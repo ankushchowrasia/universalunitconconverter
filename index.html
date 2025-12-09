@@ -110,8 +110,12 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border);
+            padding: 20px;
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3), inset 0 0 10px rgba(0, 255, 65, 0.1);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
         }
 
         .logo h1 {
@@ -158,12 +162,16 @@
             width: 100%;
             padding: 16px 24px 16px 50px;
             border-radius: 50px;
-            border: 2px solid transparent;
+            border: 2px solid var(--primary);
             background: var(--surface);
-            color: var(--text);
-            box-shadow: var(--shadow);
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3), inset 0 0 5px rgba(0, 255, 65, 0.1);
             font-size: 1rem;
             outline: none;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .search-input:focus {
@@ -227,24 +235,62 @@
 
         .category-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
+            /* PC: 4 columns, 5 rows (for 20 items) -> "Filled" look */
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            padding: 20px 0;
         }
 
         .category-card {
             background: var(--surface);
             border-radius: 16px;
-            padding: 24px;
+            padding: 30px;
+            /* More padding for PC */
             text-align: center;
             cursor: pointer;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
             transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
         }
 
         .category-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             border-color: var(--primary);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Mobile Layout Adjustments */
+        @media (max-width: 768px) {
+            .category-grid {
+                /* Mobile: 2 columns, 10 rows -> "Less congestive" */
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+                padding: 10px 0;
+            }
+
+            .category-card {
+                padding: 16px;
+                /* Compact padding */
+                border-radius: 12px;
+            }
+
+            .cat-icon {
+                font-size: 2rem;
+                margin-bottom: 8px;
+            }
+
+            .cat-title {
+                font-size: 0.95rem;
+            }
+
+            .cat-desc {
+                font-size: 0.75rem;
+            }
         }
 
         .cat-icon {
@@ -607,7 +653,35 @@
     </div>
 
     <script>
-        const DATA = { categories: [{ id: 'length', name: 'Length', icon: '📏' }, { id: 'weight', name: 'Weight', icon: '⚖️' }, { id: 'temperature', name: 'Temperature', icon: '🌡️' }, { id: 'time', name: 'Time', icon: '⏰' }, { id: 'area', name: 'Area', icon: '📐' }, { id: 'volume', name: 'Volume', icon: '🧪' }, { id: 'speed', name: 'Speed', icon: '🚀' }, { id: 'digital', name: 'Digital Storage', icon: '💾' }, { id: 'currency', name: 'Currency', icon: '💰' }, { id: 'energy', name: 'Energy', icon: '⚡' }], length: { factors: { m: 1, km: 1e3, cm: .01, mm: .001, inch: .0254, foot: .3048, yard: .9144, mile: 1609.34, nautical_mile: 1852, light_year: 9.461e15 }, converters: [{ id: 'cm_m', title: 'cm ⇄ m', pair: ['cm', 'm'] }, { id: 'cm_km', title: 'cm ⇄ km', pair: ['cm', 'km'] }, { id: 'm_km', title: 'm ⇄ km', pair: ['m', 'km'] }, { id: 'inch_cm', title: 'inch ⇄ cm', pair: ['inch', 'cm'] }, { id: 'foot_meter', title: 'foot ⇄ meter', pair: ['foot', 'm'] }, { id: 'mile_km', title: 'mile ⇄ km', pair: ['mile', 'km'] }, { id: 'yard_meter', title: 'yard ⇄ meter', pair: ['yard', 'm'] }, { id: 'mm_cm', title: 'mm ⇄ cm', pair: ['mm', 'cm'] }, { id: 'ly_km', title: 'light-year ⇄ km', pair: ['light_year', 'km'] }, { id: 'nm_km', title: 'nautical mile ⇄ km', pair: ['nautical_mile', 'km'] }, { id: 'custom', title: 'Universal Length Converter', type: 'custom', all: !0 }] }, weight: { factors: { g: 1, kg: 1e3, mg: .001, tonne: 1e6, pound: 453.592, ounce: 28.3495, stone: 6350.29, carat: .2, microgram: 1e-6 }, converters: [{ id: 'g_kg', title: 'gram ⇄ kilogram', pair: ['g', 'kg'] }, { id: 'mg_g', title: 'milligram ⇄ gram', pair: ['mg', 'g'] }, { id: 'lb_kg', title: 'pound ⇄ kilogram', pair: ['pound', 'kg'] }, { id: 'oz_g', title: 'ounce ⇄ gram', pair: ['ounce', 'g'] }, { id: 't_kg', title: 'tonne ⇄ kilogram', pair: ['tonne', 'kg'] }, { id: 'ct_g', title: 'carat ⇄ gram', pair: ['carat', 'g'] }, { id: 'st_kg', title: 'stone ⇄ kilogram', pair: ['stone', 'kg'] }, { id: 'ug_mg', title: 'microgram ⇄ milligram', pair: ['microgram', 'mg'] }, { id: 'lb_oz', title: 'pound ⇄ ounce', pair: ['pound', 'ounce'] }, { id: 'kg_lb', title: 'kilogram ⇄ pound', pair: ['kg', 'pound'] }, { id: 'custom', title: 'Universal Weight Converter', type: 'custom', all: !0 }] }, temperature: { units: ['Celsius', 'Fahrenheit', 'Kelvin', 'Rankine', 'Reaumur', 'Newton', 'Delisle', 'Romer'], converters: [{ id: 'c_f', title: 'Celsius ⇄ Fahrenheit', pair: ['Celsius', 'Fahrenheit'] }, { id: 'c_k', title: 'Celsius ⇄ Kelvin', pair: ['Celsius', 'Kelvin'] }, { id: 'f_k', title: 'Fahrenheit ⇄ Kelvin', pair: ['Fahrenheit', 'Kelvin'] }, { id: 'r_k', title: 'Rankine ⇄ Kelvin', pair: ['Rankine', 'Kelvin'] }, { id: 're_c', title: 'Réaumur ⇄ Celsius', pair: ['Reaumur', 'Celsius'] }, { id: 'n_c', title: 'Newton ⇄ Celsius', pair: ['Newton', 'Celsius'] }, { id: 'd_c', title: 'Delisle ⇄ Celsius', pair: ['Delisle', 'Celsius'] }, { id: 'c_ro', title: 'Celsius ⇄ Romer', pair: ['Celsius', 'Romer'] }, { id: 'f_ro', title: 'Fahrenheit ⇄ Romer', pair: ['Fahrenheit', 'Romer'] }, { id: 'k_ro', title: 'Kelvin ⇄ Romer', pair: ['Kelvin', 'Romer'] }, { id: 'custom', title: 'Universal Temperature Converter', type: 'custom', all: !0 }] }, time: { factors: { s: 1, min: 60, h: 3600, day: 86400, week: 604800, month: 2628e3, year: 31536e3, ms: .001, us: 1e-6 }, converters: [{ id: 's_min', title: 'seconds ⇄ minutes', pair: ['s', 'min'] }, { id: 'min_h', title: 'minutes ⇄ hours', pair: ['min', 'h'] }, { id: 'h_d', title: 'hours ⇄ days', pair: ['h', 'day'] }, { id: 'd_w', title: 'days ⇄ weeks', pair: ['day', 'week'] }, { id: 'w_m', title: 'weeks ⇄ months', pair: ['week', 'month'] }, { id: 'm_y', title: 'months ⇄ years', pair: ['month', 'year'] }, { id: 'ms_s', title: 'milliseconds ⇄ seconds', pair: ['ms', 's'] }, { id: 'us_ms', title: 'microseconds ⇄ milliseconds', pair: ['us', 'ms'] }, { id: 'h_min', title: 'hours ⇄ minutes', pair: ['h', 'min'] }, { id: 'd_h', title: 'days ⇄ hours', pair: ['day', 'h'] }, { id: 'custom', title: 'Universal Time Converter', type: 'custom', all: !0 }] }, area: { factors: { sq_m: 1, sq_km: 1e6, sq_ft: .092903, sq_in: 6.4516e-4, sq_yd: .836127, sq_mi: 259e4, acre: 4046.86, hectare: 1e4, sq_cm: 1e-4, bigha: 2529 }, converters: [{ id: 'sm_sk', title: 'sq meter ⇄ sq km', pair: ['sq_m', 'sq_km'] }, { id: 'sf_sm', title: 'sq foot ⇄ sq meter', pair: ['sq_ft', 'sq_m'] }, { id: 'ac_sm', title: 'acre ⇄ sq meter', pair: ['acre', 'sq_m'] }, { id: 'ha_ac', title: 'hectare ⇄ acre', pair: ['hectare', 'acre'] }, { id: 'smi_sk', title: 'sq mile ⇄ sq km', pair: ['sq_mi', 'sq_km'] }, { id: 'si_sf', title: 'sq inch ⇄ sq foot', pair: ['sq_in', 'sq_ft'] }, { id: 'sy_sm', title: 'sq yard ⇄ sq meter', pair: ['sq_yd', 'sq_m'] }, { id: 'ha_sm', title: 'hectare ⇄ sq meter', pair: ['hectare', 'sq_m'] }, { id: 'sc_si', title: 'sq cm ⇄ sq inch', pair: ['sq_cm', 'sq_in'] }, { id: 'bi_sm', title: 'bigha ⇄ sq meter', pair: ['bigha', 'sq_m'] }, { id: 'custom', title: 'Universal Area Converter', type: 'custom', all: !0 }] }, volume: { factors: { l: 1, ml: .001, gal: 3.78541, qt: .946353, pt: .473176, cu_m: 1e3, cu_ft: 28.3168, tbsp: .0147868, tsp: .00492892, bbl: 158.987, fl_oz: .0295735 }, converters: [{ id: 'l_ml', title: 'liter ⇄ milliliter', pair: ['l', 'ml'] }, { id: 'l_gal', title: 'liter ⇄ gallon', pair: ['l', 'gal'] }, { id: 'gal_qt', title: 'gallon ⇄ quart', pair: ['gal', 'qt'] }, { id: 'pt_l', title: 'pint ⇄ liter', pair: ['pt', 'l'] }, { id: 'cm_l', title: 'cubic meter ⇄ liter', pair: ['cu_m', 'l'] }, { id: 'cf_l', title: 'cubic foot ⇄ liter', pair: ['cu_ft', 'l'] }, { id: 'tbsp_ml', title: 'tablespoon ⇄ ml', pair: ['tbsp', 'ml'] }, { id: 'tsp_ml', title: 'teaspoon ⇄ ml', pair: ['tsp', 'ml'] }, { id: 'bbl_l', title: 'barrel ⇄ liter', pair: ['bbl', 'l'] }, { id: 'oz_ml', title: 'fluid ounce ⇄ ml', pair: ['fl_oz', 'ml'] }, { id: 'custom', title: 'Universal Volume Converter', type: 'custom', all: !0 }] }, speed: { factors: { m_s: 1, km_h: .277778, mph: .44704, knot: .514444, ft_s: .3048, mach: 343, km_min: 16.6667, m_min: .0166667 }, converters: [{ id: 'kh_ms', title: 'km/h ⇄ m/s', pair: ['km_h', 'm_s'] }, { id: 'ms_mph', title: 'm/s ⇄ mph', pair: ['m_s', 'mph'] }, { id: 'mph_kh', title: 'mph ⇄ km/h', pair: ['mph', 'km_h'] }, { id: 'kn_kh', title: 'knot ⇄ km/h', pair: ['knot', 'km_h'] }, { id: 'kn_ms', title: 'knot ⇄ m/s', pair: ['knot', 'm_s'] }, { id: 'fs_ms', title: 'ft/s ⇄ m/s', pair: ['ft_s', 'm_s'] }, { id: 'ma_kh', title: 'Mach ⇄ km/h', pair: ['mach', 'km_h'] }, { id: 'ma_ms', title: 'Mach ⇄ m/s', pair: ['mach', 'm_s'] }, { id: 'km_kh', title: 'km/min ⇄ km/h', pair: ['km_min', 'km_h'] }, { id: 'mm_ms', title: 'm/min ⇄ m/s', pair: ['m_min', 'm_s'] }, { id: 'custom', title: 'Universal Speed Converter', type: 'custom', all: !0 }] }, digital: { factors: { byte: 1, bit: .125, kb: 1024, mb: 1048576, gb: 1073741824, tb: 1099511627776, pb: 1125899906842624 }, converters: [{ id: 'bit_byte', title: 'bit ⇄ byte', pair: ['bit', 'byte'] }, { id: 'kb_mb', title: 'KB ⇄ MB', pair: ['kb', 'mb'] }, { id: 'mb_gb', title: 'MB ⇄ GB', pair: ['mb', 'gb'] }, { id: 'gb_tb', title: 'GB ⇄ TB', pair: ['gb', 'tb'] }, { id: 'tb_pb', title: 'TB ⇄ PB', pair: ['tb', 'pb'] }, { id: 'mb_kb', title: 'MB ⇄ KB', pair: ['mb', 'kb'] }, { id: 'byte_kb', title: 'Byte ⇄ KB', pair: ['byte', 'kb'] }, { id: 'kb_gb', title: 'KB ⇄ GB', pair: ['kb', 'gb'] }, { id: 'bit_kb', title: 'bit ⇄ KB', pair: ['bit', 'kb'] }, { id: 'mb_tb', title: 'MB ⇄ TB', pair: ['mb', 'tb'] }, { id: 'custom', title: 'Universal Digital Converter', type: 'custom', all: !0 }] }, currency: { factors: { inr: 1, usd: 83.5, eur: 90.2, gbp: 105.1, aud: 55.4, cad: 61.2, jpy: .56, cny: 11.5, sgd: 62.1 }, converters: [{ id: 'usd_inr', title: 'USD ⇄ INR', pair: ['usd', 'inr'] }, { id: 'eur_inr', title: 'EUR ⇄ INR', pair: ['eur', 'inr'] }, { id: 'gbp_inr', title: 'GBP ⇄ INR', pair: ['gbp', 'inr'] }, { id: 'aud_inr', title: 'AUD ⇄ INR', pair: ['aud', 'inr'] }, { id: 'cad_inr', title: 'CAD ⇄ INR', pair: ['cad', 'inr'] }, { id: 'jpy_inr', title: 'JPY ⇄ INR', pair: ['jpy', 'inr'] }, { id: 'cny_inr', title: 'CNY ⇄ INR', pair: ['cny', 'inr'] }, { id: 'sgd_inr', title: 'SGD ⇄ INR', pair: ['sgd', 'inr'] }, { id: 'usd_eur', title: 'USD ⇄ EUR', pair: ['usd', 'eur'] }, { id: 'usd_gbp', title: 'USD ⇄ GBP', pair: ['usd', 'gbp'] }, { id: 'custom', title: 'Universal Currency Converter', type: 'custom', all: !0 }] }, energy: { factors: { j: 1, kj: 1e3, cal: 4.184, kcal: 4184, wh: 3600, kwh: 3600000, btu: 1055.06, erg: 1e-7, w: 1, kw: 1e3 }, converters: [{ id: 'j_kj', title: 'joules ⇄ kilojoules', pair: ['j', 'kj'] }, { id: 'j_cal', title: 'joules ⇄ calories', pair: ['j', 'cal'] }, { id: 'kj_cal', title: 'kilojoules ⇄ calories', pair: ['kj', 'cal'] }, { id: 'wh_kwh', title: 'watt-hour ⇄ kilowatt-hour', pair: ['wh', 'kwh'] }, { id: 'cal_kcal', title: 'calorie ⇄ kilocalorie', pair: ['cal', 'kcal'] }, { id: 'btu_j', title: 'BTU ⇄ joule', pair: ['btu', 'j'] }, { id: 'btu_kwh', title: 'BTU ⇄ kWh', pair: ['btu', 'kwh'] }, { id: 'erg_j', title: 'erg ⇄ joule', pair: ['erg', 'j'] }, { id: 'kcal_j', title: 'kilocalorie ⇄ joule', pair: ['kcal', 'j'] }, { id: 'w_kw', title: 'watt ⇄ kilowatt', pair: ['w', 'kw'] }, { id: 'custom', title: 'Universal Energy Converter', type: 'custom', all: !0 }] } };
+        const DATA = {
+            categories: [
+                { id: 'length', name: 'Length', icon: '📏' }, { id: 'weight', name: 'Weight', icon: '⚖️' }, { id: 'temperature', name: 'Temperature', icon: '🌡️' }, { id: 'time', name: 'Time', icon: '⏰' }, { id: 'area', name: 'Area', icon: '📐' },
+                { id: 'volume', name: 'Volume', icon: '🧪' }, { id: 'speed', name: 'Speed', icon: '🚀' }, { id: 'digital', name: 'Digital Storage', icon: '💾' }, { id: 'currency', name: 'Currency', icon: '💰' }, { id: 'energy', name: 'Energy', icon: '⚡' },
+                { id: 'pressure', name: 'Pressure', icon: '⏲️' }, { id: 'density', name: 'Density', icon: '🧱' }, { id: 'power', name: 'Power', icon: '💡' }, { id: 'force', name: 'Force', icon: '💪' }, { id: 'frequency', name: 'Frequency', icon: '📻' },
+                { id: 'angle', name: 'Angle', icon: '🔄' }, { id: 'data_transfer', name: 'Data Transfer', icon: '🌐' }, { id: 'fuel', name: 'Fuel Consumption', icon: '⛽' }, { id: 'illuminance', name: 'Illuminance', icon: '🕯️' }, { id: 'sound', name: 'Sound', icon: '🔊' }
+            ],
+            length: { factors: { m: 1, km: 1e3, cm: .01, mm: .001, inch: .0254, foot: .3048, yard: .9144, mile: 1609.34, nautical_mile: 1852, light_year: 9.461e15 }, converters: [{ id: 'cm_m', title: 'cm ⇄ m', pair: ['cm', 'm'] }, { id: 'cm_km', title: 'cm ⇄ km', pair: ['cm', 'km'] }, { id: 'm_km', title: 'm ⇄ km', pair: ['m', 'km'] }, { id: 'inch_cm', title: 'inch ⇄ cm', pair: ['inch', 'cm'] }, { id: 'foot_meter', title: 'foot ⇄ meter', pair: ['foot', 'm'] }, { id: 'mile_km', title: 'mile ⇄ km', pair: ['mile', 'km'] }, { id: 'yard_meter', title: 'yard ⇄ meter', pair: ['yard', 'm'] }, { id: 'mm_cm', title: 'mm ⇄ cm', pair: ['mm', 'cm'] }, { id: 'ly_km', title: 'light-year ⇄ km', pair: ['light_year', 'km'] }, { id: 'nm_km', title: 'nautical mile ⇄ km', pair: ['nautical_mile', 'km'] }, { id: 'custom', title: 'Universal Length Converter', type: 'custom', all: !0 }] },
+            weight: { factors: { g: 1, kg: 1e3, mg: .001, tonne: 1e6, pound: 453.592, ounce: 28.3495, stone: 6350.29, carat: .2, microgram: 1e-6 }, converters: [{ id: 'g_kg', title: 'gram ⇄ kilogram', pair: ['g', 'kg'] }, { id: 'mg_g', title: 'milligram ⇄ gram', pair: ['mg', 'g'] }, { id: 'lb_kg', title: 'pound ⇄ kilogram', pair: ['pound', 'kg'] }, { id: 'oz_g', title: 'ounce ⇄ gram', pair: ['ounce', 'g'] }, { id: 't_kg', title: 'tonne ⇄ kilogram', pair: ['tonne', 'kg'] }, { id: 'ct_g', title: 'carat ⇄ gram', pair: ['carat', 'g'] }, { id: 'st_kg', title: 'stone ⇄ kilogram', pair: ['stone', 'kg'] }, { id: 'ug_mg', title: 'microgram ⇄ milligram', pair: ['microgram', 'mg'] }, { id: 'lb_oz', title: 'pound ⇄ ounce', pair: ['pound', 'ounce'] }, { id: 'kg_lb', title: 'kilogram ⇄ pound', pair: ['kg', 'pound'] }, { id: 'custom', title: 'Universal Weight Converter', type: 'custom', all: !0 }] },
+            temperature: { units: ['Celsius', 'Fahrenheit', 'Kelvin', 'Rankine', 'Reaumur', 'Newton', 'Delisle', 'Romer'], converters: [{ id: 'c_f', title: 'Celsius ⇄ Fahrenheit', pair: ['Celsius', 'Fahrenheit'] }, { id: 'c_k', title: 'Celsius ⇄ Kelvin', pair: ['Celsius', 'Kelvin'] }, { id: 'f_k', title: 'Fahrenheit ⇄ Kelvin', pair: ['Fahrenheit', 'Kelvin'] }, { id: 'r_k', title: 'Rankine ⇄ Kelvin', pair: ['Rankine', 'Kelvin'] }, { id: 're_c', title: 'Réaumur ⇄ Celsius', pair: ['Reaumur', 'Celsius'] }, { id: 'n_c', title: 'Newton ⇄ Celsius', pair: ['Newton', 'Celsius'] }, { id: 'd_c', title: 'Delisle ⇄ Celsius', pair: ['Delisle', 'Celsius'] }, { id: 'c_ro', title: 'Celsius ⇄ Romer', pair: ['Celsius', 'Romer'] }, { id: 'f_ro', title: 'Fahrenheit ⇄ Romer', pair: ['Fahrenheit', 'Romer'] }, { id: 'k_ro', title: 'Kelvin ⇄ Romer', pair: ['Kelvin', 'Romer'] }, { id: 'custom', title: 'Universal Temperature Converter', type: 'custom', all: !0 }] },
+            time: { factors: { s: 1, min: 60, h: 3600, day: 86400, week: 604800, month: 2628e3, year: 31536e3, ms: .001, us: 1e-6 }, converters: [{ id: 's_min', title: 'seconds ⇄ minutes', pair: ['s', 'min'] }, { id: 'min_h', title: 'minutes ⇄ hours', pair: ['min', 'h'] }, { id: 'h_d', title: 'hours ⇄ days', pair: ['h', 'day'] }, { id: 'd_w', title: 'days ⇄ weeks', pair: ['day', 'week'] }, { id: 'w_m', title: 'weeks ⇄ months', pair: ['week', 'month'] }, { id: 'm_y', title: 'months ⇄ years', pair: ['month', 'year'] }, { id: 'ms_s', title: 'milliseconds ⇄ seconds', pair: ['ms', 's'] }, { id: 'us_ms', title: 'microseconds ⇄ milliseconds', pair: ['us', 'ms'] }, { id: 'h_min', title: 'hours ⇄ minutes', pair: ['h', 'min'] }, { id: 'd_h', title: 'days ⇄ hours', pair: ['day', 'h'] }, { id: 'custom', title: 'Universal Time Converter', type: 'custom', all: !0 }] },
+            area: { factors: { sq_m: 1, sq_km: 1e6, sq_ft: .092903, sq_in: 6.4516e-4, sq_yd: .836127, sq_mi: 259e4, acre: 4046.86, hectare: 1e4, sq_cm: 1e-4, bigha: 2529 }, converters: [{ id: 'sm_sk', title: 'sq meter ⇄ sq km', pair: ['sq_m', 'sq_km'] }, { id: 'sf_sm', title: 'sq foot ⇄ sq meter', pair: ['sq_ft', 'sq_m'] }, { id: 'ac_sm', title: 'acre ⇄ sq meter', pair: ['acre', 'sq_m'] }, { id: 'ha_ac', title: 'hectare ⇄ acre', pair: ['hectare', 'acre'] }, { id: 'smi_sk', title: 'sq mile ⇄ sq km', pair: ['sq_mi', 'sq_km'] }, { id: 'si_sf', title: 'sq inch ⇄ sq foot', pair: ['sq_in', 'sq_ft'] }, { id: 'sy_sm', title: 'sq yard ⇄ sq meter', pair: ['sq_yd', 'sq_m'] }, { id: 'ha_sm', title: 'hectare ⇄ sq meter', pair: ['hectare', 'sq_m'] }, { id: 'sc_si', title: 'sq cm ⇄ sq inch', pair: ['sq_cm', 'sq_in'] }, { id: 'bi_sm', title: 'bigha ⇄ sq meter', pair: ['bigha', 'sq_m'] }, { id: 'custom', title: 'Universal Area Converter', type: 'custom', all: !0 }] },
+            volume: { factors: { l: 1, ml: .001, gal: 3.78541, qt: .946353, pt: .473176, cu_m: 1e3, cu_ft: 28.3168, tbsp: .0147868, tsp: .00492892, bbl: 158.987, fl_oz: .0295735 }, converters: [{ id: 'l_ml', title: 'liter ⇄ milliliter', pair: ['l', 'ml'] }, { id: 'l_gal', title: 'liter ⇄ gallon', pair: ['l', 'gal'] }, { id: 'gal_qt', title: 'gallon ⇄ quart', pair: ['gal', 'qt'] }, { id: 'pt_l', title: 'pint ⇄ liter', pair: ['pt', 'l'] }, { id: 'cm_l', title: 'cubic meter ⇄ liter', pair: ['cu_m', 'l'] }, { id: 'cf_l', title: 'cubic foot ⇄ liter', pair: ['cu_ft', 'l'] }, { id: 'tbsp_ml', title: 'tablespoon ⇄ ml', pair: ['tbsp', 'ml'] }, { id: 'tsp_ml', title: 'teaspoon ⇄ ml', pair: ['tsp', 'ml'] }, { id: 'bbl_l', title: 'barrel ⇄ liter', pair: ['bbl', 'l'] }, { id: 'oz_ml', title: 'fluid ounce ⇄ ml', pair: ['fl_oz', 'ml'] }, { id: 'custom', title: 'Universal Volume Converter', type: 'custom', all: !0 }] },
+            speed: { factors: { m_s: 1, km_h: .277778, mph: .44704, knot: .514444, ft_s: .3048, mach: 343, km_min: 16.6667, m_min: .0166667 }, converters: [{ id: 'kh_ms', title: 'km/h ⇄ m/s', pair: ['km_h', 'm_s'] }, { id: 'ms_mph', title: 'm/s ⇄ mph', pair: ['m_s', 'mph'] }, { id: 'mph_kh', title: 'mph ⇄ km/h', pair: ['mph', 'km_h'] }, { id: 'kn_kh', title: 'knot ⇄ km/h', pair: ['knot', 'km_h'] }, { id: 'kn_ms', title: 'knot ⇄ m/s', pair: ['knot', 'm_s'] }, { id: 'fs_ms', title: 'ft/s ⇄ m/s', pair: ['ft_s', 'm_s'] }, { id: 'ma_kh', title: 'Mach ⇄ km/h', pair: ['mach', 'km_h'] }, { id: 'ma_ms', title: 'Mach ⇄ m/s', pair: ['mach', 'm_s'] }, { id: 'km_kh', title: 'km/min ⇄ km/h', pair: ['km_min', 'km_h'] }, { id: 'mm_ms', title: 'm/min ⇄ m/s', pair: ['m_min', 'm_s'] }, { id: 'custom', title: 'Universal Speed Converter', type: 'custom', all: !0 }] },
+            digital: { factors: { byte: 1, bit: .125, kb: 1024, mb: 1048576, gb: 1073741824, tb: 1099511627776, pb: 1125899906842624 }, converters: [{ id: 'bit_byte', title: 'bit ⇄ byte', pair: ['bit', 'byte'] }, { id: 'kb_mb', title: 'KB ⇄ MB', pair: ['kb', 'mb'] }, { id: 'mb_gb', title: 'MB ⇄ GB', pair: ['mb', 'gb'] }, { id: 'gb_tb', title: 'GB ⇄ TB', pair: ['gb', 'tb'] }, { id: 'tb_pb', title: 'TB ⇄ PB', pair: ['tb', 'pb'] }, { id: 'mb_kb', title: 'MB ⇄ KB', pair: ['mb', 'kb'] }, { id: 'byte_kb', title: 'Byte ⇄ KB', pair: ['byte', 'kb'] }, { id: 'kb_gb', title: 'KB ⇄ GB', pair: ['kb', 'gb'] }, { id: 'bit_kb', title: 'bit ⇄ KB', pair: ['bit', 'kb'] }, { id: 'mb_tb', title: 'MB ⇄ TB', pair: ['mb', 'tb'] }, { id: 'custom', title: 'Universal Digital Converter', type: 'custom', all: !0 }] },
+            currency: { factors: { inr: 1, usd: 83.5, eur: 90.2, gbp: 105.1, aud: 55.4, cad: 61.2, jpy: .56, cny: 11.5, sgd: 62.1 }, converters: [{ id: 'usd_inr', title: 'USD ⇄ INR', pair: ['usd', 'inr'] }, { id: 'eur_inr', title: 'EUR ⇄ INR', pair: ['eur', 'inr'] }, { id: 'gbp_inr', title: 'GBP ⇄ INR', pair: ['gbp', 'inr'] }, { id: 'aud_inr', title: 'AUD ⇄ INR', pair: ['aud', 'inr'] }, { id: 'cad_inr', title: 'CAD ⇄ INR', pair: ['cad', 'inr'] }, { id: 'jpy_inr', title: 'JPY ⇄ INR', pair: ['jpy', 'inr'] }, { id: 'cny_inr', title: 'CNY ⇄ INR', pair: ['cny', 'inr'] }, { id: 'sgd_inr', title: 'SGD ⇄ INR', pair: ['sgd', 'inr'] }, { id: 'usd_eur', title: 'USD ⇄ EUR', pair: ['usd', 'eur'] }, { id: 'usd_gbp', title: 'USD ⇄ GBP', pair: ['usd', 'gbp'] }, { id: 'custom', title: 'Universal Currency Converter', type: 'custom', all: !0 }] },
+            energy: { factors: { j: 1, kj: 1e3, cal: 4.184, kcal: 4184, wh: 3600, kwh: 3600000, btu: 1055.06, erg: 1e-7, w: 1, kw: 1e3 }, converters: [{ id: 'j_kj', title: 'joules ⇄ kilojoules', pair: ['j', 'kj'] }, { id: 'j_cal', title: 'joules ⇄ calories', pair: ['j', 'cal'] }, { id: 'kj_cal', title: 'kilojoules ⇄ calories', pair: ['kj', 'cal'] }, { id: 'wh_kwh', title: 'watt-hour ⇄ kilowatt-hour', pair: ['wh', 'kwh'] }, { id: 'cal_kcal', title: 'calorie ⇄ kilocalorie', pair: ['cal', 'kcal'] }, { id: 'btu_j', title: 'BTU ⇄ joule', pair: ['btu', 'j'] }, { id: 'btu_kwh', title: 'BTU ⇄ kWh', pair: ['btu', 'kwh'] }, { id: 'erg_j', title: 'erg ⇄ joule', pair: ['erg', 'j'] }, { id: 'kcal_j', title: 'kilocalorie ⇄ joule', pair: ['kcal', 'j'] }, { id: 'w_kw', title: 'watt ⇄ kilowatt', pair: ['w', 'kw'] }, { id: 'custom', title: 'Universal Energy Converter', type: 'custom', all: !0 }] },
+
+            pressure: { factors: { pa: 1, bar: 100000, atm: 101325, psi: 6894.76, torr: 133.322, mmhg: 133.322, kpa: 1000, mpa: 1000000 }, converters: [{ id: 'pa_bar', title: 'Pascal ⇄ Bar', pair: ['pa', 'bar'] }, { id: 'pa_atm', title: 'Pascal ⇄ atm', pair: ['pa', 'atm'] }, { id: 'pa_psi', title: 'Pascal ⇄ psi', pair: ['pa', 'psi'] }, { id: 'bar_atm', title: 'Bar ⇄ atm', pair: ['bar', 'atm'] }, { id: 'bar_psi', title: 'Bar ⇄ psi', pair: ['bar', 'psi'] }, { id: 'atm_torr', title: 'atm ⇄ Torr', pair: ['atm', 'torr'] }, { id: 'psi_kpa', title: 'psi ⇄ kPa', pair: ['psi', 'kpa'] }, { id: 'kpa_atm', title: 'kPa ⇄ atm', pair: ['kpa', 'atm'] }, { id: 'mmhg_pa', title: 'mmHg ⇄ Pascal', pair: ['mmhg', 'pa'] }, { id: 'torr_bar', title: 'Torr ⇄ Bar', pair: ['torr', 'bar'] }, { id: 'custom', title: 'Universal Pressure Converter', type: 'custom', all: !0 }] },
+            density: { factors: { kg_m3: 1, g_cm3: 1000, g_ml: 1000, kg_l: 1000, g_l: 1, mg_ml: 1, lb_ft3: 16.0185, lb_gal: 119.826, oz_in3: 1729.99 }, converters: [{ id: 'gcm3_kgm3', title: 'g/cm³ ⇄ kg/m³', pair: ['g_cm3', 'kg_m3'] }, { id: 'gcm3_gml', title: 'g/cm³ ⇄ g/mL', pair: ['g_cm3', 'g_ml'] }, { id: 'kgm3_gml', title: 'kg/m³ ⇄ g/mL', pair: ['kg_m3', 'g_ml'] }, { id: 'gcm3_kgl', title: 'g/cm³ ⇄ kg/L', pair: ['g_cm3', 'kg_l'] }, { id: 'kgl_gml', title: 'kg/L ⇄ g/mL', pair: ['kg_l', 'g_ml'] }, { id: 'gl_mgml', title: 'g/L ⇄ mg/mL', pair: ['g_l', 'mg_ml'] }, { id: 'mgml_gcm3', title: 'mg/mL ⇄ g/cm³', pair: ['mg_ml', 'g_cm3'] }, { id: 'lbft3_kgm3', title: 'lb/ft³ ⇄ kg/m³', pair: ['lb_ft3', 'kg_m3'] }, { id: 'lbgal_kgl', title: 'lb/gal ⇄ kg/L', pair: ['lb_gal', 'kg_l'] }, { id: 'ozin3_gcm3', title: 'oz/in³ ⇄ g/cm³', pair: ['oz_in3', 'g_cm3'] }, { id: 'custom', title: 'Universal Density Converter', type: 'custom', all: !0 }] },
+            power: { factors: { w: 1, kw: 1000, mw: 1e6, hp_metric: 735.499, hp_mech: 745.7, btu_hr: 0.293071, cal_s: 4.184, j_s: 1, erg_s: 1e-7 }, converters: [{ id: 'w_kw', title: 'Watt ⇄ Kilowatt', pair: ['w', 'kw'] }, { id: 'w_hpm', title: 'Watt ⇄ HP (metric)', pair: ['w', 'hp_metric'] }, { id: 'w_hpmech', title: 'Watt ⇄ HP (mechanical)', pair: ['w', 'hp_mech'] }, { id: 'kw_hp', title: 'kW ⇄ HP', pair: ['kw', 'hp_mech'] }, { id: 'btu_w', title: 'BTU/hr ⇄ Watt', pair: ['btu_hr', 'w'] }, { id: 'btu_kw', title: 'BTU/hr ⇄ kW', pair: ['btu_hr', 'kw'] }, { id: 'cal_w', title: 'calorie/sec ⇄ Watt', pair: ['cal_s', 'w'] }, { id: 'j_w', title: 'J/s ⇄ Watt', pair: ['j_s', 'w'] }, { id: 'erg_w', title: 'erg/s ⇄ Watt', pair: ['erg_s', 'w'] }, { id: 'kw_mw', title: 'kW ⇄ MW', pair: ['kw', 'mw'] }, { id: 'custom', title: 'Universal Power Converter', type: 'custom', all: !0 }] },
+            force: { factors: { n: 1, kn: 1000, dyne: 1e-5, kgf: 9.80665, lbf: 4.44822, ozf: 0.278014 }, converters: [{ id: 'n_dyne', title: 'Newton ⇄ Dyne', pair: ['n', 'dyne'] }, { id: 'n_kgf', title: 'Newton ⇄ kgf', pair: ['n', 'kgf'] }, { id: 'n_lbf', title: 'Newton ⇄ lbf', pair: ['n', 'lbf'] }, { id: 'dyne_kgf', title: 'dyne ⇄ kgf', pair: ['dyne', 'kgf'] }, { id: 'kgf_lbf', title: 'kgf ⇄ lbf', pair: ['kgf', 'lbf'] }, { id: 'lbf_n', title: 'lbf ⇄ N', pair: ['lbf', 'n'] }, { id: 'n_kn', title: 'N ⇄ kN', pair: ['n', 'kn'] }, { id: 'lbf_ozf', title: 'lbf ⇄ ozf', pair: ['lbf', 'ozf'] }, { id: 'kgf_n', title: 'kgf ⇄ N', pair: ['kgf', 'n'] }, { id: 'kn_lbf', title: 'kN ⇄ lbf', pair: ['kn', 'lbf'] }, { id: 'custom', title: 'Universal Force Converter', type: 'custom', all: !0 }] },
+            frequency: { factors: { hz: 1, khz: 1000, mhz: 1e6, ghz: 1e9, thz: 1e12, rpm: 1 / 60, rad_s: 0.159155, cps: 1 }, converters: [{ id: 'hz_khz', title: 'Hertz ⇄ Kilohertz', pair: ['hz', 'khz'] }, { id: 'hz_mhz', title: 'Hertz ⇄ Megahertz', pair: ['hz', 'mhz'] }, { id: 'hz_ghz', title: 'Hertz ⇄ Gigahertz', pair: ['hz', 'ghz'] }, { id: 'hz_rpm', title: 'Hz ⇄ RPM', pair: ['hz', 'rpm'] }, { id: 'khz_mhz', title: 'kHz ⇄ MHz', pair: ['khz', 'mhz'] }, { id: 'mhz_ghz', title: 'MHz ⇄ GHz', pair: ['mhz', 'ghz'] }, { id: 'hz_thz', title: 'Hz ⇄ THz', pair: ['hz', 'thz'] }, { id: 'rpm_rad', title: 'RPM ⇄ rad/s', pair: ['rpm', 'rad_s'] }, { id: 'rad_hz', title: 'rad/s ⇄ Hz', pair: ['rad_s', 'hz'] }, { id: 'hz_cycles', title: 'Hz ⇄ cycles/min', pair: ['hz', 'rpm'] }, { id: 'custom', title: 'Universal Frequency Converter', type: 'custom', all: !0 }] },
+            angle: { factors: { deg: 1, rad: 57.2958, grad: 0.9, arcmin: 1 / 60, arcsec: 1 / 3600 }, converters: [{ id: 'deg_rad', title: 'Degrees ⇄ Radians', pair: ['deg', 'rad'] }, { id: 'deg_grad', title: 'Degrees ⇄ Gradians', pair: ['deg', 'grad'] }, { id: 'deg_min', title: 'Degrees ⇄ Minutes', pair: ['deg', 'arcmin'] }, { id: 'deg_sec', title: 'Degrees ⇄ Seconds', pair: ['deg', 'arcsec'] }, { id: 'rad_grad', title: 'Radians ⇄ Gradians', pair: ['rad', 'grad'] }, { id: 'rad_min', title: 'Radians ⇄ Minutes', pair: ['rad', 'arcmin'] }, { id: 'rad_sec', title: 'Radians ⇄ Seconds', pair: ['rad', 'arcsec'] }, { id: 'grad_deg', title: 'Gradians ⇄ Degrees', pair: ['grad', 'deg'] }, { id: 'grad_min', title: 'Gradians ⇄ Minutes', pair: ['grad', 'arcmin'] }, { id: 'grad_sec', title: 'Gradians ⇄ Seconds', pair: ['grad', 'arcsec'] }, { id: 'custom', title: 'Universal Angle Converter', type: 'custom', all: !0 }] },
+            data_transfer: { factors: { bit_s: 1, byte_s: 8, kb_s: 8192, mb_s: 8388608, gb_s: 8589934592, mbps: 1000000, gbps: 1e9 }, converters: [{ id: 'mbps_gbps', title: 'Mbps ⇄ Gbps', pair: ['mbps', 'gbps'] }, { id: 'mbps_mbs', title: 'Mbps ⇄ MB/s', pair: ['mbps', 'mb_s'] }, { id: 'mbs_mbps', title: 'MB/s ⇄ Mbps', pair: ['mb_s', 'mbps'] }, { id: 'kbs_mbs', title: 'KB/s ⇄ MB/s', pair: ['kb_s', 'mb_s'] }, { id: 'kbs_mbps', title: 'KB/s ⇄ Mbps', pair: ['kb_s', 'mbps'] }, { id: 'gbs_mbps', title: 'GB/s ⇄ Mbps', pair: ['gb_s', 'mbps'] }, { id: 'gbs_mbs', title: 'GB/s ⇄ MB/s', pair: ['gb_s', 'mb_s'] }, { id: 'bits_bytes', title: 'bit/s ⇄ byte/s', pair: ['bit_s', 'byte_s'] }, { id: 'bytes_kbs', title: 'byte/s ⇄ KB/s', pair: ['byte_s', 'kb_s'] }, { id: 'kbs_gbs', title: 'KB/s ⇄ GB/s', pair: ['kb_s', 'gb_s'] }, { id: 'custom', title: 'Universal Data Transfer Converter', type: 'custom', all: !0 }] },
+            fuel: { units: ['km/L', 'L/100km', 'mpg(US)', 'mpg(UK)', 'km/gal', 'gal/100mi'], converters: [{ id: 'kml_l100', title: 'km/L ⇄ L/100 km', pair: ['km/L', 'L/100km'] }, { id: 'kml_mpg_us', title: 'km/L ⇄ mpg (US)', pair: ['km/L', 'mpg(US)'] }, { id: 'kml_mpg_uk', title: 'km/L ⇄ mpg (UK)', pair: ['km/L', 'mpg(UK)'] }, { id: 'mpg_us_l100', title: 'mpg (US) ⇄ L/100 km', pair: ['mpg(US)', 'L/100km'] }, { id: 'mpg_uk_l100', title: 'mpg (UK) ⇄ L/100 km', pair: ['mpg(UK)', 'L/100km'] }, { id: 'l100_mpg_us', title: 'L/100 km ⇄ mpg (US)', pair: ['L/100km', 'mpg(US)'] }, { id: 'l100_mpg_uk', title: 'L/100 km ⇄ mpg (UK)', pair: ['L/100km', 'mpg(UK)'] }, { id: 'gal100_kml', title: 'gallon/100 miles ⇄ km/L', pair: ['gal/100mi', 'km/L'] }, { id: 'mpg_us_kmgal', title: 'mpg (US) ⇄ km/gal', pair: ['mpg(US)', 'km/gal'] }, { id: 'kmgal_l100', title: 'km/gal ⇄ L/100 km', pair: ['km/gal', 'L/100km'] }, { id: 'custom', title: 'Universal Fuel Converter', type: 'custom', all: !0 }] },
+            illuminance: { factors: { lux: 1, fc: 10.7639, lumen: 1, phot: 10000, nit: 3.14159, candela: 1, candlepower: 1 }, converters: [{ id: 'lux_fc', title: 'Lux ⇄ Foot-candle', pair: ['lux', 'fc'] }, { id: 'lumen_cd', title: 'Lumen ⇄ Candela', pair: ['lumen', 'candela'] }, { id: 'lux_lm', title: 'Lux ⇄ Lumen/m²', pair: ['lux', 'lumen'] }, { id: 'lux_phot', title: 'Lux ⇄ Phot', pair: ['lux', 'phot'] }, { id: 'cd_cp', title: 'Candela ⇄ Candlepower', pair: ['candela', 'candlepower'] }, { id: 'fc_lm', title: 'Foot-candle ⇄ Lumen/m²', pair: ['fc', 'lumen'] }, { id: 'lm_lux', title: 'Lumen ⇄ Lux', pair: ['lumen', 'lux'] }, { id: 'lux_nit', title: 'Lux ⇄ Nits', pair: ['lux', 'nit'] }, { id: 'cd_lux', title: 'Candela ⇄ Lux', pair: ['candela', 'lux'] }, { id: 'phot_lux', title: 'Phot ⇄ Lux', pair: ['phot', 'lux'] }, { id: 'custom', title: 'Universal Illuminance Converter', type: 'custom', all: !0 }] },
+            sound: { units: ['dB SPL', 'dB', 'pascal', 'watt/m²', 'phon', 'sone', 'amplitude_ratio'], converters: [{ id: 'dbspl_pa', title: 'dB SPL ⇄ sound pressure', pair: ['dB SPL', 'pascal'] }, { id: 'db_int', title: 'dB ⇄ intensity ratio', pair: ['dB', 'watt/m²'] }, { id: 'db_volt', title: 'dB ⇄ voltage ratio', pair: ['dB', 'amplitude_ratio'] }, { id: 'pa_dbspl', title: 'pascal ⇄ dB SPL', pair: ['pascal', 'dB SPL'] }, { id: 'watt_db', title: 'watt/m² ⇄ dB intensity', pair: ['watt/m²', 'dB'] }, { id: 'amp_db', title: 'amplitude ratio ⇄ dB', pair: ['amplitude_ratio', 'dB'] }, { id: 'db_amp', title: 'dBFS ⇄ amplitude', pair: ['dB', 'amplitude_ratio'] }, { id: 'phon_db', title: 'phon ⇄ decibel', pair: ['phon', 'dB'] }, { id: 'sone_phon', title: 'sone ⇄ phon', pair: ['sone', 'phon'] }, { id: 'int_press', title: 'sound intensity ⇄ sound pressure', pair: ['watt/m²', 'pascal'] }, { id: 'custom', title: 'Universal Sound Converter', type: 'custom', all: !0 }] }
+        };
 
         const app = {
             state: { view: 'home', category: null, converter: null, favorites: JSON.parse(localStorage.getItem('unit_favorites')) || [], history: JSON.parse(localStorage.getItem('unit_history')) || [] },
@@ -680,7 +754,9 @@
                 const cat = this.state.category;
                 let res = 0; let form = '';
 
-                if (cat === 'temperature') { res = this.convertTemp(val, from, to); form = `${from} to ${to}`; }
+                if (cat === 'temperature') { res = this.convertTemp(val, from, to); form = 'Temperature shift'; }
+                else if (cat === 'fuel') { res = this.convertFuel(val, from, to); form = 'Non-linear conversion'; }
+                else if (cat === 'sound') { res = this.convertSound(val, from, to); form = 'Logarithmic scale'; }
                 else {
                     const f = DATA[cat].factors;
                     const base = val * f[from];
@@ -718,6 +794,40 @@
                 if (f === 'Fahrenheit') c = (v - 32) * 5 / 9; else if (f === 'Kelvin') c = v - 273.15; else if (f === 'Rankine') c = (v - 491.67) * 5 / 9; else if (f === 'Reaumur') c = v * 1.25; else if (f === 'Newton') c = v * 100 / 33; else if (f === 'Delisle') c = 100 - v * 2 / 3; else if (f === 'Romer') c = (v - 7.5) * 40 / 21;
                 if (t === 'Fahrenheit') return c * 9 / 5 + 32; if (t === 'Kelvin') return c + 273.15; if (t === 'Rankine') return (c + 273.15) * 9 / 5; if (t === 'Reaumur') return c * 0.8; if (t === 'Newton') return c * 0.33; if (t === 'Delisle') return (100 - c) * 1.5; if (t === 'Romer') return c * 21 / 40 + 7.5;
                 return c;
+            },
+            convertFuel: function (v, f, t) {
+                if (f === t) return v;
+                let kml = v;
+                // Convert to km/L base
+                if (f === 'L/100km') kml = 100 / v;
+                else if (f === 'mpg(US)') kml = v * 0.425144;
+                else if (f === 'mpg(UK)') kml = v * 0.354006;
+                else if (f === 'km/gal') kml = v / 3.78541;
+                else if (f === 'gal/100mi') kml = 42.5144 / v;
+
+                // Convert from km/L to target
+                if (t === 'L/100km') return 100 / kml;
+                if (t === 'mpg(US)') return kml / 0.425144;
+                if (t === 'mpg(UK)') return kml / 0.354006;
+                if (t === 'km/gal') return kml * 3.78541;
+                if (t === 'gal/100mi') return 42.5144 / kml;
+                return kml;
+            },
+            convertSound: function (v, f, t) {
+                if (f === t) return v;
+                let db = v;
+                // Convert to base dB (SPL/Ratio)
+                if (f === 'pascal') db = 20 * Math.log10(v / 2e-5);
+                else if (f === 'watt/m²') db = 10 * Math.log10(v / 1e-12);
+                else if (f === 'amplitude_ratio') db = 20 * Math.log10(v);
+                else if (f === 'sone') db = 40 + 10 * Math.log2(v);
+
+                // Convert from dB to target
+                if (t === 'pascal') return 2e-5 * Math.pow(10, db / 20);
+                if (t === 'watt/m²') return 1e-12 * Math.pow(10, db / 10);
+                if (t === 'amplitude_ratio') return Math.pow(10, db / 20);
+                if (t === 'sone') return Math.pow(2, (db - 40) / 10);
+                return db;
             },
             reset: function () { document.getElementById('input-val').value = ''; document.getElementById('output-val').value = ''; document.getElementById('result-display').textContent = '0'; },
             copyResult: function () { const v = document.getElementById('output-val').value; if (v) { navigator.clipboard.writeText(v); const b = event.target; const o = b.innerText; b.innerText = 'Copied!'; setTimeout(() => b.innerText = o, 1000); } },
