@@ -315,6 +315,28 @@
             .search-container {
                 margin-bottom: 20px;
             }
+
+            /* Fix Converter UI Congestion on Mobile */
+            .converter-ui {
+                padding: 20px;
+                /* Reduced padding */
+            }
+
+            .input-wrapper {
+                flex-direction: column;
+                /* Stack input and select vertically */
+                gap: 8px;
+                /* Smaller gap */
+                margin-bottom: 16px;
+            }
+
+            .conv-input,
+            .conv-select {
+                width: 100%;
+                /* Full width */
+                font-size: 1rem;
+                /* Prevent zoom on IOS */
+            }
         }
 
         .cat-icon {
