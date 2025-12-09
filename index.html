@@ -533,6 +533,119 @@
             justify-content: space-between;
             margin-bottom: 30px;
         }
+
+        /* Reference Section Styles */
+        .reference-section {
+            margin-top: 30px;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+
+        .ref-panel {
+            background: rgba(0, 20, 0, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .ref-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+            background: rgba(0, 40, 10, 0.5);
+            border-bottom: 1px solid transparent;
+            user-select: none;
+        }
+
+        .ref-header:hover {
+            background: rgba(0, 60, 15, 0.6);
+        }
+
+        .ref-header .toggle-icon {
+            transition: transform 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .ref-panel.open .ref-header .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .ref-panel.open .ref-header {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .ref-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 16px;
+        }
+
+        .ref-panel.open .ref-content {
+            max-height: 500px;
+            padding: 16px;
+        }
+
+        .ref-box {
+            background: rgba(0, 30, 5, 0.5);
+            border-left: 3px solid var(--primary);
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .ref-box:last-child {
+            margin-bottom: 0;
+        }
+
+        .ref-box strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .ref-box code {
+            background: rgba(0, 255, 65, 0.15);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #7fff7f;
+        }
+
+        .ref-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        @media (max-width: 768px) {
+            .reference-section {
+                margin-top: 20px;
+            }
+
+            .ref-header {
+                padding: 10px 12px;
+                font-size: 0.9rem;
+            }
+
+            .ref-panel.open .ref-content {
+                padding: 12px;
+            }
+
+            .ref-box {
+                font-size: 0.85rem;
+                padding: 8px 10px;
+            }
+        }
     </style>
     <style>
         /* Preloader */
@@ -667,7 +780,8 @@
                     <label>From</label>
                     <div class="input-wrapper">
                         <input type="number" class="conv-input" id="input-val" placeholder="0" oninput="app.convert()">
-                        <select class="conv-select" id="unit-from" onchange="app.convert()"></select>
+                        <select class="conv-select" id="unit-from"
+                            onchange="app.convert(); app.updateDynamicReference()"></select>
                     </div>
                 </div>
 
@@ -677,7 +791,8 @@
                     <label>To</label>
                     <div class="input-wrapper">
                         <input type="number" class="conv-input" id="output-val" readonly placeholder="0">
-                        <select class="conv-select" id="unit-to" onchange="app.convert()"></select>
+                        <select class="conv-select" id="unit-to"
+                            onchange="app.convert(); app.updateDynamicReference()"></select>
                     </div>
                 </div>
 
@@ -693,6 +808,34 @@
                     <button class="btn btn-primary" onclick="app.convert()">Convert</button>
                     <button class="btn btn-outline" onclick="app.reset()">Reset</button>
                     <button class="btn btn-secondary" onclick="app.copyResult()">Copy</button>
+                </div>
+
+                <!-- Reference Section -->
+                <div class="reference-section" id="ref-section">
+                    <div class="ref-panel" id="ref-definitions">
+                        <div class="ref-header" onclick="app.toggleRefPanel('definitions')">
+                            📖 Unit Definitions <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="ref-content" id="ref-definitions-content"></div>
+                    </div>
+                    <div class="ref-panel" id="ref-formula">
+                        <div class="ref-header" onclick="app.toggleRefPanel('formula')">
+                            🔢 Conversion Formula <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="ref-content" id="ref-formula-content"></div>
+                    </div>
+                    <div class="ref-panel" id="ref-context">
+                        <div class="ref-header" onclick="app.toggleRefPanel('context')">
+                            🌍 Real-World Applications <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="ref-content" id="ref-context-content"></div>
+                    </div>
+                    <div class="ref-panel" id="ref-notes">
+                        <div class="ref-header" onclick="app.toggleRefPanel('notes')">
+                            💡 Usage Notes <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="ref-content" id="ref-notes-content"></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -727,6 +870,293 @@
             fuel: { units: ['km/L', 'L/100km', 'mpg(US)', 'mpg(UK)', 'km/gal', 'gal/100mi'], converters: [{ id: 'kml_l100', title: 'km/L ⇄ L/100 km', pair: ['km/L', 'L/100km'] }, { id: 'kml_mpg_us', title: 'km/L ⇄ mpg (US)', pair: ['km/L', 'mpg(US)'] }, { id: 'kml_mpg_uk', title: 'km/L ⇄ mpg (UK)', pair: ['km/L', 'mpg(UK)'] }, { id: 'mpg_us_l100', title: 'mpg (US) ⇄ L/100 km', pair: ['mpg(US)', 'L/100km'] }, { id: 'mpg_uk_l100', title: 'mpg (UK) ⇄ L/100 km', pair: ['mpg(UK)', 'L/100km'] }, { id: 'l100_mpg_us', title: 'L/100 km ⇄ mpg (US)', pair: ['L/100km', 'mpg(US)'] }, { id: 'l100_mpg_uk', title: 'L/100 km ⇄ mpg (UK)', pair: ['L/100km', 'mpg(UK)'] }, { id: 'gal100_kml', title: 'gallon/100 miles ⇄ km/L', pair: ['gal/100mi', 'km/L'] }, { id: 'mpg_us_kmgal', title: 'mpg (US) ⇄ km/gal', pair: ['mpg(US)', 'km/gal'] }, { id: 'kmgal_l100', title: 'km/gal ⇄ L/100 km', pair: ['km/gal', 'L/100km'] }, { id: 'custom', title: 'Universal Fuel Converter', type: 'custom', all: !0 }] },
             illuminance: { factors: { lux: 1, fc: 10.7639, lumen: 1, phot: 10000, nit: 3.14159, candela: 1, candlepower: 1 }, converters: [{ id: 'lux_fc', title: 'Lux ⇄ Foot-candle', pair: ['lux', 'fc'] }, { id: 'lumen_cd', title: 'Lumen ⇄ Candela', pair: ['lumen', 'candela'] }, { id: 'lux_lm', title: 'Lux ⇄ Lumen/m²', pair: ['lux', 'lumen'] }, { id: 'lux_phot', title: 'Lux ⇄ Phot', pair: ['lux', 'phot'] }, { id: 'cd_cp', title: 'Candela ⇄ Candlepower', pair: ['candela', 'candlepower'] }, { id: 'fc_lm', title: 'Foot-candle ⇄ Lumen/m²', pair: ['fc', 'lumen'] }, { id: 'lm_lux', title: 'Lumen ⇄ Lux', pair: ['lumen', 'lux'] }, { id: 'lux_nit', title: 'Lux ⇄ Nits', pair: ['lux', 'nit'] }, { id: 'cd_lux', title: 'Candela ⇄ Lux', pair: ['candela', 'lux'] }, { id: 'phot_lux', title: 'Phot ⇄ Lux', pair: ['phot', 'lux'] }, { id: 'custom', title: 'Universal Illuminance Converter', type: 'custom', all: !0 }] },
             sound: { units: ['dB SPL', 'dB', 'pascal', 'watt/m²', 'phon', 'sone', 'amplitude_ratio'], converters: [{ id: 'dbspl_pa', title: 'dB SPL ⇄ sound pressure', pair: ['dB SPL', 'pascal'] }, { id: 'db_int', title: 'dB ⇄ intensity ratio', pair: ['dB', 'watt/m²'] }, { id: 'db_volt', title: 'dB ⇄ voltage ratio', pair: ['dB', 'amplitude_ratio'] }, { id: 'pa_dbspl', title: 'pascal ⇄ dB SPL', pair: ['pascal', 'dB SPL'] }, { id: 'watt_db', title: 'watt/m² ⇄ dB intensity', pair: ['watt/m²', 'dB'] }, { id: 'amp_db', title: 'amplitude ratio ⇄ dB', pair: ['amplitude_ratio', 'dB'] }, { id: 'db_amp', title: 'dBFS ⇄ amplitude', pair: ['dB', 'amplitude_ratio'] }, { id: 'phon_db', title: 'phon ⇄ decibel', pair: ['phon', 'dB'] }, { id: 'sone_phon', title: 'sone ⇄ phon', pair: ['sone', 'phon'] }, { id: 'int_press', title: 'sound intensity ⇄ sound pressure', pair: ['watt/m²', 'pascal'] }, { id: 'custom', title: 'Universal Sound Converter', type: 'custom', all: !0 }] }
+        };
+
+        // Reference Data for all 20 categories
+        const REF_DATA = {
+            length: {
+                units: {
+                    m: { name: 'Meter', def: 'The SI base unit of length, defined as the distance light travels in vacuum in 1/299,792,458 of a second.' },
+                    km: { name: 'Kilometer', def: 'Equal to 1,000 meters. Commonly used for measuring distances between locations.' },
+                    cm: { name: 'Centimeter', def: 'Equal to 1/100 of a meter (0.01 m). Used for everyday measurements.' },
+                    mm: { name: 'Millimeter', def: 'Equal to 1/1000 of a meter (0.001 m). Used for precise measurements.' },
+                    inch: { name: 'Inch', def: 'Imperial unit equal to exactly 2.54 cm. Used in the US/UK for everyday measurements.' },
+                    foot: { name: 'Foot', def: 'Imperial unit equal to 12 inches or 0.3048 meters.' },
+                    yard: { name: 'Yard', def: 'Imperial unit equal to 3 feet or 0.9144 meters.' },
+                    mile: { name: 'Mile', def: 'Imperial unit equal to 5,280 feet or 1.609344 kilometers.' },
+                    nautical_mile: { name: 'Nautical Mile', def: 'Used in maritime and aviation, equal to 1,852 meters (one minute of latitude).' },
+                    light_year: { name: 'Light Year', def: 'The distance light travels in one year: approximately 9.461 trillion kilometers.' }
+                },
+                context: 'Length conversions are essential in construction, engineering, navigation, manufacturing, and everyday measurements like height and distance.',
+                notes: 'Metric units (m, km, cm) are based on powers of 10, making conversions simple. Imperial units (inch, foot, mile) require specific conversion factors.'
+            },
+            weight: {
+                units: {
+                    g: { name: 'Gram', def: 'Base unit in the metric system, defined as 1/1000 of a kilogram.' },
+                    kg: { name: 'Kilogram', def: 'SI base unit of mass. Equal to 1,000 grams. Standard for most weight measurements.' },
+                    mg: { name: 'Milligram', def: 'Equal to 1/1000 of a gram. Used in medicine and chemistry.' },
+                    tonne: { name: 'Metric Tonne', def: 'Equal to 1,000 kilograms. Used for large quantities.' },
+                    pound: { name: 'Pound', def: 'Imperial unit equal to 453.592 grams. Common in US/UK.' },
+                    ounce: { name: 'Ounce', def: 'Imperial unit equal to 1/16 of a pound or 28.3495 grams.' },
+                    stone: { name: 'Stone', def: 'British unit equal to 14 pounds, traditionally used for body weight.' },
+                    carat: { name: 'Carat', def: 'Equal to 0.2 grams. Used for measuring gemstones and precious metals.' },
+                    microgram: { name: 'Microgram', def: 'Equal to 1/1,000,000 of a gram. Used in pharmaceutical dosing.' }
+                },
+                context: 'Weight/mass conversions are used in cooking, shipping, medicine, fitness tracking, and industrial manufacturing.',
+                notes: 'Weight technically refers to gravitational force, while mass is the amount of matter. For everyday purposes, they are used interchangeably on Earth.'
+            },
+            temperature: {
+                units: {
+                    Celsius: { name: 'Celsius', def: 'Metric scale where 0°C is water freezing point and 100°C is boiling point at standard pressure.' },
+                    Fahrenheit: { name: 'Fahrenheit', def: 'Scale where 32°F is water freezing point and 212°F is boiling point. Used in the US.' },
+                    Kelvin: { name: 'Kelvin', def: 'SI unit starting at absolute zero (-273.15°C). Used in science and engineering.' },
+                    Rankine: { name: 'Rankine', def: 'Absolute temperature scale using Fahrenheit degrees. 0°R = absolute zero.' },
+                    Reaumur: { name: 'Réaumur', def: 'Historical scale where 0°Ré = freezing point and 80°Ré = boiling point of water.' },
+                    Newton: { name: 'Newton Scale', def: 'Scale devised by Isaac Newton where 0°N = freezing and 33°N = boiling point of water.' },
+                    Delisle: { name: 'Delisle', def: 'Inverted scale where higher values mean colder temperatures. 0°De = boiling point of water.' },
+                    Romer: { name: 'Rømer', def: 'Historical scale where 7.5°Rø = freezing and 60°Rø = boiling point of water.' }
+                },
+                context: 'Temperature conversions are critical in weather forecasting, cooking, HVAC systems, scientific research, and medical diagnostics.',
+                notes: '⚠️ Temperature scales have different zero points. Kelvin and Rankine are absolute scales (0 = no thermal energy). Conversions are non-linear between some scales.'
+            },
+            time: {
+                units: {
+                    s: { name: 'Second', def: 'SI base unit of time. Defined by cesium-133 atomic transitions.' },
+                    min: { name: 'Minute', def: 'Equal to 60 seconds.' },
+                    h: { name: 'Hour', def: 'Equal to 60 minutes or 3,600 seconds.' },
+                    day: { name: 'Day', def: 'Equal to 24 hours or 86,400 seconds.' },
+                    week: { name: 'Week', def: 'Equal to 7 days or 604,800 seconds.' },
+                    month: { name: 'Month', def: 'Approximately 30.44 days (average). Actual length varies 28-31 days.' },
+                    year: { name: 'Year', def: 'Equal to 365 days (365.25 including leap years) or about 31.536 million seconds.' },
+                    ms: { name: 'Millisecond', def: 'Equal to 1/1000 of a second. Used in computing and timing.' },
+                    us: { name: 'Microsecond', def: 'Equal to 1/1,000,000 of a second. Used in electronics and physics.' }
+                },
+                context: 'Time conversions are used in scheduling, project management, computing, physics, and everyday planning.',
+                notes: 'Month and year conversions use average values. For precise calculations, use exact dates. Leap years add complexity to year calculations.'
+            },
+            area: {
+                units: {
+                    sq_m: { name: 'Square Meter', def: 'SI unit of area. The area of a square with 1-meter sides.' },
+                    sq_km: { name: 'Square Kilometer', def: 'Equal to 1,000,000 square meters. Used for land area.' },
+                    sq_ft: { name: 'Square Foot', def: 'Imperial unit equal to 0.0929 square meters.' },
+                    sq_in: { name: 'Square Inch', def: 'Imperial unit equal to 6.4516 square centimeters.' },
+                    sq_yd: { name: 'Square Yard', def: 'Imperial unit equal to 9 square feet.' },
+                    sq_mi: { name: 'Square Mile', def: 'Imperial unit equal to 2.59 square kilometers.' },
+                    acre: { name: 'Acre', def: 'Traditional unit equal to 4,046.86 square meters. Used in real estate.' },
+                    hectare: { name: 'Hectare', def: 'Metric unit equal to 10,000 square meters. Common for land measurement.' },
+                    sq_cm: { name: 'Square Centimeter', def: 'Equal to 0.0001 square meters.' },
+                    bigha: { name: 'Bigha', def: 'Traditional South Asian unit varying by region, typically 2,529 sq meters.' }
+                },
+                context: 'Area conversions are essential in real estate, agriculture, urban planning, and construction.',
+                notes: 'Bigha size varies by region in South Asia. Acre and hectare are commonly used for land, while sq ft/sq m for buildings.'
+            },
+            volume: {
+                units: {
+                    l: { name: 'Liter', def: 'Metric unit equal to 1,000 cubic centimeters or 1 cubic decimeter.' },
+                    ml: { name: 'Milliliter', def: 'Equal to 1/1000 of a liter or 1 cubic centimeter.' },
+                    gal: { name: 'US Gallon', def: 'Equal to 3.785 liters. Used in the United States.' },
+                    qt: { name: 'Quart', def: 'Equal to 1/4 gallon or about 0.946 liters.' },
+                    pt: { name: 'Pint', def: 'Equal to 1/2 quart or about 0.473 liters.' },
+                    cu_m: { name: 'Cubic Meter', def: 'SI unit of volume. Equal to 1,000 liters.' },
+                    cu_ft: { name: 'Cubic Foot', def: 'Imperial unit equal to 28.317 liters.' },
+                    tbsp: { name: 'Tablespoon', def: 'Cooking measurement equal to about 14.79 milliliters.' },
+                    tsp: { name: 'Teaspoon', def: 'Cooking measurement equal to about 4.93 milliliters.' },
+                    bbl: { name: 'Barrel', def: 'Oil barrel equal to 42 US gallons or 158.987 liters.' },
+                    fl_oz: { name: 'Fluid Ounce', def: 'US fluid ounce equal to 29.57 milliliters.' }
+                },
+                context: 'Volume conversions are used in cooking, fuel measurement, chemistry, shipping, and beverage industries.',
+                notes: 'US and UK gallons differ! US gallon = 3.785L, UK gallon = 4.546L. This converter uses US measures.'
+            },
+            speed: {
+                units: {
+                    m_s: { name: 'Meters/Second', def: 'SI unit of velocity. Distance in meters covered per second.' },
+                    km_h: { name: 'Kilometers/Hour', def: 'Common metric unit for vehicle speed.' },
+                    mph: { name: 'Miles/Hour', def: 'Imperial unit used in US/UK for vehicle speed.' },
+                    knot: { name: 'Knot', def: 'Nautical unit equal to 1 nautical mile per hour. Used in aviation and maritime.' },
+                    ft_s: { name: 'Feet/Second', def: 'Imperial unit for velocity.' },
+                    mach: { name: 'Mach', def: 'Ratio of speed to speed of sound (~343 m/s at sea level). Used for aircraft.' },
+                    km_min: { name: 'Kilometers/Minute', def: 'Distance in kilometers covered per minute.' },
+                    m_min: { name: 'Meters/Minute', def: 'Distance in meters covered per minute.' }
+                },
+                context: 'Speed conversions are critical in transportation, aviation, sports, physics, and weather reporting.',
+                notes: 'Mach number varies with altitude and temperature since sound speed changes. Values here use sea-level standard conditions.'
+            },
+            digital: {
+                units: {
+                    byte: { name: 'Byte', def: 'Basic unit of digital storage, typically representing 8 bits.' },
+                    bit: { name: 'Bit', def: 'Smallest unit of data, representing a 0 or 1.' },
+                    kb: { name: 'Kilobyte', def: 'Equal to 1,024 bytes in binary (IEC) or 1,000 bytes (SI).' },
+                    mb: { name: 'Megabyte', def: 'Equal to 1,024 KB (binary) or 1,000,000 bytes (SI).' },
+                    gb: { name: 'Gigabyte', def: 'Equal to 1,024 MB (binary) or 1 billion bytes (SI).' },
+                    tb: { name: 'Terabyte', def: 'Equal to 1,024 GB. Common for hard drives and SSDs.' },
+                    pb: { name: 'Petabyte', def: 'Equal to 1,024 TB. Used for large data centers and cloud storage.' }
+                },
+                context: 'Digital storage conversions are essential in computing, data management, cloud storage, and software development.',
+                notes: 'This converter uses binary (1024) prefixes (IEC standard). Marketing often uses decimal (1000) prefixes, so actual storage may appear smaller.'
+            },
+            currency: {
+                units: {
+                    inr: { name: 'Indian Rupee (₹)', def: 'Official currency of India. ISO code: INR.' },
+                    usd: { name: 'US Dollar ($)', def: 'Official currency of the United States. World reserve currency.' },
+                    eur: { name: 'Euro (€)', def: 'Official currency of the Eurozone (20 EU countries).' },
+                    gbp: { name: 'British Pound (£)', def: 'Official currency of the United Kingdom.' },
+                    aud: { name: 'Australian Dollar (A$)', def: 'Official currency of Australia.' },
+                    cad: { name: 'Canadian Dollar (C$)', def: 'Official currency of Canada.' },
+                    jpy: { name: 'Japanese Yen (¥)', def: 'Official currency of Japan.' },
+                    cny: { name: 'Chinese Yuan (¥)', def: 'Official currency of China. Also called Renminbi.' },
+                    sgd: { name: 'Singapore Dollar (S$)', def: 'Official currency of Singapore.' }
+                },
+                context: 'Currency conversions are essential in international trade, travel, e-commerce, and financial markets.',
+                notes: '⚠️ Exchange rates shown are approximate and may not reflect real-time market rates. For financial transactions, use live rates from banks or forex services.'
+            },
+            energy: {
+                units: {
+                    j: { name: 'Joule', def: 'SI unit of energy. The work done by a force of 1 newton moving 1 meter.' },
+                    kj: { name: 'Kilojoule', def: 'Equal to 1,000 joules. Common for nutritional energy.' },
+                    cal: { name: 'Calorie', def: 'Energy to raise 1 gram of water by 1°C. Equal to 4.184 joules.' },
+                    kcal: { name: 'Kilocalorie', def: 'Equal to 1,000 calories. Used in food nutrition labels.' },
+                    wh: { name: 'Watt-hour', def: 'Energy used by 1 watt for 1 hour. Equal to 3,600 joules.' },
+                    kwh: { name: 'Kilowatt-hour', def: 'Equal to 1,000 watt-hours. Standard for electricity billing.' },
+                    btu: { name: 'BTU', def: 'British Thermal Unit. Energy to raise 1 pound of water by 1°F.' },
+                    erg: { name: 'Erg', def: 'CGS unit equal to 10^-7 joules. Used in physics.' },
+                    w: { name: 'Watt', def: 'SI unit of power (energy per second). 1 W = 1 J/s.' },
+                    kw: { name: 'Kilowatt', def: 'Equal to 1,000 watts.' }
+                },
+                context: 'Energy conversions are used in nutrition, electricity billing, physics, HVAC, and engineering.',
+                notes: 'Food "Calories" (capital C) are actually kilocalories. Watt is power, not energy—but Watt-hour measures energy.'
+            },
+            pressure: {
+                units: {
+                    pa: { name: 'Pascal', def: 'SI unit of pressure. 1 Pa = 1 newton per square meter.' },
+                    bar: { name: 'Bar', def: 'Equal to 100,000 pascals. Close to atmospheric pressure.' },
+                    atm: { name: 'Atmosphere', def: 'Standard atmospheric pressure at sea level (101,325 Pa).' },
+                    psi: { name: 'PSI', def: 'Pounds per square inch. Common in US for tire and gas pressure.' },
+                    torr: { name: 'Torr', def: 'Approximately 1 mmHg. Used in vacuum measurements.' },
+                    mmhg: { name: 'mmHg', def: 'Millimeters of mercury. Used in blood pressure measurement.' },
+                    kpa: { name: 'Kilopascal', def: 'Equal to 1,000 pascals. Common metric unit.' },
+                    mpa: { name: 'Megapascal', def: 'Equal to 1,000,000 pascals. Used in material strength.' }
+                },
+                context: 'Pressure conversions are used in weather forecasting, HVAC, hydraulics, blood pressure, and tire pressure.',
+                notes: 'Blood pressure is typically measured in mmHg. Tire pressure uses PSI (US) or bar/kPa (metric countries).'
+            },
+            density: {
+                units: {
+                    kg_m3: { name: 'kg/m³', def: 'SI unit of density. Kilograms per cubic meter.' },
+                    g_cm3: { name: 'g/cm³', def: 'Grams per cubic centimeter. Water is approximately 1 g/cm³.' },
+                    g_ml: { name: 'g/mL', def: 'Grams per milliliter. Equivalent to g/cm³.' },
+                    kg_l: { name: 'kg/L', def: 'Kilograms per liter. Equivalent to g/mL.' },
+                    g_l: { name: 'g/L', def: 'Grams per liter. Equal to kg/m³.' },
+                    mg_ml: { name: 'mg/mL', def: 'Milligrams per milliliter. Common in pharmaceuticals.' },
+                    lb_ft3: { name: 'lb/ft³', def: 'Pounds per cubic foot. Imperial density unit.' },
+                    lb_gal: { name: 'lb/gal', def: 'Pounds per gallon (US). Common for liquids.' },
+                    oz_in3: { name: 'oz/in³', def: 'Ounces per cubic inch.' }
+                },
+                context: 'Density is critical in material science, chemistry, shipping, petroleum, and determining if objects float.',
+                notes: 'Water density is about 1 g/cm³ or 1000 kg/m³ at 4°C. Objects with lower density than water float.'
+            },
+            power: {
+                units: {
+                    w: { name: 'Watt', def: 'SI unit of power. Rate of energy transfer: 1 watt = 1 joule/second.' },
+                    kw: { name: 'Kilowatt', def: 'Equal to 1,000 watts. Used for appliances and vehicles.' },
+                    mw: { name: 'Megawatt', def: 'Equal to 1,000,000 watts. Used for power plants.' },
+                    hp_metric: { name: 'HP (metric)', def: 'Metric horsepower = 735.5 watts. Common in Europe.' },
+                    hp_mech: { name: 'HP (mechanical)', def: 'Mechanical horsepower = 745.7 watts. Common in US.' },
+                    btu_hr: { name: 'BTU/hr', def: 'British Thermal Units per hour. Used in HVAC.' },
+                    cal_s: { name: 'cal/s', def: 'Calories per second.' },
+                    j_s: { name: 'J/s', def: 'Joules per second. Equivalent to watts.' },
+                    erg_s: { name: 'erg/s', def: 'Ergs per second. CGS unit of power.' }
+                },
+                context: 'Power conversions are used for engines, electrical appliances, HVAC systems, and industrial equipment.',
+                notes: 'Metric HP and mechanical HP differ by about 1.4%. Always specify which type when working with horsepower.'
+            },
+            force: {
+                units: {
+                    n: { name: 'Newton', def: 'SI unit of force. Force to accelerate 1 kg at 1 m/s².' },
+                    kn: { name: 'Kilonewton', def: 'Equal to 1,000 newtons. Used in engineering.' },
+                    dyne: { name: 'Dyne', def: 'CGS unit equal to 10^-5 newtons.' },
+                    kgf: { name: 'Kilogram-force', def: 'Force exerted by 1 kg under standard gravity (9.80665 N).' },
+                    lbf: { name: 'Pound-force', def: 'Force exerted by 1 pound under standard gravity.' },
+                    ozf: { name: 'Ounce-force', def: 'Force exerted by 1 ounce under standard gravity.' }
+                },
+                context: 'Force conversions are essential in physics, engineering, construction, and mechanical design.',
+                notes: 'Kilogram-force (kgf) is different from kilogram (mass). Force = mass × acceleration. On Earth, 1 kgf ≈ 9.8 N.'
+            },
+            frequency: {
+                units: {
+                    hz: { name: 'Hertz', def: 'SI unit of frequency. One cycle per second.' },
+                    khz: { name: 'Kilohertz', def: 'Equal to 1,000 Hz. Used in audio and radio.' },
+                    mhz: { name: 'Megahertz', def: 'Equal to 1,000,000 Hz. Used in radio and computing.' },
+                    ghz: { name: 'Gigahertz', def: 'Equal to 1 billion Hz. Used in CPUs and WiFi.' },
+                    thz: { name: 'Terahertz', def: 'Equal to 1 trillion Hz. Used in advanced imaging.' },
+                    rpm: { name: 'RPM', def: 'Revolutions per minute. Common for motors and engines.' },
+                    rad_s: { name: 'rad/s', def: 'Radians per second. Angular velocity in physics.' },
+                    cps: { name: 'cycles/s', def: 'Cycles per second. Equivalent to Hertz.' }
+                },
+                context: 'Frequency is crucial in electronics, telecommunications, audio engineering, CPU specifications, and radio.',
+                notes: 'Higher frequency doesn\'t always mean better—it depends on the application. WiFi 2.4 GHz has better range than 5 GHz.'
+            },
+            angle: {
+                units: {
+                    deg: { name: 'Degree', def: '1/360 of a full rotation. Most common angle unit.' },
+                    rad: { name: 'Radian', def: 'SI unit. Angle where arc length equals radius. Full circle = 2π rad.' },
+                    grad: { name: 'Gradian', def: 'Also called gon. Full circle = 400 gradians. Used in surveying.' },
+                    arcmin: { name: 'Arcminute', def: 'Equal to 1/60 of a degree. Used in astronomy.' },
+                    arcsec: { name: 'Arcsecond', def: 'Equal to 1/60 of an arcminute. Used in precision astronomy.' }
+                },
+                context: 'Angle conversions are used in navigation, surveying, astronomy, engineering, and graphics/gaming.',
+                notes: 'Radians are essential in calculus and physics formulas. Degrees are more intuitive for everyday use.'
+            },
+            data_transfer: {
+                units: {
+                    bit_s: { name: 'bit/s', def: 'Bits per second. Base unit of data transfer rate.' },
+                    byte_s: { name: 'byte/s', def: 'Bytes per second. Equal to 8 bits/second.' },
+                    kb_s: { name: 'KB/s', def: 'Kilobytes per second (binary: 1024 bytes/s).' },
+                    mb_s: { name: 'MB/s', def: 'Megabytes per second. Used for drive speeds.' },
+                    gb_s: { name: 'GB/s', def: 'Gigabytes per second. High-speed connections.' },
+                    mbps: { name: 'Mbps', def: 'Megabits per second. Common for internet speeds.' },
+                    gbps: { name: 'Gbps', def: 'Gigabits per second. Used for fiber and high-speed networks.' }
+                },
+                context: 'Data transfer rates are essential for internet plans, file transfers, streaming quality, and network design.',
+                notes: '⚠️ ISPs advertise in Mbps (bits) but downloads show MB/s (bytes). Divide Mbps by 8 to get approximate MB/s.'
+            },
+            fuel: {
+                units: {
+                    'km/L': { name: 'km/L', def: 'Kilometers per liter. How far you can travel on 1 liter.' },
+                    'L/100km': { name: 'L/100km', def: 'Liters consumed per 100 kilometers. Lower is better.' },
+                    'mpg(US)': { name: 'MPG (US)', def: 'Miles per US gallon. Higher is better.' },
+                    'mpg(UK)': { name: 'MPG (UK)', def: 'Miles per UK gallon. UK gallon is larger.' },
+                    'km/gal': { name: 'km/gal', def: 'Kilometers per gallon.' },
+                    'gal/100mi': { name: 'gal/100mi', def: 'Gallons consumed per 100 miles.' }
+                },
+                context: 'Fuel efficiency is critical for vehicle comparison, trip planning, cost calculation, and environmental impact.',
+                notes: '⚠️ L/100km is inverse of km/L. Lower L/100km means better efficiency. US and UK gallons differ!'
+            },
+            illuminance: {
+                units: {
+                    lux: { name: 'Lux', def: 'SI unit of illuminance. Lumens per square meter.' },
+                    fc: { name: 'Foot-candle', def: 'Lumens per square foot. Common in US lighting design.' },
+                    lumen: { name: 'Lumen', def: 'SI unit of luminous flux. Total light output.' },
+                    phot: { name: 'Phot', def: 'CGS unit equal to 10,000 lux.' },
+                    nit: { name: 'Nit', def: 'Unit of luminance (candela per square meter). Used for displays.' },
+                    candela: { name: 'Candela', def: 'SI base unit of luminous intensity.' },
+                    candlepower: { name: 'Candlepower', def: 'Historical unit approximately equal to 1 candela.' }
+                },
+                context: 'Illuminance is important in photography, architecture, workplace safety, display technology, and agriculture.',
+                notes: 'Lux measures light on a surface, lumens measure total light output, and candela measures brightness in a direction.'
+            },
+            sound: {
+                units: {
+                    'dB SPL': { name: 'dB SPL', def: 'Decibels Sound Pressure Level. Measured against 20 µPa reference.' },
+                    'dB': { name: 'Decibel', def: 'Logarithmic unit for sound intensity ratios.' },
+                    'pascal': { name: 'Pascal (sound)', def: 'Absolute sound pressure in pascals.' },
+                    'watt/m²': { name: 'W/m²', def: 'Sound intensity in watts per square meter.' },
+                    'phon': { name: 'Phon', def: 'Unit of loudness level. Frequency-weighted dB.' },
+                    'sone': { name: 'Sone', def: 'Unit of perceived loudness. 1 sone = 40 phon at 1kHz.' },
+                    'amplitude_ratio': { name: 'Amplitude Ratio', def: 'Linear ratio of sound wave amplitudes.' }
+                },
+                context: 'Sound measurements are used in audio engineering, noise control, hearing protection, and acoustic design.',
+                notes: '⚠️ Sound uses logarithmic scales. +10 dB = 10× intensity, +20 dB = 100× intensity. Hearing is non-linear.'
+            }
         };
 
         const app = {
@@ -788,6 +1218,7 @@
 
                 if (!convObj.all) { s1.value = convObj.pair[0]; s2.value = convObj.pair[1]; }
                 this.reset();
+                this.renderReference();
             },
             toggleFavorite: function (id) {
                 const idx = this.state.favorites.indexOf(id);
@@ -894,7 +1325,71 @@
                 };
                 document.onclick = (e) => { if (!e.target.closest('.search-container')) res.style.display = 'none'; }
             },
-            setupHistory: function () { document.getElementById('history-toggle').onclick = () => document.getElementById('history-panel').classList.toggle('open'); this.renderHistoryPanel(); }
+            setupHistory: function () { document.getElementById('history-toggle').onclick = () => document.getElementById('history-panel').classList.toggle('open'); this.renderHistoryPanel(); },
+
+            // Reference Section Functions
+            toggleRefPanel: function (panelId) {
+                const panel = document.getElementById('ref-' + panelId);
+                if (panel) panel.classList.toggle('open');
+            },
+            getUnitDef: function (catId, unit) {
+                const ref = REF_DATA[catId];
+                if (!ref || !ref.units) return null;
+                return ref.units[unit] || null;
+            },
+            getConversionFormula: function (catId, from, to) {
+                const cat = DATA[catId];
+                if (catId === 'temperature') return { eq: 'Non-linear conversion using temperature scale formulas', note: 'Each scale has different zero points and scale factors.' };
+                if (catId === 'fuel') return { eq: 'Non-linear reciprocal conversion', note: 'Some units measure distance per fuel, others fuel per distance.' };
+                if (catId === 'sound') return { eq: 'Logarithmic conversion (dB = 20·log10(ratio))', note: 'Sound uses logarithmic scales based on human perception.' };
+                if (cat && cat.factors) {
+                    const f = cat.factors[from] || 1;
+                    const t = cat.factors[to] || 1;
+                    const ratio = f / t;
+                    const ratioStr = ratio < 0.001 || ratio > 1000 ? ratio.toExponential(4) : parseFloat(ratio.toFixed(6));
+                    return { eq: `${from} × ${ratioStr} = ${to}`, note: 'Multiply input by conversion factor.' };
+                }
+                return { eq: 'Direct conversion', note: '' };
+            },
+            renderReference: function () {
+                const catId = this.state.category;
+                const convObj = this.state.converter;
+                const ref = REF_DATA[catId];
+                if (!ref) return;
+
+                const from = document.getElementById('unit-from').value;
+                const to = document.getElementById('unit-to').value;
+                const isUniversal = convObj.type === 'custom' || convObj.all;
+
+                // Unit Definitions
+                const fromDef = this.getUnitDef(catId, from);
+                const toDef = this.getUnitDef(catId, to);
+                let defHtml = '';
+                if (fromDef) defHtml += `<div class="ref-box"><strong>${fromDef.name}</strong>${fromDef.def}</div>`;
+                if (toDef && from !== to) defHtml += `<div class="ref-box"><strong>${toDef.name}</strong>${toDef.def}</div>`;
+                document.getElementById('ref-definitions-content').innerHTML = defHtml || '<div class="ref-box">No definitions available.</div>';
+
+                // Formula
+                const formula = this.getConversionFormula(catId, from, to);
+                let formulaHtml = `<div class="ref-box"><div class="ref-label">Equation</div><code>${formula.eq}</code></div>`;
+                if (formula.note) formulaHtml += `<div class="ref-box"><div class="ref-label">Explanation</div>${formula.note}</div>`;
+                document.getElementById('ref-formula-content').innerHTML = formulaHtml;
+
+                // Real-World Context
+                document.getElementById('ref-context-content').innerHTML = `<div class="ref-box">${ref.context || 'Used across various fields and applications.'}</div>`;
+
+                // Usage Notes
+                document.getElementById('ref-notes-content').innerHTML = `<div class="ref-box">${ref.notes || 'No special notes for this conversion.'}</div>`;
+
+                // Close all panels by default
+                document.querySelectorAll('.ref-panel').forEach(p => p.classList.remove('open'));
+            },
+            updateDynamicReference: function () {
+                const convObj = this.state.converter;
+                if (convObj && (convObj.type === 'custom' || convObj.all)) {
+                    this.renderReference();
+                }
+            }
         };
 
         document.addEventListener('DOMContentLoaded', () => {
