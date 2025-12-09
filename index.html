@@ -285,11 +285,35 @@
             }
 
             .cat-title {
-                font-size: 0.95rem;
+                font-size: 0.9rem;
             }
 
             .cat-desc {
                 font-size: 0.75rem;
+            }
+
+            /* Header Optimization for Mobile */
+            header {
+                padding: 10px 15px;
+                /* Reduce padding */
+                margin-bottom: 20px;
+                flex-wrap: nowrap;
+                /* Try to keep on one line */
+            }
+
+            .logo h1 {
+                font-size: 1.1rem;
+                /* Significantly smaller to fit line */
+                white-space: nowrap;
+            }
+
+            #history-toggle {
+                font-size: 0.8rem !important;
+                padding: 6px 12px !important;
+            }
+
+            .search-container {
+                margin-bottom: 20px;
             }
         }
 
@@ -735,7 +759,9 @@
                 const s1 = document.getElementById('unit-from'); const s2 = document.getElementById('unit-to');
                 s1.innerHTML = ''; s2.innerHTML = '';
                 let units = [];
-                if (convObj.type === 'custom' || convObj.all) { units = catId === 'temperature' ? DATA[catId].units : Object.keys(DATA[catId].factors); } else { units = convObj.pair; }
+                if (convObj.type === 'custom' || convObj.all) {
+                    units = (catId === 'temperature' || catId === 'fuel' || catId === 'sound') ? DATA[catId].units : Object.keys(DATA[catId].factors);
+                } else { units = convObj.pair; }
                 units.forEach(u => { const l = u.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()); s1.add(new Option(l, u)); s2.add(new Option(l, u)); });
 
                 if (!convObj.all) { s1.value = convObj.pair[0]; s2.value = convObj.pair[1]; }
