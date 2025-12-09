@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter Hub - 110 Converters</title>
+    <meta name="description" content="Universal Unit Converter. Matrix Theme.">
+    <style>
+        :root {
+            --primary: #00FF41;
+            --secondary: #008F11;
+            --bg-light: #000000;
+            --surface-light: #0d0d0d;
+            --text-light: #00FF41;
+            --text-muted-light: #4af25d;
+            --border-light: #003300;
+            --shadow-light: 0 4px 6px -1px rgba(0, 255, 65, 0.2);
+            --shadow-hover-light: 0 0 15px rgba(0, 255, 65, 0.4);
+
+            --bg-dark: #000000;
+            --surface-dark: #0d0d0d;
+            --text-dark: #00FF41;
+            --text-muted-dark: #4af25d;
+            --border-dark: #003300;
+            --shadow-dark: 0 4px 6px -1px rgba(0, 255, 65, 0.2);
+        }
+
+        body {
+            --bg: var(--bg-light);
+            --surface: var(--surface-light);
+            --text: var(--text-light);
+            --text-muted: var(--text-muted-light);
+            --border: var(--border-light);
+            --shadow: var(--shadow-light);
+            --shadow-hover: var(--shadow-hover-light);
+        }
+
+        /* Force dark mode variables always */
+        body.dark-mode {
+            --bg: var(--bg-light);
+            --surface: var(--surface-light);
+            --text: var(--text-light);
+            --text-muted: var(--text-muted-light);
+            --border: var(--border-light);
+            --shadow: var(--shadow-light);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        #bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            background-image: url('https://raw.githubusercontent.com/ankushchowrasia/universalunitconconverter/67fcbaf531b88432c360b047c1f0fa9b0ba8e288/bguuc.png');
+            background-size: cover;
+            background-position: center bottom;
+            opacity: 0.3;
+            animation: bgPan 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgPan {
+            0% {
+                background-position: center bottom;
+            }
+
+            100% {
+                background-position: center top;
+            }
+        }
+
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .btn-icon {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 24px 16px 50px;
+            border-radius: 50px;
+            border: 2px solid transparent;
+            background: var(--surface);
+            color: var(--text);
+            box-shadow: var(--shadow);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        #search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            border-radius: 12px;
+            margin-top: 8px;
+            box-shadow: var(--shadow-hover);
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+        }
+
+        .search-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .search-item:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .view-section {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .category-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: transform 0.3s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .cat-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        .cat-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+
+        .cat-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .converter-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .converter-item {
+            background: var(--surface);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .converter-item:hover {
+            transform: translateX(5px);
+            border-color: var(--secondary);
+        }
+
+        .converter-ui {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--surface);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-hover);
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .conv-input,
+        .conv-select {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 1.1rem;
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(255, 152, 0, 0.1));
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 30px 0;
+            border: 1px dashed var(--primary);
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            word-break: break-all;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text);
+        }
+
+        .back-btn {
+            padding: 8px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* History Panel */
+        .history-panel {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 320px;
+            height: 100%;
+            background: var(--surface);
+            box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .history-panel.open {
+            right: 0;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .history-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            background: var(--bg);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .fav-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--border);
+            margin-left: auto;
+            transition: color 0.2s;
+        }
+
+        .fav-btn.active {
+            color: #FFC107;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="bg-image"></div>
+
+    <!-- History Sidebar -->
+    <aside class="history-panel" id="history-panel">
+        <div class="history-header">
+            <h3>Recent History</h3>
+            <button class="btn-icon"
+                onclick="document.getElementById('history-panel').classList.remove('open')">✕</button>
+        </div>
+        <div class="history-list" id="history-list">
+            <div style="text-align:center; color:var(--text-muted); margin-top:20px;">No history yet</div>
+        </div>
+        <button class="btn btn-outline" style="width:100%; margin-top:20px;" onclick="app.clearHistory()">Clear
+            History</button>
+    </aside>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <h1>Unit Converter Hub</h1>
+            </div>
+            <div class="header-controls">
+                <button class="btn-icon" id="theme-toggle" title="Toggle Dark Mode">🌓</button>
+                <button class="btn-icon" id="history-toggle" title="History">🕒</button>
+            </div>
+        </header>
+
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" id="global-search" placeholder="Search 110+ converters...">
+            <div id="search-results"></div>
+        </div>
+
+        <section id="home-view" class="view-section active">
+            <div class="category-grid" id="category-grid"></div>
+        </section>
+
+        <section id="category-view" class="view-section">
+            <div class="page-header">
+                <button class="back-btn" onclick="app.navigate('home')">← Back Categories</button>
+                <h2 id="cat-view-title" style="flex:1; text-align:center;"></h2>
+                <div style="width:40px;"></div>
+            </div>
+            <div class="converter-list" id="converter-list"></div>
+        </section>
+
+        <section id="converter-view" class="view-section">
+            <div class="page-header">
+                <button class="back-btn" onclick="app.navigate('category')">← Back List</button>
+                <button class="fav-btn" id="fav-toggle" title="Add to Favorites">★</button>
+            </div>
+            <div class="converter-ui">
+                <h3 class="conv-title" id="conv-page-title">Converter</h3>
+
+                <div class="input-group">
+                    <label>From</label>
+                    <div class="input-wrapper">
+                        <input type="number" class="conv-input" id="input-val" placeholder="0" oninput="app.convert()">
+                        <select class="conv-select" id="unit-from" onchange="app.convert()"></select>
+                    </div>
+                </div>
+
+                <div style="text-align:center; margin:-10px 0 10px; color:var(--text-muted);">↓</div>
+
+                <div class="input-group">
+                    <label>To</label>
+                    <div class="input-wrapper">
+                        <input type="number" class="conv-input" id="output-val" readonly placeholder="0">
+                        <select class="conv-select" id="unit-to" onchange="app.convert()"></select>
+                    </div>
+                </div>
+
+                <div class="result-box">
+                    <div id="result-display" class="result-value">0</div>
+                    <div id="result-unit-label" style="font-size:0.9rem; margin-top:5px; color:var(--text-muted);">
+                    </div>
+                </div>
+                <div class="formula-display" id="formula-text"
+                    style="text-align:center; color:var(--text-muted); font-style:italic;"></div>
+
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="app.convert()">Convert</button>
+                    <button class="btn btn-outline" onclick="app.reset()">Reset</button>
+                    <button class="btn btn-secondary" onclick="app.copyResult()">Copy</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const DATA = { categories: [{ id: 'length', name: 'Length', icon: '📏' }, { id: 'weight', name: 'Weight', icon: '⚖️' }, { id: 'temperature', name: 'Temperature', icon: '🌡️' }, { id: 'time', name: 'Time', icon: '⏰' }, { id: 'area', name: 'Area', icon: '📐' }, { id: 'volume', name: 'Volume', icon: '🧪' }, { id: 'speed', name: 'Speed', icon: '🚀' }, { id: 'digital', name: 'Digital Storage', icon: '💾' }, { id: 'currency', name: 'Currency', icon: '💰' }, { id: 'energy', name: 'Energy', icon: '⚡' }], length: { factors: { m: 1, km: 1e3, cm: .01, mm: .001, inch: .0254, foot: .3048, yard: .9144, mile: 1609.34, nautical_mile: 1852, light_year: 9.461e15 }, converters: [{ id: 'cm_m', title: 'cm ⇄ m', pair: ['cm', 'm'] }, { id: 'cm_km', title: 'cm ⇄ km', pair: ['cm', 'km'] }, { id: 'm_km', title: 'm ⇄ km', pair: ['m', 'km'] }, { id: 'inch_cm', title: 'inch ⇄ cm', pair: ['inch', 'cm'] }, { id: 'foot_meter', title: 'foot ⇄ meter', pair: ['foot', 'm'] }, { id: 'mile_km', title: 'mile ⇄ km', pair: ['mile', 'km'] }, { id: 'yard_meter', title: 'yard ⇄ meter', pair: ['yard', 'm'] }, { id: 'mm_cm', title: 'mm ⇄ cm', pair: ['mm', 'cm'] }, { id: 'ly_km', title: 'light-year ⇄ km', pair: ['light_year', 'km'] }, { id: 'nm_km', title: 'nautical mile ⇄ km', pair: ['nautical_mile', 'km'] }, { id: 'custom', title: 'Universal Length Converter', type: 'custom', all: !0 }] }, weight: { factors: { g: 1, kg: 1e3, mg: .001, tonne: 1e6, pound: 453.592, ounce: 28.3495, stone: 6350.29, carat: .2, microgram: 1e-6 }, converters: [{ id: 'g_kg', title: 'gram ⇄ kilogram', pair: ['g', 'kg'] }, { id: 'mg_g', title: 'milligram ⇄ gram', pair: ['mg', 'g'] }, { id: 'lb_kg', title: 'pound ⇄ kilogram', pair: ['pound', 'kg'] }, { id: 'oz_g', title: 'ounce ⇄ gram', pair: ['ounce', 'g'] }, { id: 't_kg', title: 'tonne ⇄ kilogram', pair: ['tonne', 'kg'] }, { id: 'ct_g', title: 'carat ⇄ gram', pair: ['carat', 'g'] }, { id: 'st_kg', title: 'stone ⇄ kilogram', pair: ['stone', 'kg'] }, { id: 'ug_mg', title: 'microgram ⇄ milligram', pair: ['microgram', 'mg'] }, { id: 'lb_oz', title: 'pound ⇄ ounce', pair: ['pound', 'ounce'] }, { id: 'kg_lb', title: 'kilogram ⇄ pound', pair: ['kg', 'pound'] }, { id: 'custom', title: 'Universal Weight Converter', type: 'custom', all: !0 }] }, temperature: { units: ['Celsius', 'Fahrenheit', 'Kelvin', 'Rankine', 'Reaumur', 'Newton', 'Delisle', 'Romer'], converters: [{ id: 'c_f', title: 'Celsius ⇄ Fahrenheit', pair: ['Celsius', 'Fahrenheit'] }, { id: 'c_k', title: 'Celsius ⇄ Kelvin', pair: ['Celsius', 'Kelvin'] }, { id: 'f_k', title: 'Fahrenheit ⇄ Kelvin', pair: ['Fahrenheit', 'Kelvin'] }, { id: 'r_k', title: 'Rankine ⇄ Kelvin', pair: ['Rankine', 'Kelvin'] }, { id: 're_c', title: 'Réaumur ⇄ Celsius', pair: ['Reaumur', 'Celsius'] }, { id: 'n_c', title: 'Newton ⇄ Celsius', pair: ['Newton', 'Celsius'] }, { id: 'd_c', title: 'Delisle ⇄ Celsius', pair: ['Delisle', 'Celsius'] }, { id: 'c_ro', title: 'Celsius ⇄ Romer', pair: ['Celsius', 'Romer'] }, { id: 'f_ro', title: 'Fahrenheit ⇄ Romer', pair: ['Fahrenheit', 'Romer'] }, { id: 'k_ro', title: 'Kelvin ⇄ Romer', pair: ['Kelvin', 'Romer'] }, { id: 'custom', title: 'Universal Temperature Converter', type: 'custom', all: !0 }] }, time: { factors: { s: 1, min: 60, h: 3600, day: 86400, week: 604800, month: 2628e3, year: 31536e3, ms: .001, us: 1e-6 }, converters: [{ id: 's_min', title: 'seconds ⇄ minutes', pair: ['s', 'min'] }, { id: 'min_h', title: 'minutes ⇄ hours', pair: ['min', 'h'] }, { id: 'h_d', title: 'hours ⇄ days', pair: ['h', 'day'] }, { id: 'd_w', title: 'days ⇄ weeks', pair: ['day', 'week'] }, { id: 'w_m', title: 'weeks ⇄ months', pair: ['week', 'month'] }, { id: 'm_y', title: 'months ⇄ years', pair: ['month', 'year'] }, { id: 'ms_s', title: 'milliseconds ⇄ seconds', pair: ['ms', 's'] }, { id: 'us_ms', title: 'microseconds ⇄ milliseconds', pair: ['us', 'ms'] }, { id: 'h_min', title: 'hours ⇄ minutes', pair: ['h', 'min'] }, { id: 'd_h', title: 'days ⇄ hours', pair: ['day', 'h'] }, { id: 'custom', title: 'Universal Time Converter', type: 'custom', all: !0 }] }, area: { factors: { sq_m: 1, sq_km: 1e6, sq_ft: .092903, sq_in: 6.4516e-4, sq_yd: .836127, sq_mi: 259e4, acre: 4046.86, hectare: 1e4, sq_cm: 1e-4, bigha: 2529 }, converters: [{ id: 'sm_sk', title: 'sq meter ⇄ sq km', pair: ['sq_m', 'sq_km'] }, { id: 'sf_sm', title: 'sq foot ⇄ sq meter', pair: ['sq_ft', 'sq_m'] }, { id: 'ac_sm', title: 'acre ⇄ sq meter', pair: ['acre', 'sq_m'] }, { id: 'ha_ac', title: 'hectare ⇄ acre', pair: ['hectare', 'acre'] }, { id: 'smi_sk', title: 'sq mile ⇄ sq km', pair: ['sq_mi', 'sq_km'] }, { id: 'si_sf', title: 'sq inch ⇄ sq foot', pair: ['sq_in', 'sq_ft'] }, { id: 'sy_sm', title: 'sq yard ⇄ sq meter', pair: ['sq_yd', 'sq_m'] }, { id: 'ha_sm', title: 'hectare ⇄ sq meter', pair: ['hectare', 'sq_m'] }, { id: 'sc_si', title: 'sq cm ⇄ sq inch', pair: ['sq_cm', 'sq_in'] }, { id: 'bi_sm', title: 'bigha ⇄ sq meter', pair: ['bigha', 'sq_m'] }, { id: 'custom', title: 'Universal Area Converter', type: 'custom', all: !0 }] }, volume: { factors: { l: 1, ml: .001, gal: 3.78541, qt: .946353, pt: .473176, cu_m: 1e3, cu_ft: 28.3168, tbsp: .0147868, tsp: .00492892, bbl: 158.987, fl_oz: .0295735 }, converters: [{ id: 'l_ml', title: 'liter ⇄ milliliter', pair: ['l', 'ml'] }, { id: 'l_gal', title: 'liter ⇄ gallon', pair: ['l', 'gal'] }, { id: 'gal_qt', title: 'gallon ⇄ quart', pair: ['gal', 'qt'] }, { id: 'pt_l', title: 'pint ⇄ liter', pair: ['pt', 'l'] }, { id: 'cm_l', title: 'cubic meter ⇄ liter', pair: ['cu_m', 'l'] }, { id: 'cf_l', title: 'cubic foot ⇄ liter', pair: ['cu_ft', 'l'] }, { id: 'tbsp_ml', title: 'tablespoon ⇄ ml', pair: ['tbsp', 'ml'] }, { id: 'tsp_ml', title: 'teaspoon ⇄ ml', pair: ['tsp', 'ml'] }, { id: 'bbl_l', title: 'barrel ⇄ liter', pair: ['bbl', 'l'] }, { id: 'oz_ml', title: 'fluid ounce ⇄ ml', pair: ['fl_oz', 'ml'] }, { id: 'custom', title: 'Universal Volume Converter', type: 'custom', all: !0 }] }, speed: { factors: { m_s: 1, km_h: .277778, mph: .44704, knot: .514444, ft_s: .3048, mach: 343, km_min: 16.6667, m_min: .0166667 }, converters: [{ id: 'kh_ms', title: 'km/h ⇄ m/s', pair: ['km_h', 'm_s'] }, { id: 'ms_mph', title: 'm/s ⇄ mph', pair: ['m_s', 'mph'] }, { id: 'mph_kh', title: 'mph ⇄ km/h', pair: ['mph', 'km_h'] }, { id: 'kn_kh', title: 'knot ⇄ km/h', pair: ['knot', 'km_h'] }, { id: 'kn_ms', title: 'knot ⇄ m/s', pair: ['knot', 'm_s'] }, { id: 'fs_ms', title: 'ft/s ⇄ m/s', pair: ['ft_s', 'm_s'] }, { id: 'ma_kh', title: 'Mach ⇄ km/h', pair: ['mach', 'km_h'] }, { id: 'ma_ms', title: 'Mach ⇄ m/s', pair: ['mach', 'm_s'] }, { id: 'km_kh', title: 'km/min ⇄ km/h', pair: ['km_min', 'km_h'] }, { id: 'mm_ms', title: 'm/min ⇄ m/s', pair: ['m_min', 'm_s'] }, { id: 'custom', title: 'Universal Speed Converter', type: 'custom', all: !0 }] }, digital: { factors: { byte: 1, bit: .125, kb: 1024, mb: 1048576, gb: 1073741824, tb: 1099511627776, pb: 1125899906842624 }, converters: [{ id: 'bit_byte', title: 'bit ⇄ byte', pair: ['bit', 'byte'] }, { id: 'kb_mb', title: 'KB ⇄ MB', pair: ['kb', 'mb'] }, { id: 'mb_gb', title: 'MB ⇄ GB', pair: ['mb', 'gb'] }, { id: 'gb_tb', title: 'GB ⇄ TB', pair: ['gb', 'tb'] }, { id: 'tb_pb', title: 'TB ⇄ PB', pair: ['tb', 'pb'] }, { id: 'mb_kb', title: 'MB ⇄ KB', pair: ['mb', 'kb'] }, { id: 'byte_kb', title: 'Byte ⇄ KB', pair: ['byte', 'kb'] }, { id: 'kb_gb', title: 'KB ⇄ GB', pair: ['kb', 'gb'] }, { id: 'bit_kb', title: 'bit ⇄ KB', pair: ['bit', 'kb'] }, { id: 'mb_tb', title: 'MB ⇄ TB', pair: ['mb', 'tb'] }, { id: 'custom', title: 'Universal Digital Converter', type: 'custom', all: !0 }] }, currency: { factors: { inr: 1, usd: 83.5, eur: 90.2, gbp: 105.1, aud: 55.4, cad: 61.2, jpy: .56, cny: 11.5, sgd: 62.1 }, converters: [{ id: 'usd_inr', title: 'USD ⇄ INR', pair: ['usd', 'inr'] }, { id: 'eur_inr', title: 'EUR ⇄ INR', pair: ['eur', 'inr'] }, { id: 'gbp_inr', title: 'GBP ⇄ INR', pair: ['gbp', 'inr'] }, { id: 'aud_inr', title: 'AUD ⇄ INR', pair: ['aud', 'inr'] }, { id: 'cad_inr', title: 'CAD ⇄ INR', pair: ['cad', 'inr'] }, { id: 'jpy_inr', title: 'JPY ⇄ INR', pair: ['jpy', 'inr'] }, { id: 'cny_inr', title: 'CNY ⇄ INR', pair: ['cny', 'inr'] }, { id: 'sgd_inr', title: 'SGD ⇄ INR', pair: ['sgd', 'inr'] }, { id: 'usd_eur', title: 'USD ⇄ EUR', pair: ['usd', 'eur'] }, { id: 'usd_gbp', title: 'USD ⇄ GBP', pair: ['usd', 'gbp'] }, { id: 'custom', title: 'Universal Currency Converter', type: 'custom', all: !0 }] }, energy: { factors: { j: 1, kj: 1e3, cal: 4.184, kcal: 4184, wh: 3600, kwh: 3600000, btu: 1055.06, erg: 1e-7, w: 1, kw: 1e3 }, converters: [{ id: 'j_kj', title: 'joules ⇄ kilojoules', pair: ['j', 'kj'] }, { id: 'j_cal', title: 'joules ⇄ calories', pair: ['j', 'cal'] }, { id: 'kj_cal', title: 'kilojoules ⇄ calories', pair: ['kj', 'cal'] }, { id: 'wh_kwh', title: 'watt-hour ⇄ kilowatt-hour', pair: ['wh', 'kwh'] }, { id: 'cal_kcal', title: 'calorie ⇄ kilocalorie', pair: ['cal', 'kcal'] }, { id: 'btu_j', title: 'BTU ⇄ joule', pair: ['btu', 'j'] }, { id: 'btu_kwh', title: 'BTU ⇄ kWh', pair: ['btu', 'kwh'] }, { id: 'erg_j', title: 'erg ⇄ joule', pair: ['erg', 'j'] }, { id: 'kcal_j', title: 'kilocalorie ⇄ joule', pair: ['kcal', 'j'] }, { id: 'w_kw', title: 'watt ⇄ kilowatt', pair: ['w', 'kw'] }, { id: 'custom', title: 'Universal Energy Converter', type: 'custom', all: !0 }] } };
+
+        const app = {
+            state: { view: 'home', category: null, converter: null, favorites: JSON.parse(localStorage.getItem('unit_favorites')) || [], history: JSON.parse(localStorage.getItem('unit_history')) || [] },
+            init: function () { this.renderCategories(); this.setupSearch(); this.setupHistory(); },
+            navigate: function (view, dataId = null) {
+                document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+                this.state.view = view;
+                if (view === 'home') { document.getElementById('home-view').classList.add('active'); this.state.category = null; this.renderCategories(); }
+                else if (view === 'category') { document.getElementById('category-view').classList.add('active'); if (dataId) this.state.category = dataId; this.renderConverterList(this.state.category); }
+                else if (view === 'converter') { document.getElementById('converter-view').classList.add('active'); if (dataId) this.state.converter = dataId; this.loadConverter(this.state.converter); }
+            },
+            renderCategories: function () {
+                const grid = document.getElementById('category-grid'); grid.innerHTML = '';
+                if (this.state.favorites.length > 0) {
+                    const row = document.createElement('div'); row.style.gridColumn = "1/-1"; row.innerHTML = `<h3 style="margin-bottom:15px">⭐ Favorites</h3>`; grid.appendChild(row);
+                    const favGrid = document.createElement('div'); favGrid.className = "converter-list"; favGrid.style.gridColumn = "1/-1"; favGrid.style.marginBottom = "30px";
+                    this.state.favorites.forEach(fid => {
+                        let cObj, cCat; DATA.categories.forEach(ct => { const found = DATA[ct.id].converters.find(x => x.id === fid); if (found) { cObj = found; cCat = ct.id; } });
+                        if (cObj) {
+                            const item = document.createElement('div'); item.className = 'converter-item'; item.innerHTML = `<strong>${cObj.title}</strong><span>➝</span>`;
+                            item.onclick = () => { app.state.category = cCat; app.navigate('converter', cObj); }; favGrid.appendChild(item);
+                        }
+                    });
+                    grid.appendChild(favGrid);
+                }
+                const hr = document.createElement('h3'); hr.style.gridColumn = "1/-1"; hr.innerText = "All Categories"; grid.appendChild(hr);
+                DATA.categories.forEach(cat => {
+                    const card = document.createElement('div'); card.className = 'category-card';
+                    card.innerHTML = `<span class="cat-icon">${cat.icon}</span><div class="cat-title">${cat.name}</div><div class="cat-desc">${DATA[cat.id].converters.length} Converters</div>`;
+                    card.onclick = () => app.navigate('category', cat.id);
+                    grid.appendChild(card);
+                });
+            },
+            renderConverterList: function (catId) {
+                const catData = DATA.categories.find(c => c.id === catId); document.getElementById('cat-view-title').textContent = catData.name;
+                const list = document.getElementById('converter-list'); list.innerHTML = '';
+                DATA[catId].converters.forEach(conv => {
+                    const item = document.createElement('div'); item.className = 'converter-item';
+                    item.innerHTML = `<strong>${conv.title}</strong><span style="color:var(--primary)">➝</span>`;
+                    item.onclick = () => { app.state.converter = conv; app.navigate('converter', conv); };
+                    list.appendChild(item);
+                });
+            },
+            loadConverter: function (convObj) {
+                const catId = this.state.category;
+                document.getElementById('conv-page-title').textContent = convObj.title;
+                const favBtn = document.getElementById('fav-toggle');
+                favBtn.classList.toggle('active', this.state.favorites.includes(convObj.id));
+                favBtn.onclick = () => this.toggleFavorite(convObj.id);
+
+                const s1 = document.getElementById('unit-from'); const s2 = document.getElementById('unit-to');
+                s1.innerHTML = ''; s2.innerHTML = '';
+                let units = [];
+                if (convObj.type === 'custom' || convObj.all) { units = catId === 'temperature' ? DATA[catId].units : Object.keys(DATA[catId].factors); } else { units = convObj.pair; }
+                units.forEach(u => { const l = u.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()); s1.add(new Option(l, u)); s2.add(new Option(l, u)); });
+
+                if (!convObj.all) { s1.value = convObj.pair[0]; s2.value = convObj.pair[1]; }
+                this.reset();
+            },
+            toggleFavorite: function (id) {
+                const idx = this.state.favorites.indexOf(id);
+                if (idx === -1) { this.state.favorites.push(id); document.getElementById('fav-toggle').classList.add('active'); }
+                else { this.state.favorites.splice(idx, 1); document.getElementById('fav-toggle').classList.remove('active'); }
+                localStorage.setItem('unit_favorites', JSON.stringify(this.state.favorites));
+            },
+            convert: function () {
+                const val = parseFloat(document.getElementById('input-val').value);
+                if (isNaN(val)) { document.getElementById('output-val').value = ''; return; }
+                const from = document.getElementById('unit-from').value; const to = document.getElementById('unit-to').value;
+                const cat = this.state.category;
+                let res = 0; let form = '';
+
+                if (cat === 'temperature') { res = this.convertTemp(val, from, to); form = `${from} to ${to}`; }
+                else {
+                    const f = DATA[cat].factors;
+                    const base = val * f[from];
+                    res = base / f[to];
+                    const r = f[from] / f[to];
+                    form = `Multiply by ${r < 0.01 || r > 1000 ? r.toExponential(4) : parseFloat(r.toFixed(6))}`;
+                }
+                const disp = (Math.abs(res) < 1e-6 && res !== 0) ? res.toExponential(4) : parseFloat(res.toFixed(6));
+                document.getElementById('output-val').value = disp;
+                document.getElementById('result-display').textContent = disp;
+                document.getElementById('result-unit-label').textContent = to.replace(/_/g, ' ');
+                document.getElementById('formula-text').textContent = "Formula: " + form;
+
+                this.debounceHistory(val, from, disp, to);
+            },
+            timer: null,
+            debounceHistory: function (v, f, r, t) {
+                clearTimeout(this.timer);
+                this.timer = setTimeout(() => {
+                    this.state.history.unshift({ in: v, u1: f, out: r, u2: t, time: new Date().toLocaleTimeString() });
+                    if (this.state.history.length > 20) this.state.history.pop();
+                    localStorage.setItem('unit_history', JSON.stringify(this.state.history));
+                    this.renderHistoryPanel();
+                }, 1000);
+            },
+            renderHistoryPanel: function () {
+                const list = document.getElementById('history-list');
+                if (this.state.history.length === 0) { list.innerHTML = '<div style="text-align:center;margin-top:20px;color:#888">No history</div>'; return; }
+                list.innerHTML = this.state.history.map(h => `<div class="history-item"><div>${h.in} ${h.u1} = <strong>${h.out} ${h.u2}</strong></div><div style="font-size:0.75rem;color:#888">${h.time}</div></div>`).join('');
+            },
+            clearHistory: function () { this.state.history = []; localStorage.setItem('unit_history', '[]'); this.renderHistoryPanel(); },
+            convertTemp: function (v, f, t) {
+                if (f === t) return v;
+                let c = v;
+                if (f === 'Fahrenheit') c = (v - 32) * 5 / 9; else if (f === 'Kelvin') c = v - 273.15; else if (f === 'Rankine') c = (v - 491.67) * 5 / 9; else if (f === 'Reaumur') c = v * 1.25; else if (f === 'Newton') c = v * 100 / 33; else if (f === 'Delisle') c = 100 - v * 2 / 3; else if (f === 'Romer') c = (v - 7.5) * 40 / 21;
+                if (t === 'Fahrenheit') return c * 9 / 5 + 32; if (t === 'Kelvin') return c + 273.15; if (t === 'Rankine') return (c + 273.15) * 9 / 5; if (t === 'Reaumur') return c * 0.8; if (t === 'Newton') return c * 0.33; if (t === 'Delisle') return (100 - c) * 1.5; if (t === 'Romer') return c * 21 / 40 + 7.5;
+                return c;
+            },
+            reset: function () { document.getElementById('input-val').value = ''; document.getElementById('output-val').value = ''; document.getElementById('result-display').textContent = '0'; },
+            copyResult: function () { const v = document.getElementById('output-val').value; if (v) { navigator.clipboard.writeText(v); const b = event.target; const o = b.innerText; b.innerText = 'Copied!'; setTimeout(() => b.innerText = o, 1000); } },
+            setupSearch: function () {
+                const inp = document.getElementById('global-search'); const res = document.getElementById('search-results');
+                inp.oninput = (e) => {
+                    const q = e.target.value.toLowerCase();
+                    if (q.length < 2) { res.style.display = 'none'; return; }
+                    const hits = [];
+                    DATA.categories.forEach(c => { DATA[c.id].converters.forEach(cv => { if (cv.title.toLowerCase().includes(q) || c.name.toLowerCase().includes(q)) hits.push({ c: c.id, cv: cv }); }); });
+                    if (hits.length) {
+                        res.innerHTML = hits.map(h => `<div class="search-item">${DATA.categories.find(x => x.id === h.c).name} > ${h.cv.title}</div>`).join('');
+                        res.style.display = 'block';
+                        Array.from(document.getElementsByClassName('search-item')).forEach((el, i) => { el.onclick = () => { app.state.category = hits[i].c; app.navigate('converter', hits[i].cv); res.style.display = 'none'; inp.value = ''; } });
+                    } else res.style.display = 'none';
+                };
+                document.onclick = (e) => { if (!e.target.closest('.search-container')) res.style.display = 'none'; }
+            },
+            setupHistory: function () { document.getElementById('history-toggle').onclick = () => document.getElementById('history-panel').classList.toggle('open'); this.renderHistoryPanel(); }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => { app.init(); });
+
+        // Theme
+        const tb = document.getElementById('theme-toggle');
+        if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
+        tb.onclick = () => { document.body.classList.toggle('dark-mode'); localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light'); };
+    </script>
+</body>
+
+</html>
