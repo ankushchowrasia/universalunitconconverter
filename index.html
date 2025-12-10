@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unit Converter Hub - 110 Converters</title>
     <meta name="description" content="Universal Unit Converter. Matrix Theme.">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
             --primary: #00FF41;
@@ -28,6 +29,8 @@
             --border-dark: #003300;
             --shadow-dark: 0 4px 6px -1px rgba(0, 255, 65, 0.2);
         }
+
+
 
         body {
             --bg: var(--bg-light);
@@ -63,6 +66,1450 @@
             overflow-x: hidden;
             min-height: 100vh;
         }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, rgba(0, 60, 20, 0.95), rgba(0, 30, 10, 0.95));
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.4);
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Input Glow Animation */
+        @keyframes inputGlow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(0, 255, 65, 0.6);
+            }
+        }
+
+        .conv-input:focus,
+        .conv-select:focus {
+            border-color: var(--primary);
+            animation: inputGlow 2s ease-in-out infinite;
+            outline: none;
+        }
+
+        /* Ripple Effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(0, 255, 65, 0.4);
+            transform: scale(0);
+            animation: rippleAnim 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes rippleAnim {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Page Slide Transitions */
+        .view-section {
+            display: none;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-out {
+            animation: slideOut 0.3s ease-in forwards;
+        }
+
+        @keyframes slideOutLeft {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+        }
+
+        /* ========== 24 CATEGORY ANIMATED SVG ICONS ========== */
+
+        /* Generic neon glow helper */
+        .neon-glow {
+            filter: drop-shadow(0 0 6px #00ff41);
+        }
+
+        /* Icon container sizing */
+        .cat-icon svg {
+            width: 60px;
+            height: 60px;
+            display: block;
+            overflow: visible;
+        }
+
+        /* 1 Length - Ruler with Draw & Tick Fade Animation */
+        .length .icon-stroke {
+            stroke: #00ff41;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .length .draw-anim {
+            stroke-dasharray: 120;
+            stroke-dashoffset: 120;
+            animation: drawLen 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+        }
+
+        .length .draw-anim-delayed {
+            stroke-dasharray: 40;
+            stroke-dashoffset: 40;
+            animation: drawLen 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+            animation-delay: 0.2s;
+        }
+
+        .length .fade-ticks {
+            opacity: 0;
+            animation: fade-in-ticks 1.6s ease infinite alternate;
+        }
+
+        @keyframes drawLen {
+            0% {
+                stroke-dashoffset: 120;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes fade-in-ticks {
+            0% {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 2 Weight - Balance Scale with Draw & Sway */
+        .weight .icon-stroke {
+            stroke: #00ff41;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .weight .draw-anim {
+            stroke-dasharray: 150;
+            stroke-dashoffset: 150;
+            animation: draw-line 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        .weight .draw-anim-delayed {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: draw-line 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            animation-delay: 0.4s;
+        }
+
+        .weight .balance-sway {
+            transform-origin: 50% 25px;
+            animation: sway 4s ease-in-out infinite;
+        }
+
+        @keyframes draw-line {
+            0% {
+                stroke-dashoffset: 150;
+                opacity: 1;
+            }
+
+            40% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+
+            80% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+
+            100% {
+                stroke-dashoffset: 150;
+                opacity: 1;
+            }
+        }
+
+        @keyframes sway {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(5deg);
+            }
+
+            75% {
+                transform: rotate(-5deg);
+            }
+        }
+
+        /* 3 Temperature - Animated Thermometer */
+        .temp .icon-stroke {
+            stroke: #00ff41;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .temp .icon-fill {
+            fill: #00ff41;
+            stroke: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .temp .draw-anim {
+            stroke-dasharray: 300;
+            stroke-dashoffset: 300;
+            animation: draw-shell 2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+        }
+
+        .temp .temp-rise {
+            stroke-dasharray: 60;
+            stroke-dashoffset: 60;
+            stroke-width: 6;
+            animation: rise-liquid 2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+            animation-delay: 0.5s;
+        }
+
+        .temp .fade-ticks {
+            opacity: 0;
+            animation: fade-ticks-temp 2s ease infinite alternate;
+            animation-delay: 0.3s;
+        }
+
+        .temp .bulb-pulse {
+            animation: pulse-opacity 2s ease infinite alternate;
+        }
+
+        @keyframes draw-shell {
+            0% {
+                stroke-dashoffset: 300;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes rise-liquid {
+            0% {
+                stroke-dashoffset: 60;
+            }
+
+            100% {
+                stroke-dashoffset: 10;
+            }
+        }
+
+        @keyframes fade-ticks-temp {
+            0% {
+                opacity: 0;
+                transform: translateX(5px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse-opacity {
+            0% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* 4 Time - Animated Stopwatch */
+        .time .icon-stroke {
+            stroke: #00ff41;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .time .draw-anim {
+            stroke-dasharray: 300;
+            stroke-dashoffset: 300;
+            animation: draw-circle 2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+        }
+
+        .time .hands-anim {
+            transform-origin: 50% 55%;
+            animation: spin-hands 4s linear infinite;
+        }
+
+        .time .fade-ticks {
+            opacity: 0;
+            animation: fade-ticks-time 2s ease infinite alternate;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes draw-circle {
+            0% {
+                stroke-dashoffset: 300;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes spin-hands {
+            0% {
+                transform: rotate(0deg) scale(0);
+                opacity: 0;
+            }
+
+            20% {
+                transform: rotate(0deg) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: rotate(360deg) scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fade-ticks-time {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+                transform-origin: center;
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+                transform-origin: center;
+            }
+        }
+
+        /* 5 Area - Animated Grid Square */
+        .area .icon-stroke {
+            stroke: #00ff41;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .area .draw-boundary {
+            stroke-dasharray: 240;
+            stroke-dashoffset: 240;
+            animation: draw-square 2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+        }
+
+        .area .draw-grid {
+            stroke-dasharray: 60;
+            stroke-dashoffset: 60;
+            stroke-width: 1.5;
+            opacity: 0.7;
+            animation: draw-grid-lines 2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+            animation-delay: 0.5s;
+        }
+
+        .area .draw-arrows {
+            stroke-dasharray: 70;
+            stroke-dashoffset: 70;
+            animation: draw-arrows-anim 2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+            animation-delay: 0.8s;
+        }
+
+        .area .area-fill {
+            fill: #00ff41;
+            fill-opacity: 0;
+            animation: fill-pulse 2s ease infinite alternate;
+        }
+
+        @keyframes draw-square {
+            0% {
+                stroke-dashoffset: 240;
+                fill-opacity: 0;
+            }
+
+            40% {
+                stroke-dashoffset: 0;
+                fill-opacity: 0;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+                fill-opacity: 0.1;
+            }
+        }
+
+        @keyframes draw-grid-lines {
+            0% {
+                stroke-dashoffset: 60;
+                opacity: 0;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes draw-arrows-anim {
+            0% {
+                stroke-dashoffset: 70;
+                opacity: 0;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        @keyframes fill-pulse {
+
+            0%,
+            40% {
+                fill-opacity: 0;
+            }
+
+            100% {
+                fill-opacity: 0.15;
+            }
+        }
+
+        /* 6 Volume - Animated 3D Cube */
+        .volume .icon-stroke {
+            stroke: #00ff41;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .volume .draw-cube {
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: draw-cube-lines 2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+        }
+
+        .volume .draw-cube-delayed {
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: draw-cube-lines 2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+            animation-delay: 0.3s;
+        }
+
+        .volume .draw-arrows {
+            stroke-dasharray: 60;
+            stroke-dashoffset: 60;
+            animation: draw-vol-arrows 2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+            animation-delay: 0.8s;
+        }
+
+        .volume .volume-fill {
+            fill: #00ff41;
+            fill-opacity: 0;
+            animation: vol-fill-pulse 2s ease infinite alternate;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes draw-cube-lines {
+            0% {
+                stroke-dashoffset: 200;
+            }
+
+            40% {
+                stroke-dashoffset: 0;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes draw-vol-arrows {
+            0% {
+                stroke-dashoffset: 60;
+                opacity: 0;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        @keyframes vol-fill-pulse {
+
+            0%,
+            40% {
+                fill-opacity: 0;
+            }
+
+            100% {
+                fill-opacity: 0.15;
+            }
+        }
+
+        /* 7 Speed - Animated Speedometer Gauge */
+        .speed .icon-stroke {
+            stroke: #00ff41;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .speed .draw-arc {
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: draw-gauge 2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+        }
+
+        .speed .needle-rev {
+            transform-origin: 50% 65%;
+            animation: rev-engine 2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite alternate;
+            animation-delay: 0.5s;
+        }
+
+        .speed .motion-lines {
+            stroke-dasharray: 20;
+            stroke-dashoffset: 100;
+            opacity: 0;
+            animation: rush-lines 0.5s linear infinite;
+        }
+
+        .speed .fade-ticks {
+            opacity: 0;
+            animation: fade-speed-ticks 2s ease infinite alternate;
+            animation-delay: 0.3s;
+        }
+
+        .speed .motion-group {
+            opacity: 0;
+            animation: motion-visibility 2s ease infinite alternate;
+        }
+
+        @keyframes draw-gauge {
+            0% {
+                stroke-dashoffset: 200;
+                opacity: 0;
+            }
+
+            40% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        @keyframes rev-engine {
+            0% {
+                transform: rotate(-90deg);
+            }
+
+            20% {
+                transform: rotate(-20deg);
+            }
+
+            40% {
+                transform: rotate(-90deg);
+            }
+
+            60% {
+                transform: rotate(80deg);
+            }
+
+            70% {
+                transform: rotate(75deg);
+            }
+
+            80% {
+                transform: rotate(85deg);
+            }
+
+            100% {
+                transform: rotate(90deg);
+            }
+        }
+
+        @keyframes rush-lines {
+            0% {
+                stroke-dashoffset: 100;
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 0;
+            }
+        }
+
+        @keyframes fade-speed-ticks {
+
+            0%,
+            20% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes motion-visibility {
+
+            0%,
+            50% {
+                opacity: 0;
+            }
+
+            70%,
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* 8 Digital Storage - Animated SD Card Chip */
+        .storage .icon-stroke {
+            stroke: #00ff41;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .storage .icon-fill {
+            fill: #00ff41;
+            stroke: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .storage .draw-chip {
+            stroke-dasharray: 300;
+            stroke-dashoffset: 300;
+            animation: draw-storage-line 2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+        }
+
+        .storage .draw-pins {
+            stroke-dasharray: 50;
+            stroke-dashoffset: 50;
+            animation: draw-storage-line 2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+            animation-delay: 0.3s;
+        }
+
+        .storage .capacity-fill {
+            opacity: 0;
+            animation: fill-capacity 2s steps(4) infinite alternate;
+            animation-delay: 0.6s;
+        }
+
+        .storage .data-led {
+            opacity: 0;
+            animation: blink-led 0.5s steps(2) infinite;
+            animation-delay: 1s;
+        }
+
+        @keyframes draw-storage-line {
+            0% {
+                stroke-dashoffset: 300;
+                opacity: 0;
+            }
+
+            30% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        @keyframes fill-capacity {
+            0% {
+                opacity: 0;
+                transform: scaleY(0);
+            }
+
+            20% {
+                opacity: 1;
+                transform: scaleY(0.25);
+            }
+
+            40% {
+                opacity: 1;
+                transform: scaleY(0.5);
+            }
+
+            60% {
+                opacity: 1;
+                transform: scaleY(0.75);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scaleY(1);
+            }
+        }
+
+        @keyframes blink-led {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* 9 Currency - Indian Rupee Symbol Draw Animation */
+        .currency .icon-stroke {
+            stroke: #00ff41;
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .currency .draw-symbol {
+            stroke-dasharray: 250;
+            stroke-dashoffset: 250;
+            animation: draw-symbol-anim 2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+        }
+
+        @keyframes draw-symbol-anim {
+            0% {
+                stroke-dashoffset: 250;
+                opacity: 0;
+            }
+
+            30% {
+                opacity: 1;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        /* 10 Energy - Lightning Bolt Draw Animation */
+        /* 10 Energy - Battery Charging Animation */
+        .energy .icon-stroke {
+            stroke: #00ff41;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .energy .icon-fill {
+            fill: #00ff41;
+            stroke: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .energy .draw-shell {
+            stroke-dasharray: 250;
+            stroke-dashoffset: 250;
+            animation: draw-energy-line 2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+        }
+
+        .energy .draw-bolt {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            opacity: 0;
+            animation: draw-energy-bolt 2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+            animation-delay: 0.5s;
+        }
+
+        .energy .charge-bar {
+            opacity: 0;
+            animation: charge-cycle 2s steps(1) infinite alternate;
+        }
+
+        .energy .bar-1 {
+            animation-delay: 0.8s;
+        }
+
+        .energy .bar-2 {
+            animation-delay: 1.0s;
+        }
+
+        .energy .bar-3 {
+            animation-delay: 1.2s;
+        }
+
+        .energy .bolt-pulse {
+            transform-origin: center;
+            animation: pulse-bolt 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes draw-energy-line {
+            0% {
+                stroke-dashoffset: 250;
+                opacity: 0;
+            }
+
+            30% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        @keyframes draw-energy-bolt {
+            0% {
+                stroke-dashoffset: 100;
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        @keyframes charge-cycle {
+            0% {
+                opacity: 0;
+                transform: scaleX(0);
+            }
+
+            50%,
+            100% {
+                opacity: 1;
+                transform: scaleX(1);
+            }
+        }
+
+        @keyframes pulse-bolt {
+            0% {
+                transform: scale(0.9);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        /* 11 Pressure - Animated Press & Squish */
+        .pressure .icon-stroke {
+            stroke: #00ff41;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .pressure .draw-anim {
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: draw-press-line 1.5s ease-out forwards;
+        }
+
+        .pressure .arrow-group {
+            animation: press-down 2s ease-in-out infinite;
+        }
+
+        .pressure .block-combined {
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            transform-origin: 50% 80px;
+            animation:
+                draw-press-line 1.5s ease-out forwards,
+                squish-block 2s ease-in-out infinite;
+        }
+
+        @keyframes draw-press-line {
+            0% {
+                stroke-dashoffset: 200;
+                opacity: 0;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        @keyframes press-down {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(15px);
+            }
+        }
+
+        @keyframes squish-block {
+
+            0%,
+            100% {
+                transform: scaleY(1);
+            }
+
+            50% {
+                transform: scaleY(0.6);
+                stroke-width: 4px;
+            }
+        }
+
+        /* 12 Density - Particle Compression Animation */
+        .density .icon-stroke {
+            stroke: #00ff41;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .density .draw-anim {
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: draw-density-line 1.5s ease-out forwards;
+        }
+
+        .density .particle-center {
+            animation: pulse-center 3s ease-in-out infinite;
+        }
+
+        .density .particle-move {
+            animation: compress-particles 3s ease-in-out infinite;
+            transform-origin: 50px 50px;
+        }
+
+        .density .top-left {
+            --x-move: 12px;
+            --y-move: 12px;
+        }
+
+        .density .top-right {
+            --x-move: -12px;
+            --y-move: 12px;
+        }
+
+        .density .bottom-left {
+            --x-move: 12px;
+            --y-move: -12px;
+        }
+
+        .density .bottom-right {
+            --x-move: -12px;
+            --y-move: -12px;
+        }
+
+        .density .volume-box {
+            stroke: #00ff41;
+            opacity: 0.3;
+            stroke-dasharray: 4 4;
+            animation: fade-density-box 2s ease-out forwards;
+        }
+
+        @keyframes draw-density-line {
+            0% {
+                stroke-dashoffset: 200;
+                opacity: 0;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        @keyframes compress-particles {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(var(--x-move), var(--y-move));
+            }
+        }
+
+        @keyframes pulse-center {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes fade-density-box {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 0.3;
+            }
+        }
+
+        /* 13 Power - bulb glow */
+        .power .bulb {
+            stroke: #00ff41;
+            stroke-width: 3;
+            fill: none;
+            filter: drop-shadow(0 0 10px #00ff41);
+            animation: bulbGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes bulbGlow {
+            0% {
+                opacity: .8
+            }
+
+            50% {
+                opacity: 1
+            }
+
+            100% {
+                opacity: .8
+            }
+        }
+
+        /* 14 Force - spring stretch */
+        .force .spring {
+            stroke: #00ff41;
+            stroke-width: 3;
+            fill: none;
+            animation: stretch 1.6s ease-in-out infinite;
+            filter: drop-shadow(0 0 6px #00ff41);
+        }
+
+        @keyframes stretch {
+            0% {
+                transform: scaleY(1)
+            }
+
+            50% {
+                transform: scaleY(1.12)
+            }
+
+            100% {
+                transform: scaleY(1)
+            }
+        }
+
+        /* 15 Frequency - sine oscillation */
+        .freq .wave {
+            stroke: #00ff41;
+            stroke-width: 3;
+            fill: none;
+            animation: osc 1.2s ease-in-out infinite;
+            filter: drop-shadow(0 0 6px #00ff41);
+        }
+
+        @keyframes osc {
+            0% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-4px)
+            }
+
+            100% {
+                transform: translateY(0)
+            }
+        }
+
+        /* 16 Angle - protractor rotate */
+        .angle .arm {
+            transform-origin: 50% 50%;
+            stroke: #00ff41;
+            stroke-width: 3;
+            fill: none;
+            animation: armRotate 1.8s linear infinite;
+        }
+
+        @keyframes armRotate {
+            0% {
+                transform: rotate(0deg)
+            }
+
+            100% {
+                transform: rotate(360deg)
+            }
+        }
+
+        /* 17 Data Transfer - arrows moving */
+        .transfer .arrowA {
+            stroke: #00ff41;
+            stroke-width: 3;
+            fill: none;
+            animation: moveA 1.4s linear infinite;
+        }
+
+        .transfer .arrowB {
+            stroke: #00ff41;
+            stroke-width: 3;
+            fill: none;
+            animation: moveB 1.4s linear infinite reverse;
+        }
+
+        @keyframes moveA {
+            0% {
+                transform: translateX(-6px)
+            }
+
+            50% {
+                transform: translateX(6px)
+            }
+
+            100% {
+                transform: translateX(-6px)
+            }
+        }
+
+        @keyframes moveB {
+            0% {
+                transform: translateX(6px)
+            }
+
+            50% {
+                transform: translateX(-6px)
+            }
+
+            100% {
+                transform: translateX(6px)
+            }
+        }
+
+        /* 18 Fuel Consumption - drop pulse */
+        .fuel .drop {
+            fill: #00ff41;
+            transform-origin: 50% 50%;
+            animation: dropPulse 1.6s ease-in-out infinite;
+            filter: drop-shadow(0 0 6px #00ff41);
+        }
+
+        @keyframes dropPulse {
+            0% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-6px)
+            }
+
+            100% {
+                transform: translateY(0)
+            }
+        }
+
+        /* 19 Illuminance - rays glow */
+        .light .rays {
+            stroke: #00ff41;
+            stroke-width: 3;
+            fill: none;
+            animation: rays 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px #00ff41);
+        }
+
+        @keyframes rays {
+            0% {
+                opacity: .7
+            }
+
+            50% {
+                opacity: 1
+            }
+
+            100% {
+                opacity: .7
+            }
+        }
+
+        /* 20 Sound - bars bounce */
+        .sound .bar {
+            fill: #00ff41;
+            transform-origin: 50% 100%;
+            animation: barBounce 1.2s ease-in-out infinite;
+        }
+
+        .sound .bar:nth-child(1) {
+            animation-delay: 0
+        }
+
+        .sound .bar:nth-child(2) {
+            animation-delay: .15s
+        }
+
+        .sound .bar:nth-child(3) {
+            animation-delay: .3s
+        }
+
+        @keyframes barBounce {
+            0% {
+                transform: scaleY(.6)
+            }
+
+            50% {
+                transform: scaleY(1.2)
+            }
+
+            100% {
+                transform: scaleY(.6)
+            }
+        }
+
+        /* 21 Typography - letter stroke draw */
+        .type .ltr {
+            stroke: #00ff41;
+            stroke-width: 3;
+            fill: none;
+            stroke-dasharray: 120;
+            stroke-dashoffset: 120;
+            animation: drawText 1.6s ease forwards, glow 2.6s infinite;
+        }
+
+        @keyframes drawText {
+            to {
+                stroke-dashoffset: 0
+            }
+        }
+
+        /* 22 Cooking - steam rising */
+        .cook .steam {
+            stroke: #00ff41;
+            stroke-width: 3;
+            fill: none;
+            stroke-linecap: round;
+            animation: steam 1.8s ease-in-out infinite;
+        }
+
+        @keyframes steam {
+            0% {
+                transform: translateY(6px);
+                opacity: .5
+            }
+
+            50% {
+                transform: translateY(-6px);
+                opacity: 1
+            }
+
+            100% {
+                transform: translateY(6px);
+                opacity: .5
+            }
+        }
+
+        /* 23 Clothing/Shoes - shoe bounce */
+        .shoe {
+            transform-origin: 50% 50%;
+            animation: shoeBounce 1.6s ease-in-out infinite;
+        }
+
+        @keyframes shoeBounce {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-6px)
+            }
+        }
+
+        /* 24 Time Zones - globe rotate */
+        .tz .globe {
+            transform-origin: 50% 50%;
+            animation: globeSpin 6s linear infinite;
+            stroke: #00ff41;
+            stroke-width: 3;
+            fill: none;
+            filter: drop-shadow(0 0 6px #00ff41);
+        }
+
+        @keyframes globeSpin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        /* Shared glow animation */
+        @keyframes glow {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 2px #00ff41)
+            }
+
+            50% {
+                filter: drop-shadow(0 0 8px #00ff41)
+            }
+        }
+
 
         #bg-image {
             position: fixed;
@@ -118,20 +1565,52 @@
             backdrop-filter: blur(4px);
         }
 
+
+
         .logo h1 {
             font-size: 1.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ffffff;
+            /* background: linear-gradient(135deg, var(--primary), var(--secondary)); */
+            /* background-clip: text; */
+            /* -webkit-background-clip: text; */
+            /* -webkit-text-fill-color: transparent; */
         }
 
         .header-controls {
             display: flex;
-            gap: 16px;
+            gap: 12px;
             align-items: center;
         }
+
+        .header-icon-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--text);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .header-icon-btn:hover {
+            background: rgba(0, 255, 65, 0.15);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+            transform: scale(1.08);
+        }
+
+        .header-icon-btn svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--primary);
+            stroke-width: 2;
+        }
+
 
         .btn-icon {
             background: var(--surface);
@@ -167,6 +1646,8 @@
             color: #ffffff;
             box-shadow: 0 0 15px rgba(0, 255, 65, 0.3), inset 0 0 5px rgba(0, 255, 65, 0.1);
             font-size: 1rem;
+
+
             outline: none;
         }
 
@@ -245,24 +1726,126 @@
             background: var(--surface);
             border-radius: 16px;
             padding: 30px;
-            /* More padding for PC */
             text-align: center;
             cursor: pointer;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100%;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            opacity: 0;
+            animation: cardEntrance 0.5s ease-out forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Staggered entrance animation */
+        @keyframes cardEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .category-card:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+
+        .category-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .category-card:nth-child(3) {
+            animation-delay: 0.15s;
+        }
+
+        .category-card:nth-child(4) {
+            animation-delay: 0.2s;
+        }
+
+        .category-card:nth-child(5) {
+            animation-delay: 0.25s;
+        }
+
+        .category-card:nth-child(6) {
+            animation-delay: 0.3s;
+        }
+
+        .category-card:nth-child(7) {
+            animation-delay: 0.35s;
+        }
+
+        .category-card:nth-child(8) {
+            animation-delay: 0.4s;
+        }
+
+        .category-card:nth-child(9) {
+            animation-delay: 0.45s;
+        }
+
+        .category-card:nth-child(10) {
+            animation-delay: 0.5s;
+        }
+
+        .category-card:nth-child(11) {
+            animation-delay: 0.55s;
+        }
+
+        .category-card:nth-child(12) {
+            animation-delay: 0.6s;
+        }
+
+        .category-card:nth-child(13) {
+            animation-delay: 0.65s;
+        }
+
+        .category-card:nth-child(14) {
+            animation-delay: 0.7s;
+        }
+
+        .category-card:nth-child(15) {
+            animation-delay: 0.75s;
+        }
+
+        .category-card:nth-child(16) {
+            animation-delay: 0.8s;
+        }
+
+        .category-card:nth-child(17) {
+            animation-delay: 0.85s;
+        }
+
+        .category-card:nth-child(18) {
+            animation-delay: 0.9s;
+        }
+
+        .category-card:nth-child(19) {
+            animation-delay: 0.95s;
+        }
+
+        .category-card:nth-child(20) {
+            animation-delay: 1s;
+        }
+
+        .category-card:nth-child(n+21) {
+            animation-delay: 1.05s;
         }
 
         .category-card:hover {
-            transform: translateY(-8px);
             border-color: var(--primary);
-            box-shadow: var(--shadow-hover);
+            box-shadow: var(--shadow-hover), 0 15px 35px rgba(0, 255, 65, 0.2);
         }
+
 
         /* Mobile Layout Adjustments */
         @media (max-width: 768px) {
@@ -349,6 +1932,7 @@
             font-weight: 700;
             font-size: 1.2rem;
             margin-bottom: 4px;
+            color: #ffffff;
         }
 
         .cat-desc {
@@ -534,6 +2118,26 @@
             margin-bottom: 30px;
         }
 
+        .back-btn {
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            background: rgba(0, 40, 15, 0.6);
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 12px rgba(0, 255, 65, 0.2);
+        }
+
+        .back-btn:hover {
+            background: rgba(0, 80, 30, 0.8);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+            transform: translateX(-4px);
+        }
+
+
         /* Reference Section Styles */
         .reference-section {
             margin-top: 30px;
@@ -544,6 +2148,8 @@
         .ref-panel {
             background: rgba(0, 20, 0, 0.4);
             border: 1px solid var(--border);
+
+
             border-radius: 10px;
             margin-bottom: 12px;
             overflow: hidden;
@@ -565,6 +2171,8 @@
         .ref-header:hover {
             background: rgba(0, 60, 15, 0.6);
         }
+
+
 
         .ref-header .toggle-icon {
             transition: transform 0.3s ease;
@@ -594,6 +2202,8 @@
         .ref-box {
             background: rgba(0, 30, 5, 0.5);
             border-left: 3px solid var(--primary);
+
+
             padding: 10px 14px;
             margin-bottom: 10px;
             border-radius: 0 6px 6px 0;
@@ -619,12 +2229,388 @@
             color: #7fff7f;
         }
 
+
+
         .ref-label {
             font-size: 0.75rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 6px;
+        }
+
+        /* Calculator Popup Styles */
+        .calc-trigger {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            border: 2px solid var(--primary);
+            background: var(--surface);
+            color: var(--primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .calc-trigger:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+            transform: scale(1.05);
+        }
+
+
+
+        .calc-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Footer Styles */
+        .site-footer {
+            background: linear-gradient(180deg, rgba(0, 10, 5, 0.9), rgba(0, 0, 0, 0.98));
+            border-top: 1px solid var(--border);
+            padding: 40px 24px 20px;
+            margin-top: 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000;
+            font-size: 1.2rem;
+        }
+
+        .footer-logo-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .footer-logo-text span {
+            color: var(--text);
+        }
+
+        .footer-logo-text strong {
+            color: #fff;
+        }
+
+        .footer-tagline {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            max-width: 280px;
+            line-height: 1.5;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-icon {
+            width: 44px;
+            height: 44px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            background: rgba(0, 255, 65, 0.15);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+            transform: scale(1.1);
+        }
+
+        .social-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--primary);
+        }
+
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 30px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .footer-credit {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-credit-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            background: transparent;
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .footer-credit-btn:hover {
+            background: rgba(0, 255, 65, 0.15);
+            box-shadow: 0 0 12px rgba(0, 255, 65, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .footer-tagline {
+                max-width: 100%;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        .calc-overlay.active {
+
+            display: flex;
+        }
+
+        .calc-popup {
+            background: var(--surface);
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            padding: 20px;
+            width: 320px;
+            max-width: 90vw;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.4), inset 0 0 10px rgba(0, 255, 65, 0.1);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .calc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .calc-header h4 {
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .calc-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+
+        .calc-close:hover {
+            color: var(--primary);
+        }
+
+        .calc-display {
+            background: rgba(0, 20, 0, 0.6);
+            border: 1px solid var(--border);
+
+
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+        }
+
+        .calc-expression {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            min-height: 20px;
+            word-break: break-all;
+        }
+
+        .calc-result {
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: bold;
+            text-align: right;
+            min-height: 40px;
+            word-break: break-all;
+        }
+
+        .calc-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .calc-btn {
+            height: 48px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: rgba(0, 30, 10, 0.5);
+            color: var(--text);
+
+
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .calc-btn:hover {
+            background: rgba(0, 60, 20, 0.7);
+            border-color: var(--primary);
+        }
+
+
+
+        .calc-btn:active {
+            transform: scale(0.95);
+        }
+
+        .calc-btn.operator {
+            background: rgba(0, 80, 30, 0.5);
+            color: var(--primary);
+        }
+
+        .calc-btn.operator:hover {
+            background: rgba(0, 100, 40, 0.7);
+        }
+
+
+
+        .calc-btn.action {
+            background: rgba(0, 50, 20, 0.5);
+            color: #ff6b6b;
+        }
+
+        .calc-btn.action:hover {
+            background: rgba(100, 0, 0, 0.3);
+        }
+
+
+
+        .calc-btn.equals {
+            background: var(--primary);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .calc-btn.equals:hover {
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+        }
+
+
+
+        .calc-btn.use-result {
+            grid-column: span 4;
+            background: linear-gradient(135deg, rgba(0, 100, 40, 0.6), rgba(0, 60, 20, 0.6));
+            color: var(--primary);
+            font-size: 1rem;
+            font-weight: bold;
+            height: 44px;
+            margin-top: 8px;
+        }
+
+        .calc-btn.use-result:hover {
+            background: linear-gradient(135deg, rgba(0, 140, 50, 0.7), rgba(0, 80, 30, 0.7));
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+        }
+
+
+
+        @media (max-width: 768px) {
+            .calc-popup {
+                width: 300px;
+                padding: 16px;
+            }
+
+            .calc-btn {
+                height: 44px;
+                font-size: 1.1rem;
+            }
+
+            .calc-result {
+                font-size: 1.5rem;
+            }
         }
 
         @media (max-width: 768px) {
@@ -702,11 +2688,410 @@
             overflow: hidden;
         }
 
+
+
         .loader-progress {
             height: 100%;
             background: var(--primary);
             width: 0%;
             transition: width 0.1s linear;
+        }
+
+        /* Voice Input Mic */
+        .voice-mic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            animation: voicePulse 1.5s infinite;
+        }
+
+
+        @keyframes voicePulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(0, 255, 65, 0.5);
+            }
+
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 40px 20px rgba(0, 255, 65, 0.3);
+            }
+        }
+
+        .voice-text {
+            margin-top: 30px;
+            font-size: 1.2rem;
+            color: var(--text);
+        }
+
+        .voice-transcript {
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: rgba(0, 30, 10, 0.6);
+            border-radius: 8px;
+            color: var(--primary);
+            min-height: 40px;
+            max-width: 80%;
+            text-align: center;
+        }
+
+        /* Quiz Mode */
+        .quiz-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2500;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quiz-overlay.active {
+            display: flex;
+        }
+
+        .quiz-container {
+            background: var(--surface);
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .quiz-score {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .quiz-question {
+            font-size: 1.3rem;
+            margin: 20px 0;
+            color: var(--text);
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .quiz-option {
+            padding: 15px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            background: rgba(0, 30, 10, 0.5);
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--primary);
+            background: rgba(0, 60, 20, 0.5);
+        }
+
+        .quiz-option.correct {
+            background: rgba(0, 255, 65, 0.3);
+            border-color: var(--primary);
+        }
+
+        .quiz-option.wrong {
+            background: rgba(255, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+
+        /* Theme Switcher */
+        .theme-panel {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: var(--surface);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 16px;
+            z-index: 2000;
+            display: none;
+        }
+
+        .theme-panel.active {
+            display: block;
+        }
+
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .theme-option:hover {
+            background: rgba(0, 255, 65, 0.1);
+        }
+
+        .theme-color {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+        }
+
+        /* Conversion Table Modal */
+        .table-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .table-modal.active {
+            display: flex;
+        }
+
+        .table-content {
+            background: var(--surface);
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .conversion-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .conversion-table th,
+        .conversion-table td {
+            padding: 10px 16px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .conversion-table th {
+            background: rgba(0, 60, 20, 0.5);
+            color: var(--primary);
+        }
+
+        .conversion-table tr:hover {
+            background: rgba(0, 255, 65, 0.1);
+        }
+
+        /* Time Zone Display */
+        .timezone-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .timezone-card {
+            background: rgba(0, 30, 10, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .timezone-city {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .timezone-time {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .timezone-diff {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Extra Controls */
+        .extra-controls {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .extra-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: rgba(0, 30, 10, 0.5);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .extra-btn:hover {
+            border-color: var(--primary);
+            background: rgba(0, 60, 20, 0.5);
+        }
+
+        /* Theme Variations */
+        body.theme-cyberpunk {
+            --primary: #FF00FF;
+            --secondary: #AA00AA;
+            --text-light: #FF00FF;
+            --text-muted-light: #FF77FF;
+            --border-light: #330033;
+        }
+
+        body.theme-light {
+            --bg: #F5F5F5;
+            --surface: #FFFFFF;
+            --text: #333333;
+            --text-muted: #666666;
+            --border: #DDDDDD;
+            --primary: #2196F3;
+            --secondary: #1976D2;
+        }
+
+        body.theme-oled {
+            --bg: #000000;
+            --surface: #000000;
+            --border: #111111;
+        }
+
+        /* Ingredient Selector */
+        .ingredient-select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+
+        /* Footer Logo Animation */
+        .footer-uuc-icon {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .letter-style {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 30px;
+            fill: none;
+            stroke: #00ff41;
+            stroke-width: 2;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .u1-anim {
+            animation: slide-u1 3s ease-in-out infinite;
+            transform-box: fill-box;
+            transform-origin: center;
+        }
+
+        .u2-anim {
+            animation: slide-u2 3s ease-in-out infinite;
+            transform-box: fill-box;
+            transform-origin: center;
+        }
+
+        .c-anim {
+            animation: slide-c 3s ease-in-out infinite;
+            transform-box: fill-box;
+            transform-origin: center;
+        }
+
+        @keyframes slide-u1 {
+            0% {
+                transform: translate(-50px, -50px);
+                opacity: 0;
+            }
+
+            40%,
+            80% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(0, 0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slide-u2 {
+            0% {
+                transform: translate(0, 50px);
+                opacity: 0;
+            }
+
+            40%,
+            80% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(0, 0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slide-c {
+            0% {
+                transform: translate(50px, -50px);
+                opacity: 0;
+            }
+
+            40%,
+            80% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(0, 0);
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -722,6 +3107,102 @@
     </div>
     <div id="bg-image"></div>
 
+    <!-- Calculator Popup -->
+    <div class="calc-overlay" id="calc-overlay" onclick="if(event.target === this) calc.close()">
+        <div class="calc-popup">
+            <div class="calc-header">
+                <h4>🧮 Quick Calculator</h4>
+                <button class="calc-close" onclick="calc.close()">×</button>
+            </div>
+            <div class="calc-display">
+                <div class="calc-expression" id="calc-expr"></div>
+                <div class="calc-result" id="calc-result">0</div>
+            </div>
+            <div class="calc-buttons">
+                <button class="calc-btn action" onclick="calc.clear()">C</button>
+                <button class="calc-btn action" onclick="calc.backspace()">⌫</button>
+                <button class="calc-btn operator" onclick="calc.append('(')"> (</button>
+                <button class="calc-btn operator" onclick="calc.append(')')">) </button>
+                <button class="calc-btn" onclick="calc.append('7')">7</button>
+                <button class="calc-btn" onclick="calc.append('8')">8</button>
+                <button class="calc-btn" onclick="calc.append('9')">9</button>
+                <button class="calc-btn operator" onclick="calc.append('/')">&divide;</button>
+                <button class="calc-btn" onclick="calc.append('4')">4</button>
+                <button class="calc-btn" onclick="calc.append('5')">5</button>
+                <button class="calc-btn" onclick="calc.append('6')">6</button>
+                <button class="calc-btn operator" onclick="calc.append('*')">&times;</button>
+                <button class="calc-btn" onclick="calc.append('1')">1</button>
+                <button class="calc-btn" onclick="calc.append('2')">2</button>
+                <button class="calc-btn" onclick="calc.append('3')">3</button>
+                <button class="calc-btn operator" onclick="calc.append('-')">−</button>
+                <button class="calc-btn" onclick="calc.append('0')">0</button>
+                <button class="calc-btn" onclick="calc.append('.')">.</button>
+                <button class="calc-btn equals" onclick="calc.evaluate()">=</button>
+                <button class="calc-btn operator" onclick="calc.append('+')">+</button>
+                <button class="calc-btn use-result" onclick="calc.useResult()">✓ Use Result in Converter</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Theme Panel -->
+    <div class="theme-panel" id="theme-panel">
+        <div class="theme-option" onclick="setTheme('matrix')">
+            <span class="theme-color" style="background: #00FF41;"></span>
+            <span>Matrix Green</span>
+        </div>
+        <div class="theme-option" onclick="setTheme('cyberpunk')">
+            <span class="theme-color" style="background: #FF00FF;"></span>
+            <span>Cyberpunk Pink</span>
+        </div>
+        <div class="theme-option" onclick="setTheme('light')">
+            <span class="theme-color" style="background: #2196F3;"></span>
+            <span>Classic Light</span>
+        </div>
+        <div class="theme-option" onclick="setTheme('oled')">
+            <span class="theme-color" style="background: #000000; border: 2px solid #333;"></span>
+            <span>OLED Dark</span>
+        </div>
+    </div>
+
+
+    <!-- Quiz Overlay -->
+    <div class="quiz-overlay" id="quiz-overlay">
+        <div class="quiz-container">
+            <div class="quiz-header">
+                <h3>🎮 Quiz Mode</h3>
+                <div class="quiz-score">Score: <span id="quiz-score">0</span>/10</div>
+                <button class="btn-icon" onclick="quiz.close()">✕</button>
+            </div>
+            <div class="quiz-question" id="quiz-question">How many centimeters are in 1 meter?</div>
+            <div class="quiz-options" id="quiz-options">
+                <div class="quiz-option">50</div>
+                <div class="quiz-option">100</div>
+                <div class="quiz-option">1000</div>
+                <div class="quiz-option">10</div>
+            </div>
+            <button class="btn btn-primary" onclick="quiz.next()" style="margin-top: 16px;">Next Question</button>
+        </div>
+    </div>
+
+    <!-- Conversion Table Modal -->
+    <div class="table-modal" id="table-modal" onclick="if(event.target === this) closeTableModal()">
+        <div class="table-content">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3>📊 Conversion Table</h3>
+                <button class="btn-icon" onclick="closeTableModal()">✕</button>
+            </div>
+            <table class="conversion-table" id="conversion-table">
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
+        </div>
+    </div>
+
     <!-- History Sidebar -->
     <aside class="history-panel" id="history-panel">
         <div class="history-header">
@@ -732,7 +3213,9 @@
         <div class="history-list" id="history-list">
             <div style="text-align:center; color:var(--text-muted); margin-top:20px;">No history yet</div>
         </div>
-        <button class="btn btn-outline" style="width:100%; margin-top:20px;" onclick="app.clearHistory()">Clear
+        <button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="exportHistory()">📥 Export
+            CSV</button>
+        <button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="app.clearHistory()">Clear
             History</button>
     </aside>
 
@@ -742,16 +3225,29 @@
                 <h1>Unit Converter Hub</h1>
             </div>
             <div class="header-controls">
-                <button class="btn" id="history-toggle" title="View History"
-                    style="background:var(--primary); color:black; font-weight:bold; box-shadow: 0 0 10px var(--primary);">
-                    🕒 History
+                <button class="header-icon-btn" id="theme-toggle" title="Change Theme" onclick="toggleThemePanel()">
+                    <i data-lucide="palette"></i>
+                </button>
+                <button class="header-icon-btn" title="Calculator" onclick="calc.open()">
+                    <i data-lucide="calculator"></i>
+                </button>
+                <button class="header-icon-btn" title="Quiz Mode" onclick="quiz.open()">
+                    <i data-lucide="gamepad-2"></i>
+                </button>
+                <button class="header-icon-btn" id="history-toggle" title="History"
+                    onclick="document.getElementById('history-panel').classList.add('open')">
+                    <i data-lucide="clock"></i>
                 </button>
             </div>
+
         </header>
+
+
 
         <div class="search-container">
             <span class="search-icon">🔍</span>
-            <input type="text" class="search-input" id="global-search" placeholder="Search 110+ converters...">
+            <input type="text" class="search-input" id="global-search" placeholder="Search 154+ converters...">
+
             <div id="search-results"></div>
         </div>
 
@@ -805,10 +3301,11 @@
                     style="text-align:center; color:var(--text-muted); font-style:italic;"></div>
 
                 <div class="controls">
-                    <button class="btn btn-primary" onclick="app.convert()">Convert</button>
+                    <button class="btn btn-primary" onclick="calc.open()" title="Open Calculator">🧮</button>
                     <button class="btn btn-outline" onclick="app.reset()">Reset</button>
                     <button class="btn btn-secondary" onclick="app.copyResult()">Copy</button>
                 </div>
+
 
                 <!-- Reference Section -->
                 <div class="reference-section" id="ref-section">
@@ -841,14 +3338,109 @@
         </section>
     </div>
 
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <div class="footer-logo-icon"
+                        style="background:none; width:80px; height:80px; border:none; padding:0;">
+                        <svg class="footer-uuc-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <!-- First U - Coming from Top Left -->
+                            <text x="20" y="60" class="letter-style u1-anim">U</text>
+                            <!-- Second U - Coming from Bottom -->
+                            <text x="45" y="60" class="letter-style u2-anim">U</text>
+                            <!-- C - Coming from Top Right -->
+                            <text x="70" y="60" class="letter-style c-anim">C</text>
+                        </svg>
+                    </div>
+                    <div class="footer-logo-text" style="color: white !important;">
+                        <span>Universal Unit</span> <strong> Converter</strong>
+                    </div>
+                </div>
+                <p class="footer-tagline">A hub with more than 240+ Converters, a one-stop-shop for students and
+                    professionals.</p>
+            </div>
+            <div class="footer-socials">
+                <a href="https://facebook.com" target="_blank" class="social-icon" title="Facebook">
+                    <i data-lucide="facebook"></i>
+                </a>
+                <a href="https://linkedin.com" target="_blank" class="social-icon" title="LinkedIn">
+                    <i data-lucide="linkedin"></i>
+                </a>
+                <a href="https://instagram.com" target="_blank" class="social-icon" title="Instagram">
+                    <i data-lucide="instagram"></i>
+                </a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2025 Universal Unit Converter. All rights reserved.</span>
+            <div class="footer-credit">
+                <span>Designed with 💚 creativity of</span>
+                <button class="footer-credit-btn">Ankush Chowrasia</button>
+            </div>
+        </div>
+    </footer>
+
     <script>
+
+        // 24 Category Animated SVG Icon Definitions
+        const SVG_ICONS = {
+            length: `<svg class="length" viewBox="0 0 100 100"><line class="icon-stroke draw-anim" x1="10" y1="40" x2="90" y2="40" /><g class="icon-stroke fade-ticks"><line x1="10" y1="40" x2="10" y2="50" /><line x1="30" y1="40" x2="30" y2="46" /><line x1="50" y1="40" x2="50" y2="52" /><line x1="70" y1="40" x2="70" y2="46" /><line x1="90" y1="40" x2="90" y2="50" /></g><g class="icon-stroke draw-anim-delayed"><line x1="10" y1="70" x2="90" y2="70" /><polyline points="15 65 10 70 15 75" /><polyline points="85 65 90 70 85 75" /></g></svg>`,
+            weight: `<svg class="weight" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M 50 85 L 50 25 M 35 85 L 65 85" /><g class="balance-sway"><line class="icon-stroke draw-anim" x1="15" y1="25" x2="85" y2="25" /><path class="icon-stroke draw-anim-delayed" d="M 15 25 L 15 55 M 5 55 Q 15 70 25 55 Z" /><path class="icon-stroke draw-anim-delayed" d="M 85 25 L 85 55 M 75 55 Q 85 70 95 55 Z" /></g></svg>`,
+            temp: `<svg class="temp" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M 42 25 A 8 8 0 1 1 58 25 L 58 65 A 14 14 0 1 1 42 65 Z" /><circle class="icon-fill bulb-pulse" cx="50" cy="74" r="8" /><line class="icon-stroke temp-rise" x1="50" y1="65" x2="50" y2="25" /><g class="icon-stroke fade-ticks"><line x1="65" y1="35" x2="75" y2="35" /><line x1="65" y1="45" x2="72" y2="45" /><line x1="65" y1="55" x2="75" y2="55" /></g></svg>`,
+            time: `<svg class="time" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M 42 15 L 58 15 M 50 15 L 50 22" /><circle class="icon-stroke draw-anim" cx="50" cy="55" r="33" /><g class="icon-stroke fade-ticks"><line x1="50" y1="28" x2="50" y2="34" /><line x1="77" y1="55" x2="71" y2="55" /><line x1="50" y1="82" x2="50" y2="76" /><line x1="23" y1="55" x2="29" y2="55" /></g><g class="icon-stroke hands-anim"><line x1="50" y1="55" x2="50" y2="35" /><line x1="50" y1="55" x2="65" y2="55" /><circle cx="50" cy="55" r="1" fill="#00ff41" stroke="none" /></g></svg>`,
+            area: `<svg class="area" viewBox="0 0 100 100"><rect class="icon-stroke draw-boundary area-fill" x="20" y="20" width="60" height="60" /><g class="icon-stroke draw-grid"><line x1="40" y1="20" x2="40" y2="80" /><line x1="60" y1="20" x2="60" y2="80" /><line x1="20" y1="40" x2="80" y2="40" /><line x1="20" y1="60" x2="80" y2="60" /></g><g class="icon-stroke draw-arrows"><path d="M 20 88 L 80 88 M 75 84 L 80 88 L 75 92" /><path d="M 88 80 L 88 20 M 84 25 L 88 20 L 92 25" /></g></svg>`,
+            volume: `<svg class="volume" viewBox="0 0 100 100"><rect class="icon-stroke draw-cube" x="40" y="25" width="45" height="45" opacity="0.6" /><g class="icon-stroke draw-cube-delayed"><line x1="25" y1="40" x2="40" y2="25" /><line x1="70" y1="40" x2="85" y2="25" /><line x1="25" y1="85" x2="40" y2="70" /><line x1="70" y1="85" x2="85" y2="70" /></g><rect class="icon-stroke draw-cube-delayed volume-fill" x="25" y="40" width="45" height="45" /><g class="icon-stroke draw-arrows"><path d="M 25 92 L 70 92 M 65 88 L 70 92 L 65 96" /><path d="M 18 85 L 18 40 M 14 45 L 18 40 L 22 45" /><path d="M 88 68 L 95 61 M 90 61 L 95 61 L 95 66" /></g></svg>`,
+            speed: `<svg class="speed" viewBox="0 0 100 100"><path class="icon-stroke draw-arc" d="M 20 65 A 35 35 0 1 1 80 65" /><g class="icon-stroke fade-ticks"><line x1="20" y1="65" x2="14" y2="65" /><line x1="50" y1="30" x2="50" y2="24" /><line x1="80" y1="65" x2="86" y2="65" /><line x1="29" y1="44" x2="25" y2="40" /><line x1="71" y1="44" x2="75" y2="40" /></g><g class="icon-stroke motion-group"><line class="motion-lines" x1="10" y1="20" x2="90" y2="20" style="animation-duration: 0.4s;" /><line class="motion-lines" x1="5" y1="10" x2="80" y2="10" style="animation-duration: 0.6s;" /><line class="motion-lines" x1="15" y1="30" x2="95" y2="30" style="animation-duration: 0.5s;" /></g><g class="needle-rev"><line class="icon-stroke" x1="50" y1="65" x2="50" y2="35" /><circle cx="50" cy="65" r="3" fill="#00ff41" stroke="none" /></g></svg>`,
+            storage: `<svg class="storage" viewBox="0 0 100 100"><path class="icon-stroke draw-chip" d="M 25 15 L 65 15 L 80 30 L 80 85 L 25 85 Z" /><rect class="icon-stroke draw-chip" x="35" y="40" width="35" height="35" rx="2" stroke-width="2" /><g class="icon-stroke draw-pins" stroke-width="2"><line x1="32" y1="85" x2="32" y2="75" /><line x1="41" y1="85" x2="41" y2="75" /><line x1="50" y1="85" x2="50" y2="75" /><line x1="59" y1="85" x2="59" y2="75" /><line x1="68" y1="85" x2="68" y2="75" /></g><rect class="icon-fill capacity-fill" x="39" y="44" width="27" height="27" style="transform-origin: 50% 71px;" /><circle class="icon-fill data-led" cx="65" cy="25" r="2.5" /></svg>`,
+            currency: `<svg class="currency" viewBox="0 0 100 100"><path class="icon-stroke draw-symbol" d="M 20 20 L 80 20 M 20 35 L 80 35 M 30 35 C 75 35 75 60 30 60 L 75 85" /></svg>`,
+            energy: `<svg class="energy" viewBox="0 0 100 100"><path class="icon-stroke draw-shell" d="M 25 30 L 75 30 L 75 40 L 80 40 L 80 60 L 75 60 L 75 70 L 25 70 Z" /><g class="icon-fill"><rect class="charge-bar bar-1" x="30" y="35" width="12" height="30" rx="2" style="transform-origin: 36px 50px;" /><rect class="charge-bar bar-2" x="45" y="35" width="12" height="30" rx="2" style="transform-origin: 51px 50px;" /><rect class="charge-bar bar-3" x="60" y="35" width="12" height="30" rx="2" style="transform-origin: 66px 50px;" /></g><path class="icon-stroke draw-bolt bolt-pulse" stroke-width="2" fill="none" d="M 50 20 L 45 45 L 55 45 L 50 75" /></svg>`,
+            pressure: `<svg class="pressure" viewBox="0 0 100 100"><line class="icon-stroke draw-anim" x1="20" y1="80" x2="80" y2="80" /><rect class="icon-stroke block-combined" x="35" y="40" width="30" height="40" /><g class="arrow-group"><line class="icon-stroke draw-anim" x1="50" y1="10" x2="50" y2="35" /><path class="icon-stroke draw-anim" d="M 40 25 L 50 35 L 60 25" /></g></svg>`,
+            density: `<svg class="density" viewBox="0 0 100 100"><rect class="icon-stroke volume-box" x="10" y="10" width="80" height="80" rx="10" stroke-width="1.5" /><g class="icon-stroke draw-anim"><circle class="particle-center" cx="50" cy="50" r="6" style="transform-origin: 50px 50px;" /><circle class="particle-move top-left" cx="25" cy="25" r="6" /><circle class="particle-move top-right" cx="75" cy="25" r="6" /><circle class="particle-move bottom-left" cx="25" cy="75" r="6" /><circle class="particle-move bottom-right" cx="75" cy="75" r="6" /></g></svg>`,
+            power: `<svg class="power" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M40 70 L40 55 A15 15 0 1 1 60 55 L60 70 M35 70 L65 70 M38 75 L62 75" /><circle class="icon-fill bulb-pulse" cx="50" cy="40" r="6" /></svg>`,
+            force: `<svg class="force" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M25 50 L40 30 L40 45 L60 45 L60 30 L75 50 L60 70 L60 55 L40 55 L40 70 Z" /></svg>`,
+            freq: `<svg class="freq" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M10 50 Q25 20 40 50 Q55 80 70 50 Q85 20 100 50" /></svg>`,
+            angle: `<svg class="angle" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M25 75 L75 75 M25 75 L60 35" /><path class="icon-stroke draw-anim-delayed" d="M40 75 A15 15 0 0 1 45 60" /></svg>`,
+            transfer: `<svg class="transfer" viewBox="0 0 100 100"><g class="icon-stroke draw-anim"><path d="M20 35 L70 35 M60 25 L70 35 L60 45" /><path d="M80 65 L30 65 M40 55 L30 65 L40 75" /></g></svg>`,
+            fuel: `<svg class="fuel" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M25 80 L25 35 A15 15 0 0 1 55 35 L55 80 Z" /><path class="icon-stroke draw-anim-delayed" d="M60 45 L70 45 L70 65 A5 5 0 0 0 80 65 L80 35 L75 30" /><rect class="icon-fill capacity-fill" x="30" y="50" width="20" height="25" style="transform-origin: 50% 75px;" /></svg>`,
+            light: `<svg class="light" viewBox="0 0 100 100"><circle class="icon-stroke draw-anim" cx="50" cy="50" r="15" /><g class="icon-stroke fade-ticks"><line x1="50" y1="25" x2="50" y2="15" /><line x1="50" y1="75" x2="50" y2="85" /><line x1="25" y1="50" x2="15" y2="50" /><line x1="75" y1="50" x2="85" y2="50" /><line x1="32" y1="32" x2="25" y2="25" /><line x1="68" y1="32" x2="75" y2="25" /><line x1="32" y1="68" x2="25" y2="75" /><line x1="68" y1="68" x2="75" y2="75" /></g></svg>`,
+            sound: `<svg class="sound" viewBox="0 0 100 100"><g class="icon-stroke draw-anim"><rect x="28" y="40" width="8" height="30" rx="2" fill="#00ff41" class="bar" /><rect x="42" y="30" width="8" height="40" rx="2" fill="#00ff41" class="bar" /><rect x="56" y="35" width="8" height="35" rx="2" fill="#00ff41" class="bar" /><rect x="70" y="45" width="8" height="25" rx="2" fill="#00ff41" class="bar" /></g></svg>`,
+            type: `<svg class="type" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M30 30 L70 30 M50 30 L50 75 M35 75 L65 75" /></svg>`,
+            cook: `<svg class="cook" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M25 55 L25 75 A5 5 0 0 0 30 80 L70 80 A5 5 0 0 0 75 75 L75 55 L25 55 M20 55 L80 55" /><g class="icon-stroke fade-ticks steam"><path d="M35 45 Q32 38 38 32" /><path d="M50 45 Q47 38 53 32" /><path d="M65 45 Q62 38 68 32" /></g></svg>`,
+            shoe: `<svg class="shoe" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M20 60 L20 70 L85 70 L85 55 Q75 45 55 50 L45 55 Q35 45 25 55 L20 60" /></svg>`,
+            tz: `<svg class="tz" viewBox="0 0 100 100"><circle class="icon-stroke draw-anim" cx="50" cy="50" r="30" /><ellipse class="icon-stroke draw-anim-delayed" cx="50" cy="50" rx="12" ry="30" /><line class="icon-stroke fade-ticks" x1="20" y1="50" x2="80" y2="50" /></svg>`,
+        };
+
         const DATA = {
             categories: [
-                { id: 'length', name: 'Length', icon: '📏' }, { id: 'weight', name: 'Weight', icon: '⚖️' }, { id: 'temperature', name: 'Temperature', icon: '🌡️' }, { id: 'time', name: 'Time', icon: '⏰' }, { id: 'area', name: 'Area', icon: '📐' },
-                { id: 'volume', name: 'Volume', icon: '🧪' }, { id: 'speed', name: 'Speed', icon: '🚀' }, { id: 'digital', name: 'Digital Storage', icon: '💾' }, { id: 'currency', name: 'Currency', icon: '💰' }, { id: 'energy', name: 'Energy', icon: '⚡' },
-                { id: 'pressure', name: 'Pressure', icon: '⏲️' }, { id: 'density', name: 'Density', icon: '🧱' }, { id: 'power', name: 'Power', icon: '💡' }, { id: 'force', name: 'Force', icon: '💪' }, { id: 'frequency', name: 'Frequency', icon: '📻' },
-                { id: 'angle', name: 'Angle', icon: '🔄' }, { id: 'data_transfer', name: 'Data Transfer', icon: '🌐' }, { id: 'fuel', name: 'Fuel Consumption', icon: '⛽' }, { id: 'illuminance', name: 'Illuminance', icon: '🕯️' }, { id: 'sound', name: 'Sound', icon: '🔊' }
+                { id: 'length', name: 'Length', icon: 'svg:length' },
+                { id: 'weight', name: 'Weight', icon: 'svg:weight' },
+                { id: 'temperature', name: 'Temperature', icon: 'svg:temp' },
+                { id: 'time', name: 'Time', icon: 'svg:time' },
+                { id: 'area', name: 'Area', icon: 'svg:area' },
+                { id: 'volume', name: 'Volume', icon: 'svg:volume' },
+                { id: 'speed', name: 'Speed', icon: 'svg:speed' },
+                { id: 'digital', name: 'Digital Storage', icon: 'svg:storage' },
+                { id: 'currency', name: 'Currency', icon: 'svg:currency' },
+                { id: 'energy', name: 'Energy', icon: 'svg:energy' },
+                { id: 'pressure', name: 'Pressure', icon: 'svg:pressure' },
+                { id: 'density', name: 'Density', icon: 'svg:density' },
+                { id: 'power', name: 'Power', icon: 'svg:power' },
+                { id: 'force', name: 'Force', icon: 'svg:force' },
+                { id: 'frequency', name: 'Frequency', icon: 'svg:freq' },
+                { id: 'angle', name: 'Angle', icon: 'svg:angle' },
+                { id: 'data_transfer', name: 'Data Transfer', icon: 'svg:transfer' },
+                { id: 'fuel', name: 'Fuel Consumption', icon: 'svg:fuel' },
+                { id: 'illuminance', name: 'Illuminance', icon: 'svg:light' },
+                { id: 'sound', name: 'Sound', icon: 'svg:sound' },
+                { id: 'typography', name: 'Typography', icon: 'svg:type' },
+                { id: 'cooking', name: 'Cooking', icon: 'svg:cook' },
+                { id: 'clothing', name: 'Clothing/Shoes', icon: 'svg:shoe' },
+                { id: 'timezone', name: 'Time Zones', icon: 'svg:tz' }
             ],
+
+
             length: { factors: { m: 1, km: 1e3, cm: .01, mm: .001, inch: .0254, foot: .3048, yard: .9144, mile: 1609.34, nautical_mile: 1852, light_year: 9.461e15 }, converters: [{ id: 'cm_m', title: 'cm ⇄ m', pair: ['cm', 'm'] }, { id: 'cm_km', title: 'cm ⇄ km', pair: ['cm', 'km'] }, { id: 'm_km', title: 'm ⇄ km', pair: ['m', 'km'] }, { id: 'inch_cm', title: 'inch ⇄ cm', pair: ['inch', 'cm'] }, { id: 'foot_meter', title: 'foot ⇄ meter', pair: ['foot', 'm'] }, { id: 'mile_km', title: 'mile ⇄ km', pair: ['mile', 'km'] }, { id: 'yard_meter', title: 'yard ⇄ meter', pair: ['yard', 'm'] }, { id: 'mm_cm', title: 'mm ⇄ cm', pair: ['mm', 'cm'] }, { id: 'ly_km', title: 'light-year ⇄ km', pair: ['light_year', 'km'] }, { id: 'nm_km', title: 'nautical mile ⇄ km', pair: ['nautical_mile', 'km'] }, { id: 'custom', title: 'Universal Length Converter', type: 'custom', all: !0 }] },
             weight: { factors: { g: 1, kg: 1e3, mg: .001, tonne: 1e6, pound: 453.592, ounce: 28.3495, stone: 6350.29, carat: .2, microgram: 1e-6 }, converters: [{ id: 'g_kg', title: 'gram ⇄ kilogram', pair: ['g', 'kg'] }, { id: 'mg_g', title: 'milligram ⇄ gram', pair: ['mg', 'g'] }, { id: 'lb_kg', title: 'pound ⇄ kilogram', pair: ['pound', 'kg'] }, { id: 'oz_g', title: 'ounce ⇄ gram', pair: ['ounce', 'g'] }, { id: 't_kg', title: 'tonne ⇄ kilogram', pair: ['tonne', 'kg'] }, { id: 'ct_g', title: 'carat ⇄ gram', pair: ['carat', 'g'] }, { id: 'st_kg', title: 'stone ⇄ kilogram', pair: ['stone', 'kg'] }, { id: 'ug_mg', title: 'microgram ⇄ milligram', pair: ['microgram', 'mg'] }, { id: 'lb_oz', title: 'pound ⇄ ounce', pair: ['pound', 'ounce'] }, { id: 'kg_lb', title: 'kilogram ⇄ pound', pair: ['kg', 'pound'] }, { id: 'custom', title: 'Universal Weight Converter', type: 'custom', all: !0 }] },
             temperature: { units: ['Celsius', 'Fahrenheit', 'Kelvin', 'Rankine', 'Reaumur', 'Newton', 'Delisle', 'Romer'], converters: [{ id: 'c_f', title: 'Celsius ⇄ Fahrenheit', pair: ['Celsius', 'Fahrenheit'] }, { id: 'c_k', title: 'Celsius ⇄ Kelvin', pair: ['Celsius', 'Kelvin'] }, { id: 'f_k', title: 'Fahrenheit ⇄ Kelvin', pair: ['Fahrenheit', 'Kelvin'] }, { id: 'r_k', title: 'Rankine ⇄ Kelvin', pair: ['Rankine', 'Kelvin'] }, { id: 're_c', title: 'Réaumur ⇄ Celsius', pair: ['Reaumur', 'Celsius'] }, { id: 'n_c', title: 'Newton ⇄ Celsius', pair: ['Newton', 'Celsius'] }, { id: 'd_c', title: 'Delisle ⇄ Celsius', pair: ['Delisle', 'Celsius'] }, { id: 'c_ro', title: 'Celsius ⇄ Romer', pair: ['Celsius', 'Romer'] }, { id: 'f_ro', title: 'Fahrenheit ⇄ Romer', pair: ['Fahrenheit', 'Romer'] }, { id: 'k_ro', title: 'Kelvin ⇄ Romer', pair: ['Kelvin', 'Romer'] }, { id: 'custom', title: 'Universal Temperature Converter', type: 'custom', all: !0 }] },
@@ -869,7 +3461,41 @@
             data_transfer: { factors: { bit_s: 1, byte_s: 8, kb_s: 8192, mb_s: 8388608, gb_s: 8589934592, mbps: 1000000, gbps: 1e9 }, converters: [{ id: 'mbps_gbps', title: 'Mbps ⇄ Gbps', pair: ['mbps', 'gbps'] }, { id: 'mbps_mbs', title: 'Mbps ⇄ MB/s', pair: ['mbps', 'mb_s'] }, { id: 'mbs_mbps', title: 'MB/s ⇄ Mbps', pair: ['mb_s', 'mbps'] }, { id: 'kbs_mbs', title: 'KB/s ⇄ MB/s', pair: ['kb_s', 'mb_s'] }, { id: 'kbs_mbps', title: 'KB/s ⇄ Mbps', pair: ['kb_s', 'mbps'] }, { id: 'gbs_mbps', title: 'GB/s ⇄ Mbps', pair: ['gb_s', 'mbps'] }, { id: 'gbs_mbs', title: 'GB/s ⇄ MB/s', pair: ['gb_s', 'mb_s'] }, { id: 'bits_bytes', title: 'bit/s ⇄ byte/s', pair: ['bit_s', 'byte_s'] }, { id: 'bytes_kbs', title: 'byte/s ⇄ KB/s', pair: ['byte_s', 'kb_s'] }, { id: 'kbs_gbs', title: 'KB/s ⇄ GB/s', pair: ['kb_s', 'gb_s'] }, { id: 'custom', title: 'Universal Data Transfer Converter', type: 'custom', all: !0 }] },
             fuel: { units: ['km/L', 'L/100km', 'mpg(US)', 'mpg(UK)', 'km/gal', 'gal/100mi'], converters: [{ id: 'kml_l100', title: 'km/L ⇄ L/100 km', pair: ['km/L', 'L/100km'] }, { id: 'kml_mpg_us', title: 'km/L ⇄ mpg (US)', pair: ['km/L', 'mpg(US)'] }, { id: 'kml_mpg_uk', title: 'km/L ⇄ mpg (UK)', pair: ['km/L', 'mpg(UK)'] }, { id: 'mpg_us_l100', title: 'mpg (US) ⇄ L/100 km', pair: ['mpg(US)', 'L/100km'] }, { id: 'mpg_uk_l100', title: 'mpg (UK) ⇄ L/100 km', pair: ['mpg(UK)', 'L/100km'] }, { id: 'l100_mpg_us', title: 'L/100 km ⇄ mpg (US)', pair: ['L/100km', 'mpg(US)'] }, { id: 'l100_mpg_uk', title: 'L/100 km ⇄ mpg (UK)', pair: ['L/100km', 'mpg(UK)'] }, { id: 'gal100_kml', title: 'gallon/100 miles ⇄ km/L', pair: ['gal/100mi', 'km/L'] }, { id: 'mpg_us_kmgal', title: 'mpg (US) ⇄ km/gal', pair: ['mpg(US)', 'km/gal'] }, { id: 'kmgal_l100', title: 'km/gal ⇄ L/100 km', pair: ['km/gal', 'L/100km'] }, { id: 'custom', title: 'Universal Fuel Converter', type: 'custom', all: !0 }] },
             illuminance: { factors: { lux: 1, fc: 10.7639, lumen: 1, phot: 10000, nit: 3.14159, candela: 1, candlepower: 1 }, converters: [{ id: 'lux_fc', title: 'Lux ⇄ Foot-candle', pair: ['lux', 'fc'] }, { id: 'lumen_cd', title: 'Lumen ⇄ Candela', pair: ['lumen', 'candela'] }, { id: 'lux_lm', title: 'Lux ⇄ Lumen/m²', pair: ['lux', 'lumen'] }, { id: 'lux_phot', title: 'Lux ⇄ Phot', pair: ['lux', 'phot'] }, { id: 'cd_cp', title: 'Candela ⇄ Candlepower', pair: ['candela', 'candlepower'] }, { id: 'fc_lm', title: 'Foot-candle ⇄ Lumen/m²', pair: ['fc', 'lumen'] }, { id: 'lm_lux', title: 'Lumen ⇄ Lux', pair: ['lumen', 'lux'] }, { id: 'lux_nit', title: 'Lux ⇄ Nits', pair: ['lux', 'nit'] }, { id: 'cd_lux', title: 'Candela ⇄ Lux', pair: ['candela', 'lux'] }, { id: 'phot_lux', title: 'Phot ⇄ Lux', pair: ['phot', 'lux'] }, { id: 'custom', title: 'Universal Illuminance Converter', type: 'custom', all: !0 }] },
-            sound: { units: ['dB SPL', 'dB', 'pascal', 'watt/m²', 'phon', 'sone', 'amplitude_ratio'], converters: [{ id: 'dbspl_pa', title: 'dB SPL ⇄ sound pressure', pair: ['dB SPL', 'pascal'] }, { id: 'db_int', title: 'dB ⇄ intensity ratio', pair: ['dB', 'watt/m²'] }, { id: 'db_volt', title: 'dB ⇄ voltage ratio', pair: ['dB', 'amplitude_ratio'] }, { id: 'pa_dbspl', title: 'pascal ⇄ dB SPL', pair: ['pascal', 'dB SPL'] }, { id: 'watt_db', title: 'watt/m² ⇄ dB intensity', pair: ['watt/m²', 'dB'] }, { id: 'amp_db', title: 'amplitude ratio ⇄ dB', pair: ['amplitude_ratio', 'dB'] }, { id: 'db_amp', title: 'dBFS ⇄ amplitude', pair: ['dB', 'amplitude_ratio'] }, { id: 'phon_db', title: 'phon ⇄ decibel', pair: ['phon', 'dB'] }, { id: 'sone_phon', title: 'sone ⇄ phon', pair: ['sone', 'phon'] }, { id: 'int_press', title: 'sound intensity ⇄ sound pressure', pair: ['watt/m²', 'pascal'] }, { id: 'custom', title: 'Universal Sound Converter', type: 'custom', all: !0 }] }
+            sound: { units: ['dB SPL', 'dB', 'pascal', 'watt/m²', 'phon', 'sone', 'amplitude_ratio'], converters: [{ id: 'dbspl_pa', title: 'dB SPL ⇄ sound pressure', pair: ['dB SPL', 'pascal'] }, { id: 'db_int', title: 'dB ⇄ intensity ratio', pair: ['dB', 'watt/m²'] }, { id: 'db_volt', title: 'dB ⇄ voltage ratio', pair: ['dB', 'amplitude_ratio'] }, { id: 'pa_dbspl', title: 'pascal ⇄ dB SPL', pair: ['pascal', 'dB SPL'] }, { id: 'watt_db', title: 'watt/m² ⇄ dB intensity', pair: ['watt/m²', 'dB'] }, { id: 'amp_db', title: 'amplitude ratio ⇄ dB', pair: ['amplitude_ratio', 'dB'] }, { id: 'db_amp', title: 'dBFS ⇄ amplitude', pair: ['dB', 'amplitude_ratio'] }, { id: 'phon_db', title: 'phon ⇄ decibel', pair: ['phon', 'dB'] }, { id: 'sone_phon', title: 'sone ⇄ phon', pair: ['sone', 'phon'] }, { id: 'int_press', title: 'sound intensity ⇄ sound pressure', pair: ['watt/m²', 'pascal'] }, { id: 'custom', title: 'Universal Sound Converter', type: 'custom', all: !0 }] },
+
+            // New Categories
+            typography: { factors: { px: 1, pt: 1.333, em: 16, rem: 16, percent: 0.16, vw: 1 }, converters: [{ id: 'px_pt', title: 'Pixels ⇄ Points', pair: ['px', 'pt'] }, { id: 'px_em', title: 'Pixels ⇄ Em', pair: ['px', 'em'] }, { id: 'px_rem', title: 'Pixels ⇄ Rem', pair: ['px', 'rem'] }, { id: 'px_percent', title: 'Pixels ⇄ Percent', pair: ['px', 'percent'] }, { id: 'pt_em', title: 'Points ⇄ Em', pair: ['pt', 'em'] }, { id: 'em_rem', title: 'Em ⇄ Rem', pair: ['em', 'rem'] }, { id: 'em_percent', title: 'Em ⇄ Percent', pair: ['em', 'percent'] }, { id: 'pt_px', title: 'Points ⇄ Pixels', pair: ['pt', 'px'] }, { id: 'rem_px', title: 'Rem ⇄ Pixels', pair: ['rem', 'px'] }, { id: 'percent_px', title: 'Percent ⇄ Pixels', pair: ['percent', 'px'] }, { id: 'custom', title: 'Universal Typography Converter', type: 'custom', all: !0 }] },
+
+            cooking: {
+                ingredients: { flour: 125, sugar: 200, butter: 227, rice: 185, oats: 90, honey: 340, milk: 245, oil: 218, cocoa: 85, salt: 288 },
+                factors: { cup: 1, tbsp: 0.0625, tsp: 0.0208, ml: 0.00422, g: 1, oz: 28.35 },
+                converters: [{ id: 'cup_g', title: 'Cup ⇄ Grams', pair: ['cup', 'g'] }, { id: 'tbsp_g', title: 'Tablespoon ⇄ Grams', pair: ['tbsp', 'g'] }, { id: 'tsp_g', title: 'Teaspoon ⇄ Grams', pair: ['tsp', 'g'] }, { id: 'cup_ml', title: 'Cup ⇄ mL', pair: ['cup', 'ml'] }, { id: 'tbsp_ml', title: 'Tablespoon ⇄ mL', pair: ['tbsp', 'ml'] }, { id: 'cup_oz', title: 'Cup ⇄ Ounces', pair: ['cup', 'oz'] }, { id: 'oz_g', title: 'Ounces ⇄ Grams', pair: ['oz', 'g'] }, { id: 'tsp_ml', title: 'Teaspoon ⇄ mL', pair: ['tsp', 'ml'] }, { id: 'ml_g', title: 'mL ⇄ Grams', pair: ['ml', 'g'] }, { id: 'tbsp_tsp', title: 'Tablespoon ⇄ Teaspoon', pair: ['tbsp', 'tsp'] }, { id: 'custom', title: 'Universal Cooking Converter', type: 'custom', all: !0 }]
+            },
+
+            clothing: {
+                shoe_mens: { us: [6, 7, 8, 9, 10, 11, 12, 13], uk: [5.5, 6.5, 7.5, 8.5, 9.5, 10.5, 11.5, 12.5], eu: [39, 40, 41, 42.5, 44, 45, 46, 47], cm: [24.5, 25.4, 26, 26.7, 27.3, 28, 28.8, 29.4] },
+                shoe_womens: { us: [5, 6, 7, 8, 9, 10, 11], uk: [3, 4, 5, 6, 7, 8, 9], eu: [35, 36, 37.5, 38.5, 40, 41, 42], cm: [22, 22.9, 23.5, 24.1, 24.6, 25.4, 26] },
+                sizes: { XS: 1, S: 2, M: 3, L: 4, XL: 5, XXL: 6 },
+                factors: { us_m: 1, uk_m: 1, eu_m: 1, cm_m: 1, us_w: 1, uk_w: 1, eu_w: 1, cm_w: 1 },
+                converters: [{ id: 'us_uk_m', title: 'US ⇄ UK (Men)', pair: ['us_m', 'uk_m'] }, { id: 'us_eu_m', title: 'US ⇄ EU (Men)', pair: ['us_m', 'eu_m'] }, { id: 'us_cm_m', title: 'US ⇄ CM (Men)', pair: ['us_m', 'cm_m'] }, { id: 'uk_eu_m', title: 'UK ⇄ EU (Men)', pair: ['uk_m', 'eu_m'] }, { id: 'eu_cm_m', title: 'EU ⇄ CM (Men)', pair: ['eu_m', 'cm_m'] }, { id: 'us_uk_w', title: 'US ⇄ UK (Women)', pair: ['us_w', 'uk_w'] }, { id: 'us_eu_w', title: 'US ⇄ EU (Women)', pair: ['us_w', 'eu_w'] }, { id: 'us_cm_w', title: 'US ⇄ CM (Women)', pair: ['us_w', 'cm_w'] }, { id: 'uk_eu_w', title: 'UK ⇄ EU (Women)', pair: ['uk_w', 'eu_w'] }, { id: 'eu_cm_w', title: 'EU ⇄ CM (Women)', pair: ['eu_w', 'cm_w'] }, { id: 'custom', title: 'Universal Size Converter', type: 'custom', all: !0 }]
+            },
+
+            timezone: {
+                zones: [
+                    { city: 'New York', offset: -5, tz: 'America/New_York' },
+                    { city: 'London', offset: 0, tz: 'Europe/London' },
+                    { city: 'Paris', offset: 1, tz: 'Europe/Paris' },
+                    { city: 'Dubai', offset: 4, tz: 'Asia/Dubai' },
+                    { city: 'Mumbai', offset: 5.5, tz: 'Asia/Kolkata' },
+                    { city: 'Singapore', offset: 8, tz: 'Asia/Singapore' },
+                    { city: 'Tokyo', offset: 9, tz: 'Asia/Tokyo' },
+                    { city: 'Sydney', offset: 10, tz: 'Australia/Sydney' },
+                    { city: 'Los Angeles', offset: -8, tz: 'America/Los_Angeles' },
+                    { city: 'Berlin', offset: 1, tz: 'Europe/Berlin' }
+                ],
+                factors: { utc: 0 },
+                converters: [{ id: 'ny_london', title: 'New York ⇄ London', pair: ['New York', 'London'] }, { id: 'london_tokyo', title: 'London ⇄ Tokyo', pair: ['London', 'Tokyo'] }, { id: 'ny_la', title: 'New York ⇄ Los Angeles', pair: ['New York', 'Los Angeles'] }, { id: 'london_dubai', title: 'London ⇄ Dubai', pair: ['London', 'Dubai'] }, { id: 'tokyo_sydney', title: 'Tokyo ⇄ Sydney', pair: ['Tokyo', 'Sydney'] }, { id: 'ny_mumbai', title: 'New York ⇄ Mumbai', pair: ['New York', 'Mumbai'] }, { id: 'london_singapore', title: 'London ⇄ Singapore', pair: ['London', 'Singapore'] }, { id: 'paris_tokyo', title: 'Paris ⇄ Tokyo', pair: ['Paris', 'Tokyo'] }, { id: 'berlin_ny', title: 'Berlin ⇄ New York', pair: ['Berlin', 'New York'] }, { id: 'dubai_tokyo', title: 'Dubai ⇄ Tokyo', pair: ['Dubai', 'Tokyo'] }, { id: 'custom', title: 'World Clock', type: 'custom', all: !0 }]
+            }
         };
 
         // Reference Data for all 20 categories
@@ -1163,12 +3789,48 @@
             state: { view: 'home', category: null, converter: null, favorites: JSON.parse(localStorage.getItem('unit_favorites')) || [], history: JSON.parse(localStorage.getItem('unit_history')) || [] },
             init: function () { this.renderCategories(); this.setupSearch(); this.setupHistory(); },
             navigate: function (view, dataId = null) {
-                document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-                this.state.view = view;
-                if (view === 'home') { document.getElementById('home-view').classList.add('active'); this.state.category = null; this.renderCategories(); }
-                else if (view === 'category') { document.getElementById('category-view').classList.add('active'); if (dataId) this.state.category = dataId; this.renderConverterList(this.state.category); }
-                else if (view === 'converter') { document.getElementById('converter-view').classList.add('active'); if (dataId) this.state.converter = dataId; this.loadConverter(this.state.converter); }
+                const viewOrder = { home: 0, category: 1, converter: 2 };
+                const currentView = this.state.view;
+                const isForward = viewOrder[view] > viewOrder[currentView];
+
+                // Add exit animation to current view
+                const currentEl = document.querySelector('.view-section.active');
+                if (currentEl) {
+                    currentEl.style.animation = isForward ? 'slideOutLeft 0.3s ease-in forwards' : 'slideOutRight 0.3s ease-in forwards';
+                }
+
+                setTimeout(() => {
+                    document.querySelectorAll('.view-section').forEach(el => {
+                        el.classList.remove('active');
+                        el.style.animation = '';
+                    });
+                    this.state.view = view;
+
+                    let targetEl;
+                    if (view === 'home') {
+                        targetEl = document.getElementById('home-view');
+                        this.state.category = null;
+                        this.renderCategories();
+                        setTimeout(() => initCardTilt(), 100);
+                    }
+                    else if (view === 'category') {
+                        targetEl = document.getElementById('category-view');
+                        if (dataId) this.state.category = dataId;
+                        this.renderConverterList(this.state.category);
+                    }
+                    else if (view === 'converter') {
+                        targetEl = document.getElementById('converter-view');
+                        if (dataId) this.state.converter = dataId;
+                        this.loadConverter(this.state.converter);
+                    }
+
+                    if (targetEl) {
+                        targetEl.style.animation = isForward ? 'slideInRight 0.4s ease-out' : 'slideInLeft 0.4s ease-out';
+                        targetEl.classList.add('active');
+                    }
+                }, 300);
             },
+
             renderCategories: function () {
                 const grid = document.getElementById('category-grid'); grid.innerHTML = '';
                 if (this.state.favorites.length > 0) {
@@ -1186,7 +3848,9 @@
                 const hr = document.createElement('h3'); hr.style.gridColumn = "1/-1"; hr.innerText = "All Categories"; grid.appendChild(hr);
                 DATA.categories.forEach(cat => {
                     const card = document.createElement('div'); card.className = 'category-card';
-                    card.innerHTML = `<span class="cat-icon">${cat.icon}</span><div class="cat-title">${cat.name}</div><div class="cat-desc">${DATA[cat.id].converters.length} Converters</div>`;
+                    // Check if icon is an SVG reference (starts with 'svg:')
+                    const iconHtml = cat.icon.startsWith('svg:') ? SVG_ICONS[cat.icon.substring(4)] : cat.icon;
+                    card.innerHTML = `<span class="cat-icon">${iconHtml}</span><div class="cat-title">${cat.name}</div><div class="cat-desc">${DATA[cat.id].converters.length} Converters</div>`;
                     card.onclick = () => app.navigate('category', cat.id);
                     grid.appendChild(card);
                 });
@@ -1309,7 +3973,8 @@
                 return db;
             },
             reset: function () { document.getElementById('input-val').value = ''; document.getElementById('output-val').value = ''; document.getElementById('result-display').textContent = '0'; },
-            copyResult: function () { const v = document.getElementById('output-val').value; if (v) { navigator.clipboard.writeText(v); const b = event.target; const o = b.innerText; b.innerText = 'Copied!'; setTimeout(() => b.innerText = o, 1000); } },
+            copyResult: function () { const v = document.getElementById('output-val').value; if (v) { navigator.clipboard.writeText(v); showToast('✓ Copied to clipboard!'); } },
+
             setupSearch: function () {
                 const inp = document.getElementById('global-search'); const res = document.getElementById('search-results');
                 inp.oninput = (e) => {
@@ -1392,8 +4057,433 @@
             }
         };
 
+        // Calculator Object
+        const calc = {
+            expression: '',
+            result: '0',
+
+            open: function () {
+                document.getElementById('calc-overlay').classList.add('active');
+                this.clear();
+            },
+
+            close: function () {
+                document.getElementById('calc-overlay').classList.remove('active');
+            },
+
+            append: function (val) {
+                // Prevent multiple operators in a row
+                const lastChar = this.expression.slice(-1);
+                const operators = ['+', '-', '*', '/', '.'];
+                if (operators.includes(val) && operators.includes(lastChar)) {
+                    this.expression = this.expression.slice(0, -1) + val;
+                } else {
+                    this.expression += val;
+                }
+                this.updateDisplay();
+                this.liveEvaluate();
+            },
+
+            clear: function () {
+                this.expression = '';
+                this.result = '0';
+                this.updateDisplay();
+            },
+
+            backspace: function () {
+                this.expression = this.expression.slice(0, -1);
+                this.updateDisplay();
+                this.liveEvaluate();
+            },
+
+            evaluate: function () {
+                try {
+                    if (this.expression === '') {
+                        this.result = '0';
+                    } else {
+                        // Safe evaluation using Function constructor
+                        const sanitized = this.expression.replace(/[^0-9+\-*/.()]/g, '');
+                        const res = Function('"use strict"; return (' + sanitized + ')')();
+                        if (isNaN(res) || !isFinite(res)) {
+                            this.result = 'Error';
+                        } else {
+                            // Format result - show up to 10 decimal places, remove trailing zeros
+                            this.result = parseFloat(res.toPrecision(12)).toString();
+                        }
+                    }
+                } catch (e) {
+                    this.result = 'Error';
+                }
+                this.updateDisplay();
+            },
+
+            liveEvaluate: function () {
+                try {
+                    if (this.expression === '') {
+                        this.result = '0';
+                    } else {
+                        const sanitized = this.expression.replace(/[^0-9+\-*/.()]/g, '');
+                        const res = Function('"use strict"; return (' + sanitized + ')')();
+                        if (!isNaN(res) && isFinite(res)) {
+                            this.result = parseFloat(res.toPrecision(12)).toString();
+                        }
+                    }
+                } catch (e) {
+                    // Keep previous result if expression is incomplete
+                }
+                document.getElementById('calc-result').textContent = this.result;
+            },
+
+            updateDisplay: function () {
+                const exprDisplay = document.getElementById('calc-expr');
+                const resultDisplay = document.getElementById('calc-result');
+
+                // Format expression for display (replace operators with symbols)
+                const displayExpr = this.expression
+                    .replace(/\*/g, ' × ')
+                    .replace(/\//g, ' ÷ ')
+                    .replace(/\+/g, ' + ')
+                    .replace(/-/g, ' − ');
+
+                exprDisplay.textContent = displayExpr || '';
+                resultDisplay.textContent = this.result;
+            },
+
+            useResult: function () {
+                if (this.result !== 'Error' && this.result !== '0' || this.expression !== '') {
+                    // Evaluate one more time to get final result
+                    this.evaluate();
+                    if (this.result !== 'Error') {
+                        const inputField = document.getElementById('input-val');
+                        inputField.value = this.result;
+                        // Trigger conversion
+                        app.convert();
+                        this.close();
+                    }
+                }
+            }
+        };
+
+        // Keyboard support for calculator
+        document.addEventListener('keydown', function (e) {
+            const overlay = document.getElementById('calc-overlay');
+            if (!overlay.classList.contains('active')) return;
+
+            if (e.key >= '0' && e.key <= '9') calc.append(e.key);
+            else if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') calc.append(e.key);
+            else if (e.key === '.') calc.append('.');
+            else if (e.key === '(' || e.key === ')') calc.append(e.key);
+            else if (e.key === 'Enter') { calc.evaluate(); e.preventDefault(); }
+            else if (e.key === 'Escape') calc.close();
+            else if (e.key === 'Backspace') { calc.backspace(); e.preventDefault(); }
+            else if (e.key === 'Delete' || e.key.toLowerCase() === 'c') calc.clear();
+        });
+
+        // Theme Functions
+        function setTheme(theme) {
+            document.body.classList.remove('theme-cyberpunk', 'theme-light', 'theme-oled');
+            if (theme !== 'matrix') document.body.classList.add('theme-' + theme);
+            localStorage.setItem('unit_theme', theme);
+            document.getElementById('theme-panel').classList.remove('active');
+        }
+
+        function toggleThemePanel() {
+            document.getElementById('theme-panel').classList.toggle('active');
+        }
+
+        // Voice Input
+        const voice = {
+            recognition: null,
+            start: function () {
+                if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                    alert('Voice input not supported in this browser. Try Chrome.');
+                    return;
+                }
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                this.recognition = new SpeechRecognition();
+                this.recognition.continuous = false;
+                this.recognition.interimResults = true;
+                this.recognition.lang = 'en-US';
+
+                document.getElementById('voice-overlay').classList.add('active');
+                document.getElementById('voice-transcript').textContent = '...';
+
+                this.recognition.onresult = (e) => {
+                    const transcript = Array.from(e.results).map(r => r[0].transcript).join('');
+                    document.getElementById('voice-transcript').textContent = transcript;
+                    if (e.results[0].isFinal) {
+                        this.parseCommand(transcript);
+                    }
+                };
+
+                this.recognition.onerror = () => this.stop();
+                this.recognition.onend = () => this.stop();
+                this.recognition.start();
+            },
+            stop: function () {
+                if (this.recognition) this.recognition.stop();
+                document.getElementById('voice-overlay').classList.remove('active');
+            },
+            parseCommand: function (text) {
+                const match = text.match(/convert\s+(\d+\.?\d*)\s+(\w+)\s+to\s+(\w+)/i);
+                if (match) {
+                    document.getElementById('input-val').value = match[1];
+                    app.convert();
+                    this.stop();
+                }
+            }
+        };
+
+        // Quiz Mode
+        const quiz = {
+            score: 0,
+            current: 0,
+            questions: [
+                { q: 'How many centimeters are in 1 meter?', a: 100, opts: [10, 50, 100, 1000] },
+                { q: 'How many inches are in 1 foot?', a: 12, opts: [6, 10, 12, 24] },
+                { q: 'How many grams are in 1 kilogram?', a: 1000, opts: [100, 500, 1000, 10000] },
+                { q: 'Roughly how many kilometers are in 1 mile?', a: 1.6, opts: [0.6, 1.0, 1.6, 2.2] },
+                { q: 'How many milliliters are in 1 liter?', a: 1000, opts: [100, 500, 1000, 5000] },
+                { q: 'At what Celsius temp does water boil?', a: 100, opts: [50, 100, 150, 212] },
+                { q: 'How many seconds in 1 minute?', a: 60, opts: [30, 60, 100, 120] },
+                { q: 'How many feet are in 1 yard?', a: 3, opts: [1, 2, 3, 6] },
+                { q: 'How many bytes are in 1 kilobyte (binary)?', a: 1024, opts: [256, 512, 1000, 1024] },
+                { q: 'How many ounces are in 1 pound?', a: 16, opts: [8, 12, 16, 20] }
+            ],
+            open: function () {
+                this.score = 0;
+                this.current = 0;
+                this.shuffleQuestions();
+                this.showQuestion();
+                document.getElementById('quiz-overlay').classList.add('active');
+            },
+            close: function () {
+                document.getElementById('quiz-overlay').classList.remove('active');
+            },
+            shuffleQuestions: function () {
+                this.questions.sort(() => Math.random() - 0.5);
+            },
+            showQuestion: function () {
+                if (this.current >= 10) {
+                    document.getElementById('quiz-question').textContent = `Game Over! Final Score: ${this.score}/10`;
+                    document.getElementById('quiz-options').innerHTML = '';
+                    return;
+                }
+                const q = this.questions[this.current];
+                document.getElementById('quiz-score').textContent = this.score;
+                document.getElementById('quiz-question').textContent = q.q;
+                const shuffledOpts = [...q.opts].sort(() => Math.random() - 0.5);
+                document.getElementById('quiz-options').innerHTML = shuffledOpts.map(o =>
+                    `<div class="quiz-option" onclick="quiz.answer(${o}, ${q.a})">${o}</div>`
+                ).join('');
+            },
+            answer: function (selected, correct) {
+                const opts = document.querySelectorAll('.quiz-option');
+                opts.forEach(o => {
+                    if (parseFloat(o.textContent) === correct) o.classList.add('correct');
+                    else if (parseFloat(o.textContent) === selected) o.classList.add('wrong');
+                    o.style.pointerEvents = 'none';
+                });
+                if (selected === correct) this.score++;
+                document.getElementById('quiz-score').textContent = this.score;
+            },
+            next: function () {
+                this.current++;
+                this.showQuestion();
+            }
+        };
+
+        // Export History to CSV
+        function exportHistory() {
+            const history = JSON.parse(localStorage.getItem('unit_history') || '[]');
+            if (history.length === 0) { alert('No history to export'); return; }
+            let csv = 'Time,Input,From,Output,To\n';
+            history.forEach(h => {
+                csv += `${h.time},${h.in},${h.u1},${h.out},${h.u2}\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'conversion_history.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Conversion Table
+        function showConversionTable() {
+            const from = document.getElementById('unit-from').value;
+            const to = document.getElementById('unit-to').value;
+            const cat = app.state.category;
+            if (!cat || cat === 'temperature' || cat === 'fuel' || cat === 'sound') {
+                alert('Table not available for this converter');
+                return;
+            }
+            const f = DATA[cat].factors;
+            const ratio = f[from] / f[to];
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+            for (let i = 1; i <= 100; i++) {
+                const result = (i * ratio).toFixed(4);
+                tbody.innerHTML += `<tr><td>${i} ${from}</td><td>${result} ${to}</td></tr>`;
+            }
+            document.getElementById('table-modal').classList.add('active');
+        }
+
+        function closeTableModal() {
+            document.getElementById('table-modal').classList.remove('active');
+        }
+
+        // Comparison View (Show All Units)
+        function showComparisonView() {
+            const val = parseFloat(document.getElementById('input-val').value);
+            const from = document.getElementById('unit-from').value;
+            const cat = app.state.category;
+            if (isNaN(val) || !cat) return;
+
+            let results = [];
+            if (cat === 'temperature') {
+                DATA.temperature.units.forEach(u => {
+                    if (u !== from) {
+                        const res = app.convertTemp(val, from, u);
+                        results.push({ unit: u, value: res.toFixed(2) });
+                    }
+                });
+            } else if (DATA[cat] && DATA[cat].factors) {
+                const f = DATA[cat].factors;
+                Object.keys(f).forEach(u => {
+                    if (u !== from) {
+                        const base = val * f[from];
+                        const res = base / f[u];
+                        results.push({ unit: u.replace(/_/g, ' '), value: res < 0.0001 || res > 1e9 ? res.toExponential(4) : parseFloat(res.toFixed(6)) });
+                    }
+                });
+            }
+
+            let html = '<div class="comparison-results"><h4 style="margin-bottom:12px;">📊 All Conversions:</h4>';
+            results.forEach(r => {
+                html += `<div class="comparison-item"><span class="unit-name">${r.unit}</span><span class="unit-value">${r.value}</span></div>`;
+            });
+            html += '</div>';
+
+            const existingComp = document.querySelector('.comparison-results');
+            if (existingComp) existingComp.remove();
+            document.querySelector('.converter-ui').insertAdjacentHTML('beforeend', html);
+        }
+
+        // Live Currency Update
+        async function fetchCurrencyRates() {
+            try {
+                const resp = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+                const data = await resp.json();
+                if (data.rates) {
+                    const inrRate = data.rates.INR || 83.5;
+                    DATA.currency.factors = {
+                        inr: 1,
+                        usd: inrRate,
+                        eur: inrRate / data.rates.EUR,
+                        gbp: inrRate / data.rates.GBP,
+                        aud: inrRate / data.rates.AUD,
+                        cad: inrRate / data.rates.CAD,
+                        jpy: inrRate / data.rates.JPY,
+                        cny: inrRate / data.rates.CNY,
+                        sgd: inrRate / data.rates.SGD
+                    };
+                    console.log('Currency rates updated:', new Date().toLocaleString());
+                }
+            } catch (e) { console.log('Using offline currency rates'); }
+        }
+
+        // Toast Notification
+        function showToast(message) {
+            let toast = document.querySelector('.toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.className = 'toast';
+                document.body.appendChild(toast);
+            }
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // 3D Card Tilt Effect
+        function initCardTilt() {
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = (y - centerY) / 10;
+                    const rotateY = (centerX - x) / 10;
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+                });
+            });
+        }
+
+        // Ripple Effect on Buttons
+        function addRipple(e) {
+            const btn = e.currentTarget;
+            const circle = document.createElement('span');
+            const diameter = Math.max(btn.clientWidth, btn.clientHeight);
+            const radius = diameter / 2;
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${e.clientX - btn.getBoundingClientRect().left - radius}px`;
+            circle.style.top = `${e.clientY - btn.getBoundingClientRect().top - radius}px`;
+            circle.className = 'ripple';
+            const oldRipple = btn.querySelector('.ripple');
+            if (oldRipple) oldRipple.remove();
+            btn.appendChild(circle);
+        }
+
+        // Rolling Number Animation
+        function animateNumber(element, target, duration = 500) {
+            const start = parseFloat(element.textContent) || 0;
+            const startTime = performance.now();
+            const update = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+                const current = start + (target - start) * eased;
+                element.textContent = current < 0.001 && current !== 0 ? current.toExponential(4) :
+                    (Math.abs(current) > 1e9 ? current.toExponential(4) :
+                        (Number.isInteger(target) ? Math.round(current) : current.toFixed(6).replace(/\.?0+$/, '')));
+                if (progress < 1) requestAnimationFrame(update);
+            };
+            requestAnimationFrame(update);
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
+
+            // Initialize Lucide Icons
+            lucide.createIcons();
+
+            // Load saved theme
+            const savedTheme = localStorage.getItem('unit_theme');
+            if (savedTheme) setTheme(savedTheme);
+
+            // Fetch live currency rates
+            fetchCurrencyRates();
+
+            // Add ripple effect to all buttons
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.style.position = 'relative';
+                btn.style.overflow = 'hidden';
+                btn.addEventListener('click', addRipple);
+            });
+
+            // Initialize 3D card tilt after a short delay (for dynamically loaded cards)
+            setTimeout(() => initCardTilt(), 1500);
+
             // Preloader Logic
+
+
+
             const text = document.getElementById('loader-perc');
             const bar = document.getElementById('loader-prog');
             const loader = document.getElementById('preloader');
