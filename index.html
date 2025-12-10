@@ -7,7 +7,7 @@
         href="https://raw.githubusercontent.com/ankushchowrasia/universalunitconconverter/03eb0fa83270da69d759bf5cae2fdbf76d85d92d/universal%20unit%20converter.png"
         type="image/png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unit Converter Hub - 250+ Converters</title>
+    <title>Unit Converter Hub - 110 Converters</title>
     <meta name="description" content="Universal Unit Converter. Matrix Theme.">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -28,9 +28,16 @@
             --text-muted-dark: #4af25d;
             --border-dark: #003300;
             --shadow-dark: 0 4px 6px -1px rgba(0, 255, 65, 0.2);
+
+            /* Fluid Typography Variables */
+            --fs-base: clamp(14px, 1vw + 10px, 18px);
+            --fs-h1: clamp(1.5rem, 2.5vw + 1rem, 2.5rem);
+            --fs-h2: clamp(1.2rem, 2vw + 1rem, 2rem);
+            --fs-h3: clamp(1.1rem, 1.5vw + 1rem, 1.75rem);
+
+            /* Responsive Spacing */
+            --sp-container: clamp(16px, 5vw, 24px);
         }
-
-
 
         body {
             --bg: var(--bg-light);
@@ -65,6 +72,8 @@
             color: var(--text);
             overflow-x: hidden;
             min-height: 100vh;
+            font-size: var(--fs-base);
+            line-height: 1.6;
         }
 
         /* Custom Scrollbar */
@@ -1545,9 +1554,9 @@
 
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 24px;
+            padding: var(--sp-container);
             position: relative;
             z-index: 10;
         }
@@ -1565,16 +1574,10 @@
             backdrop-filter: blur(4px);
         }
 
-
-
         .logo h1 {
             font-size: 1.5rem;
             font-weight: 800;
             color: #ffffff;
-            /* background: linear-gradient(135deg, var(--primary), var(--secondary)); */
-            /* background-clip: text; */
-            /* -webkit-background-clip: text; */
-            /* -webkit-text-fill-color: transparent; */
         }
 
         .header-controls {
@@ -1611,7 +1614,6 @@
             stroke-width: 2;
         }
 
-
         .btn-icon {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -1646,8 +1648,6 @@
             color: #ffffff;
             box-shadow: 0 0 15px rgba(0, 255, 65, 0.3), inset 0 0 5px rgba(0, 255, 65, 0.1);
             font-size: 1rem;
-
-
             outline: none;
         }
 
@@ -1716,7 +1716,7 @@
 
         .category-grid {
             display: grid;
-            /* PC: 4 columns, 5 rows (for 20 items) -> "Filled" look */
+            /* PC: 4 columns */
             grid-template-columns: repeat(4, 1fr);
             gap: 30px;
             padding: 20px 0;
@@ -1726,11 +1726,14 @@
             background: var(--surface);
             border-radius: 16px;
             padding: 30px;
+
             text-align: center;
             cursor: pointer;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
-            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            transition: transform 0.3s,
+                box-shadow 0.3s,
+                border-color 0.3s;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -3092,6 +3095,210 @@
                 transform: translate(0, 0);
                 opacity: 0;
             }
+
+        }
+
+        /* =========================================
+           RESPONSIVE BREAKPOINTS SYSTEM
+           ========================================= */
+
+        /* 1. Large Desktop (≥ 1400px) */
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1320px;
+            }
+
+            .category-grid {
+                gap: 40px;
+                /* More spacing on huge screens */
+            }
+        }
+
+        /* 2. Laptop/Tablet Landscape (992px - 1199px) */
+        @media (max-width: 1199px) {
+            .category-grid {
+                grid-template-columns: repeat(3, 1fr);
+                /* 3 Columns */
+                gap: 24px;
+            }
+
+            .converter-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* 3. Tablet Portrait (768px - 991px) */
+        @media (max-width: 991px) {
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+                /* 2 Columns */
+            }
+
+            .site-footer {
+                padding: 30px 20px;
+            }
+        }
+
+        /* 4. Mobile (≤ 768px) - The Major Breakpoint */
+        @media (max-width: 768px) {
+
+            /* Header Stacking */
+            header {
+                flex-direction: column;
+                gap: 16px;
+                padding: 16px;
+                text-align: center;
+            }
+
+            .header-controls {
+                width: 100%;
+                justify-content: center;
+                gap: 20px;
+                margin-top: 4px;
+            }
+
+            .logo h1 {
+                font-size: 1.4rem;
+                /* Smaller title */
+            }
+
+            /* Search Bar */
+            .search-container {
+                max-width: 100%;
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+
+            /* Category Grid Single Column */
+            .category-grid {
+                grid-template-columns: 1fr;
+                /* Full width cards */
+                gap: 20px;
+                padding: 10px 0;
+            }
+
+            .category-card {
+                display: flex;
+                flex-direction: row;
+                /* Horizontal layout for cards on mobile */
+                align-items: center;
+                justify-content: flex-start;
+                padding: 20px;
+                gap: 20px;
+                text-align: left;
+            }
+
+            .cat-icon {
+                margin-bottom: 0;
+                transform: scale(0.8);
+            }
+
+            .cat-desc {
+                margin-top: 4px;
+            }
+
+            /* Converter UI */
+            .converter-ui {
+                padding: 24px 16px;
+                border-radius: 16px;
+            }
+
+            .input-wrapper {
+                flex-direction: column;
+            }
+
+            .conv-input,
+            .conv-select {
+                width: 100%;
+            }
+
+            .controls {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            /* Footer Stacking */
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 40px;
+            }
+
+            .footer-brand {
+                align-items: center;
+                width: 100%;
+            }
+
+            .footer-logo {
+                flex-direction: column;
+                gap: 12px;
+                margin-bottom: 16px;
+            }
+
+            .footer-logo-icon {
+                margin: 0 auto;
+            }
+
+            .footer-tagline {
+                max-width: 100%;
+                margin: 0 auto;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .footer-credit {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        /* 5. Small Mobile (≤ 576px) */
+        @media (max-width: 576px) {
+            :root {
+                --sp-container: 16px;
+                /* Tight padding */
+            }
+
+            .category-card {
+                padding: 16px;
+                /* Compact cards */
+            }
+
+            .result-value {
+                font-size: 1.5rem;
+                /* Prevent overflow */
+            }
+        }
+
+        /* 6. Ultra Small (≤ 390px) - iPhone SE / Foldable outer screens */
+        @media (max-width: 390px) {
+            .header-icon-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+
+            .header-controls {
+                gap: 10px;
+            }
+
+            .logo h1 {
+                font-size: 1.2rem;
+            }
+
+            .footer-credit-btn {
+                width: 100%;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -3246,7 +3453,7 @@
 
         <div class="search-container">
             <span class="search-icon">🔍</span>
-            <input type="text" class="search-input" id="global-search" placeholder="Search 250+ converters...">
+            <input type="text" class="search-input" id="global-search" placeholder="Search 154+ converters...">
 
             <div id="search-results"></div>
         </div>
