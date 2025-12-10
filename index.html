@@ -2052,13 +2052,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 24px;
+            padding: 12px 16px;
             background: rgba(0, 0, 0, 0.85);
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 1000;
             backdrop-filter: blur(10px);
+            /* OVERFLOW FIX */
+            max-width: 100%;
+            width: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
         }
 
         .nav-brand {
@@ -2083,8 +2088,8 @@
 
         /* Hamburger Menu Button */
         .hamburger-btn {
-            width: 44px;
-            height: 44px;
+            width: 42px;
+            height: 42px;
             border: 2px solid var(--primary);
             border-radius: 8px;
             background: transparent;
@@ -2094,13 +2099,16 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
-            padding: 10px;
+            padding: 8px;
             transition: all 0.3s ease;
+            /* OVERFLOW FIX */
+            flex-shrink: 0;
+            box-sizing: border-box;
         }
 
         .hamburger-btn:hover {
             background: rgba(0, 255, 65, 0.1);
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
         }
 
         .hamburger-btn span {
@@ -2143,6 +2151,8 @@
 
         .slide-menu.open {
             right: 0;
+            visibility: visible;
+            opacity: 1;
         }
 
         .slide-menu-item {
@@ -4641,16 +4651,31 @@
             }
         }
 
-        /* ============ PREVENT HORIZONTAL SCROLL ============ */
+        /* ============ GLOBAL OVERFLOW PREVENTION ============ */
+        /* CRITICAL: Use 100% instead of 100vw to avoid scrollbar issues */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            max-width: 100%;
+        }
+
         html,
         body {
-            overflow-x: hidden;
-            max-width: 100vw;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden !important;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        body {
+            position: relative;
         }
 
         .container {
-            overflow-x: hidden;
+            width: 100%;
             max-width: 100%;
+            overflow-x: hidden;
         }
 
         /* ============ TOUCH TARGETS ============ */
@@ -4664,6 +4689,280 @@
             .calc-btn,
             .quiz-option {
                 min-height: 44px;
+            }
+        }
+
+        /* ============================================
+           MOBILE PERFORMANCE & OVERFLOW FIXES
+           Comprehensive GPU optimization and strict containment
+           ============================================ */
+
+        /* FIXED ELEMENTS - Strict containment */
+        .header,
+        .nav,
+        .top-nav,
+        .menu {
+            position: sticky;
+            left: 0;
+            right: 0;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        /* NAVBAR CONTAINMENT - FIX HAMBURGER OVERFLOW */
+        .top-nav {
+            box-sizing: border-box !important;
+            overflow: hidden;
+            contain: layout style;
+        }
+
+        .hamburger-btn {
+            flex-shrink: 0;
+            box-sizing: border-box;
+            contain: layout paint;
+        }
+
+        /* SLIDE MENU - Off-canvas properly positioned */
+        .slide-menu {
+            max-width: calc(100% - 20px);
+            contain: layout style;
+            /* Aggressive hiding for "black bar" fix */
+            visibility: hidden;
+            opacity: 0;
+            transition: right 0.3s ease, opacity 0.3s ease, visibility 0.3s;
+        }
+
+        /* GPU ACCELERATION - Apply only where needed */
+        /* NOTE: .slide-menu excluded - transform conflicts with right positioning */
+        .category-card,
+        .converter-item,
+        .calc-popup,
+        .history-panel {
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        /* OPTIMIZE STICKY NAVBAR */
+        .top-nav {
+            will-change: auto;
+            contain: layout style;
+        }
+
+        /* CONTAINER OVERFLOW FIX */
+        .container,
+        main,
+        #page-home,
+        #page-category,
+        #page-converter {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* SEARCH CONTAINER CONTAINMENT */
+        .search-container {
+            width: calc(100% - 24px);
+            max-width: 550px;
+            box-sizing: border-box;
+        }
+
+        /* CATEGORY GRID CONTAINMENT - Use minmax(0, 1fr) to prevent overflow */
+        .category-grid {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* ============ MOBILE OPTIMIZATIONS (≤ 767px) ============ */
+        @media (max-width: 767px) {
+
+            /* NAVBAR MOBILE FIXES */
+            .top-nav {
+                padding: 10px 12px !important;
+                gap: 8px;
+                width: 100%;
+            }
+
+            .hamburger-btn {
+                width: 40px !important;
+                height: 40px !important;
+                padding: 8px;
+                margin-right: 0 !important;
+                /* Remove glow on mobile - border only */
+                box-shadow: none !important;
+                border: 1.5px solid var(--primary);
+            }
+
+            .hamburger-btn:hover,
+            .hamburger-btn:focus {
+                box-shadow: none !important;
+                border-color: var(--primary);
+                background: rgba(0, 255, 65, 0.1);
+            }
+
+            .nav-brand {
+                flex-shrink: 1;
+                min-width: 0;
+                overflow: hidden;
+            }
+
+            .nav-title {
+                font-size: 0.95rem !important;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .nav-logo {
+                width: 32px !important;
+                height: 32px !important;
+                flex-shrink: 0;
+            }
+
+            /* CATEGORY GRID - Force 2 columns with minmax to prevent overflow */
+            .category-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                gap: 12px;
+                padding: 10px 8px;
+            }
+
+            /* PERFORMANCE: Simplified shadows on mobile */
+            .category-card {
+                box-shadow: none !important;
+                border: 1px solid rgba(0, 255, 65, 0.3);
+            }
+
+            .category-card:hover,
+            .category-card:active {
+                box-shadow: none !important;
+                border-color: var(--primary);
+            }
+
+            .converter-item {
+                box-shadow: none !important;
+                border: 1px solid rgba(0, 255, 65, 0.2);
+            }
+
+            /* PERFORMANCE: Disable heavy glow effects */
+            .search-container::after,
+            .hero-section::before,
+            .hero-section::after {
+                display: none;
+            }
+
+            /* PERFORMANCE: Reduce/Disable animations on mobile */
+            .cat-icon svg * {
+                animation-duration: 0s !important;
+                animation: none !important;
+            }
+
+            /* Keep essential transitions but make them faster */
+            .view-section,
+            .slide-menu,
+            .btn,
+            .back-btn {
+                transition-duration: 0.15s !important;
+            }
+
+            /* Disable non-essential transitions */
+            .category-card,
+            .converter-item,
+            .cat-icon,
+            .cat-icon svg {
+                transition: none !important;
+            }
+
+            /* SVG icon containment */
+            .cat-icon {
+                overflow: visible;
+                contain: layout;
+            }
+
+            .cat-icon svg {
+                will-change: auto;
+                contain: strict;
+            }
+
+            /* Smoother scrolling */
+            .container,
+            #page-home,
+            #page-category,
+            #page-converter {
+                -webkit-overflow-scrolling: touch;
+                scroll-behavior: smooth;
+            }
+
+            /* Paint containment for heavy sections */
+            .site-footer,
+            .hero-section,
+            #bg-image {
+                contain: layout paint;
+            }
+
+            /* Background optimization - disable fixed attachment */
+            #bg-image {
+                background-attachment: scroll !important;
+            }
+
+            /* Disable hover effects on touch devices */
+            @media (hover: none) {
+
+                .category-card:hover,
+                .converter-item:hover,
+                .btn:hover {
+                    transform: none !important;
+                    box-shadow: none !important;
+                }
+            }
+        }
+
+        /* ============ VERY SMALL MOBILE (≤ 400px) ============ */
+        @media (max-width: 400px) {
+            .top-nav {
+                padding: 8px 10px !important;
+            }
+
+            .hamburger-btn {
+                width: 36px !important;
+                height: 36px !important;
+                padding: 6px;
+                border-width: 1.5px;
+            }
+
+            .hamburger-btn span {
+                width: 16px;
+            }
+
+            .nav-logo {
+                width: 28px !important;
+                height: 28px !important;
+            }
+
+            .nav-title {
+                font-size: 0.85rem !important;
+            }
+
+            .category-grid {
+                gap: 10px;
+                padding: 8px 6px;
+            }
+        }
+
+        /* ============ DESKTOP GLOW EFFECTS (≥ 768px) ============ */
+        @media (min-width: 768px) {
+            .category-card {
+                box-shadow: 0 4px 15px rgba(0, 255, 65, 0.15);
+            }
+
+            .category-card:hover {
+                box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+            }
+
+            .hamburger-btn:hover,
+            .hamburger-btn:focus {
+                box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
             }
         }
     </style>
@@ -4982,21 +5281,29 @@
                         </svg>
                     </div>
                     <div class="footer-logo-text" style="color: white !important;">
-                        <span>Universal Unit</span> <strong> Converter</strong>
+                        <span style="color: white !important;">Universal Unit</span> <strong
+                            style="color: white !important;"> Converter</strong>
                     </div>
                 </div>
                 <p class="footer-tagline">A hub with more than 240+ Converters, a one-stop-shop for students and
                     professionals.</p>
             </div>
             <div class="footer-socials">
-                <a href="https://facebook.com" target="_blank" class="social-icon" title="Facebook">
+                <a href="https://www.facebook.com/profile.php?id=100074737849819" target="_blank" class="social-icon"
+                    title="Facebook">
                     <i data-lucide="facebook"></i>
                 </a>
-                <a href="https://linkedin.com" target="_blank" class="social-icon" title="LinkedIn">
+                <a href="https://www.linkedin.com/in/ankushchowrasia27/" target="_blank" class="social-icon"
+                    title="LinkedIn">
                     <i data-lucide="linkedin"></i>
                 </a>
-                <a href="https://instagram.com" target="_blank" class="social-icon" title="Instagram">
+                <a href="https://www.instagram.com/ankushchowrasia/" target="_blank" class="social-icon"
+                    title="Instagram">
                     <i data-lucide="instagram"></i>
+                </a>
+                <a href="https://github.com/ankushchowrasia/universalunitconconverter" target="_blank"
+                    class="social-icon" title="GitHub">
+                    <i data-lucide="github"></i>
                 </a>
             </div>
         </div>
@@ -5004,7 +5311,8 @@
             <span>© 2025 Universal Unit Converter. All rights reserved.</span>
             <div class="footer-credit">
                 <span>Designed with 💚 creativity of</span>
-                <button class="footer-credit-btn">Ankush Chowrasia</button>
+                <a href="https://ankushchowrasia.vercel.app/" target="_blank" class="footer-credit-btn">Ankush
+                    Chowrasia</a>
             </div>
         </div>
     </footer>
