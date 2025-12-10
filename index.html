@@ -7,7 +7,7 @@
         href="https://raw.githubusercontent.com/ankushchowrasia/universalunitconconverter/03eb0fa83270da69d759bf5cae2fdbf76d85d92d/universal%20unit%20converter.png"
         type="image/png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universal Unit Converter - 250+ Converters</title>
+    <title>Unit Converter Hub - 110 Converters</title>
     <meta name="description" content="Universal Unit Converter. Matrix Theme.">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -1534,87 +1534,201 @@
             }
         }
 
-        /* 16 Angle - protractor rotate */
-        .angle .arm {
-            transform-origin: 50% 50%;
+        /* 16 Angle - Rotating Arm with Arc */
+        .angle .icon-stroke {
             stroke: #00ff41;
             stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
             fill: none;
-            animation: armRotate 1.8s linear infinite;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
         }
 
-        @keyframes armRotate {
-            0% {
-                transform: rotate(0deg)
-            }
-
-            100% {
-                transform: rotate(360deg)
-            }
-        }
-
-        /* 17 Data Transfer - arrows moving */
-        .transfer .arrowA {
-            stroke: #00ff41;
-            stroke-width: 3;
-            fill: none;
-            animation: moveA 1.4s linear infinite;
-        }
-
-        .transfer .arrowB {
-            stroke: #00ff41;
-            stroke-width: 3;
-            fill: none;
-            animation: moveB 1.4s linear infinite reverse;
-        }
-
-        @keyframes moveA {
-            0% {
-                transform: translateX(-6px)
-            }
-
-            50% {
-                transform: translateX(6px)
-            }
-
-            100% {
-                transform: translateX(-6px)
-            }
-        }
-
-        @keyframes moveB {
-            0% {
-                transform: translateX(6px)
-            }
-
-            50% {
-                transform: translateX(-6px)
-            }
-
-            100% {
-                transform: translateX(6px)
-            }
-        }
-
-        /* 18 Fuel Consumption - drop pulse */
-        .fuel .drop {
+        .angle .icon-fill {
             fill: #00ff41;
-            transform-origin: 50% 50%;
-            animation: dropPulse 1.6s ease-in-out infinite;
-            filter: drop-shadow(0 0 6px #00ff41);
+            stroke: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
         }
 
-        @keyframes dropPulse {
-            0% {
-                transform: translateY(0)
-            }
+        .angle .draw-fixed {
+            stroke-dasharray: 200;
+            stroke-dashoffset: 0;
+            animation: angle-draw-in 1.5s ease-out forwards;
+        }
 
-            50% {
-                transform: translateY(-6px)
+        .angle .rotating-arm {
+            transform-origin: 20px 80px;
+            animation: angle-swing 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+        }
+
+        .angle .angle-arc {
+            stroke-width: 2;
+            fill: none;
+            opacity: 0.8;
+            transform-origin: 20px 80px;
+            transform: scaleY(-1);
+            animation: arc-grow 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+        }
+
+        .angle .vertex-point {
+            transform-origin: 20px 80px;
+            animation: pulse-vertex 2.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes angle-draw-in {
+            0% {
+                stroke-dashoffset: 200;
+                opacity: 0;
             }
 
             100% {
-                transform: translateY(0)
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        @keyframes angle-swing {
+            0% {
+                transform: rotate(-20deg);
+            }
+
+            100% {
+                transform: rotate(-90deg);
+            }
+        }
+
+        @keyframes arc-grow {
+            0% {
+                stroke-dasharray: 12.2 300;
+                opacity: 0.5;
+            }
+
+            100% {
+                stroke-dasharray: 55 300;
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse-vertex {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.5);
+            }
+        }
+
+        /* 17 Data Transfer - Sliding Arrows */
+        .transfer .icon-stroke {
+            stroke: #00ff41;
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .transfer .arrow-right {
+            animation: slide-right-transfer 1.5s ease-in-out infinite alternate, pulse-glow-transfer 2s ease-in-out infinite;
+        }
+
+        .transfer .arrow-left {
+            animation: slide-left-transfer 1.5s ease-in-out infinite alternate, pulse-glow-transfer 2s ease-in-out infinite;
+        }
+
+        @keyframes slide-right-transfer {
+            0% {
+                transform: translateX(-5px);
+            }
+
+            100% {
+                transform: translateX(5px);
+            }
+        }
+
+        @keyframes slide-left-transfer {
+            0% {
+                transform: translateX(5px);
+            }
+
+            100% {
+                transform: translateX(-5px);
+            }
+        }
+
+        @keyframes pulse-glow-transfer {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+                opacity: 0.8;
+            }
+
+            50% {
+                filter: drop-shadow(0 0 5px rgba(0, 255, 65, 0.8)) drop-shadow(0 0 10px rgba(0, 255, 65, 0.6));
+                opacity: 1;
+            }
+        }
+
+        /* 18 Fuel Consumption - Jerry Can with Dripping Drop */
+        .fuel .icon-stroke {
+            stroke: #00ff41;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .fuel .icon-fill {
+            fill: #00ff41;
+            stroke: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .fuel .fuel-tank {
+            animation: tank-pulse 4s ease-in-out infinite;
+        }
+
+        .fuel .fuel-drop {
+            transform-box: fill-box;
+            transform-origin: center top;
+            animation: drop-drip 2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        }
+
+        @keyframes tank-pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+            }
+
+            50% {
+                opacity: 0.8;
+                filter: drop-shadow(0 0 1px rgba(0, 255, 65, 0.3));
+            }
+        }
+
+        @keyframes drop-drip {
+            0% {
+                transform: translateY(0) scale(0);
+                opacity: 0;
+            }
+
+            20% {
+                transform: translateY(3px) scale(1);
+                opacity: 1;
+            }
+
+            40% {
+                transform: translateY(3px) scale(1.1);
+            }
+
+            100% {
+                transform: translateY(60px) scale(0.5);
+                opacity: 0;
             }
         }
 
@@ -1953,39 +2067,85 @@
             display: block;
         }
 
-        /* Hero Section */
+        /* Hero Section - Competition Ready */
         .hero-section {
             text-align: center;
-            padding: 50px 20px 40px;
-            background: linear-gradient(180deg, rgba(0, 30, 10, 0.3) 0%, transparent 100%);
+            padding: clamp(40px, 8vw, 80px) 20px clamp(30px, 6vw, 60px);
+            background: linear-gradient(180deg, rgba(0, 40, 15, 0.4) 0%, rgba(0, 20, 5, 0.2) 50%, transparent 100%);
+            position: relative;
         }
 
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.5), transparent);
+        }
+
+        /* Welcome You - 2x the title size */
         .hero-welcome {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            letter-spacing: 2px;
+            font-size: clamp(2.4rem, 8vw, 5rem);
+            color: #00ff41;
+            margin-bottom: clamp(10px, 2vw, 20px);
+            letter-spacing: 4px;
+            font-weight: 900;
             text-transform: uppercase;
+            text-shadow:
+                0 0 10px rgba(0, 255, 65, 0.8),
+                0 0 30px rgba(0, 255, 65, 0.6),
+                0 0 60px rgba(0, 255, 65, 0.4),
+                0 0 100px rgba(0, 255, 65, 0.2);
+            animation: welcomeGlow 3s ease-in-out infinite alternate;
         }
 
+        @keyframes welcomeGlow {
+            0% {
+                text-shadow:
+                    0 0 10px rgba(0, 255, 65, 0.8),
+                    0 0 30px rgba(0, 255, 65, 0.6),
+                    0 0 60px rgba(0, 255, 65, 0.4),
+                    0 0 100px rgba(0, 255, 65, 0.2);
+                filter: brightness(1);
+            }
+
+            100% {
+                text-shadow:
+                    0 0 15px rgba(0, 255, 65, 1),
+                    0 0 40px rgba(0, 255, 65, 0.8),
+                    0 0 80px rgba(0, 255, 65, 0.5),
+                    0 0 120px rgba(0, 255, 65, 0.3);
+                filter: brightness(1.1);
+            }
+        }
+
+        /* Universal Unit Converter - Base size (1x) */
         .hero-title {
-            font-size: clamp(1.8rem, 5vw, 3rem);
-            font-weight: 800;
+            font-size: clamp(1.2rem, 4vw, 2.5rem);
+            font-weight: 700;
             color: #ffffff;
-            margin-bottom: 16px;
-            text-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+            margin-bottom: clamp(15px, 3vw, 25px);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            white-space: nowrap;
+            letter-spacing: 1px;
         }
 
         .hero-title .highlight {
-            color: var(--primary);
+            color: #ffffff;
         }
 
+        /* Subtitle - 0.5x the title size */
         .hero-subtitle {
-            font-size: clamp(0.85rem, 2vw, 1rem);
-            color: var(--text-muted);
-            max-width: 500px;
+            font-size: clamp(0.6rem, 2vw, 1.25rem);
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 550px;
             margin: 0 auto;
-            line-height: 1.6;
+            line-height: 1.8;
+            padding: 0 15px;
+            font-weight: 400;
         }
 
         /* Hide old header */
@@ -2045,53 +2205,126 @@
             transform: scale(1.1);
         }
 
+        /* Search Container - Premium Polished */
         .search-container {
             position: relative;
-            max-width: 600px;
-            margin: 0 auto 40px;
+            width: 100%;
+            max-width: clamp(320px, 85vw, 650px);
+            margin: 0 auto clamp(40px, 6vw, 60px);
+            padding: 0 20px;
         }
 
         .search-input {
             width: 100%;
-            padding: 16px 24px 16px 50px;
-            border-radius: 50px;
+            padding: clamp(14px, 2.5vw, 20px) clamp(20px, 4vw, 30px) clamp(14px, 2.5vw, 20px) clamp(50px, 8vw, 60px);
+            border-radius: 60px;
             border: 2px solid var(--primary);
-            background: var(--surface);
+            background: rgba(0, 10, 5, 0.9);
             color: #ffffff;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3), inset 0 0 5px rgba(0, 255, 65, 0.1);
-            font-size: 1rem;
+            box-shadow:
+                0 0 20px rgba(0, 255, 65, 0.25),
+                0 0 40px rgba(0, 255, 65, 0.1),
+                inset 0 0 10px rgba(0, 255, 65, 0.05);
+            font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+            font-weight: 500;
             outline: none;
+            transition: all 0.3s ease;
         }
 
         .search-input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 400;
         }
 
         .search-input:focus {
-            border-color: var(--primary);
-            box-shadow: var(--shadow-hover);
+            border-color: #00ff41;
+            box-shadow:
+                0 0 30px rgba(0, 255, 65, 0.4),
+                0 0 60px rgba(0, 255, 65, 0.2),
+                inset 0 0 15px rgba(0, 255, 65, 0.1);
+            transform: scale(1.01);
         }
 
         .search-icon {
             position: absolute;
-            left: 20px;
+            left: 40px;
             top: 50%;
             transform: translateY(-50%);
+            color: #00ff41;
+            stroke: #00ff41;
+            width: 22px;
+            height: 22px;
+            pointer-events: none;
+            filter: drop-shadow(0 0 6px rgba(0, 255, 65, 0.6));
+        }
+
+        /* Live Search Dropdown */
+        .live-search-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 500;
+            display: none;
+            box-shadow: 0 10px 40px rgba(0, 255, 65, 0.3);
+        }
+
+        .live-search-dropdown.active {
+            display: block;
+        }
+
+        .live-search-item {
+            padding: 14px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .live-search-item:last-child {
+            border-bottom: none;
+        }
+
+        .live-search-item:hover {
+            background: rgba(0, 255, 65, 0.15);
+        }
+
+        .live-search-item .search-cat {
+            font-size: 0.75rem;
+            color: var(--primary);
+            background: rgba(0, 255, 65, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .live-search-item .search-name {
+            color: #ffffff;
+            font-size: 0.95rem;
+            flex: 1;
+        }
+
+        .live-search-item .search-name mark {
+            background: rgba(0, 255, 65, 0.3);
+            color: #00ff41;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+
+        .live-search-no-results {
+            padding: 20px;
+            text-align: center;
             color: var(--text-muted);
         }
 
         #search-results {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: var(--surface);
-            border-radius: 12px;
-            margin-top: 8px;
-            box-shadow: var(--shadow-hover);
-            max-height: 300px;
-            overflow-y: auto;
-            z-index: 100;
             display: none;
         }
 
@@ -2102,7 +2335,7 @@
         }
 
         .search-item:hover {
-            background: rgba(0, 0, 0, 0.05);
+            background: rgba(0, 255, 65, 0.1);
         }
 
         .view-section {
@@ -2478,11 +2711,24 @@
             height: 100%;
             background: var(--surface);
             box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
+            z-index: 1100;
             transition: right 0.3s ease;
             padding: 24px;
             display: flex;
             flex-direction: column;
+            overscroll-behavior: contain;
+        }
+
+        @media (max-width: 480px) {
+            .history-panel {
+                width: 100%;
+                right: -100%;
+                padding: 16px;
+            }
+
+            .history-panel.open {
+                right: 0;
+            }
         }
 
         .history-panel.open {
@@ -3700,11 +3946,11 @@
             }
 
             .hero-welcome {
-                font-size: 0.75rem;
+                font-size: 1.5 rem;
             }
 
             .hero-title {
-                font-size: 1.5rem;
+                font-size: 0.75 rem;
             }
 
             .hero-subtitle {
@@ -3839,6 +4085,12 @@
 
     <!-- Theme Panel -->
     <div class="theme-panel" id="theme-panel">
+        <div
+            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border);">
+            <span style="color: var(--primary); font-weight: bold;">🎨 Choose Theme</span>
+            <button class="btn-icon" onclick="toggleThemePanel()"
+                style="width: 32px; height: 32px; font-size: 1.2rem;">✕</button>
+        </div>
         <div class="theme-option" onclick="setTheme('matrix')">
             <span class="theme-color" style="background: #00FF41;"></span>
             <span>Matrix Green</span>
@@ -3898,12 +4150,13 @@
 
     <!-- History Sidebar -->
     <aside class="history-panel" id="history-panel">
-        <div class="history-header">
-            <h3>Recent History</h3>
-            <button class="btn-icon"
-                onclick="document.getElementById('history-panel').classList.remove('open')">✕</button>
+        <div class="history-header"
+            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--primary);">
+            <h3 style="margin: 0; color: var(--primary);">🕐 Recent History</h3>
+            <button class="btn-icon" onclick="document.getElementById('history-panel').classList.remove('open')"
+                style="width: 36px; height: 36px; font-size: 1.3rem; border: 2px solid var(--primary); color: var(--primary);">✕</button>
         </div>
-        <div class="history-list" id="history-list">
+        <div class="history-list" id="history-list" style="flex: 1; overflow-y: auto; overscroll-behavior: contain;">
             <div style="text-align:center; color:var(--text-muted); margin-top:20px;">No history yet</div>
         </div>
         <button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="exportHistory()">📥 Export
@@ -3953,8 +4206,8 @@
     <div class="container">
         <!-- Hero Section -->
         <section class="hero-section">
-            <p class="hero-welcome">Welcome to</p>
-            <h1 class="hero-title">Universal Unit Converter</span></h1>
+            <p class="hero-welcome">Welcome You</p>
+            <h1 class="hero-title">Universal Unit Converter</h1>
             <p class="hero-subtitle">A Hub which contains 250+ converters for daily usage with additional features</p>
         </section>
 
@@ -3981,14 +4234,17 @@
         </header>
 
         <div class="search-container">
-            <span class="search-icon">🔍</span>
-            <input type="text" class="search-input" id="global-search" placeholder="Search 154+ converters...">
-
-            <div id="search-results"></div>
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="M21 21l-4.35-4.35"></path>
+            </svg>
+            <input type="text" class="search-input" id="global-search" placeholder="Search 250+ Converters"
+                autocomplete="off">
+            <div id="live-search-results" class="live-search-dropdown"></div>
         </div>
 
         <section id="home-view" class="view-section active">
-            <h2 style="text-align: center; margin-bottom: 30px; color: var(--primary);">All Categories</h2>
             <div class="category-grid" id="category-grid"></div>
         </section>
 
@@ -4138,9 +4394,9 @@
             power: `<svg class="power" viewBox="0 0 100 100"><g class="tower-hum"><path class="icon-stroke draw-tower" d="M 35 90 L 50 15 L 65 90" /><line class="icon-stroke draw-tower" x1="45" y1="30" x2="55" y2="30" /><line class="icon-stroke draw-tower" x1="30" y1="45" x2="70" y2="45" /><line class="icon-stroke draw-tower" x1="25" y1="60" x2="75" y2="60" /><line class="icon-stroke draw-tower" x1="30" y1="45" x2="30" y2="50" stroke-width="2" /><line class="icon-stroke draw-tower" x1="70" y1="45" x2="70" y2="50" stroke-width="2" /></g><g class="icon-stroke" stroke-width="1.5" opacity="0.7"><path d="M -10 25 Q 20 35 45 30" /><path d="M 55 30 Q 80 35 110 25" /><path d="M -10 45 Q 15 55 30 50" /><path d="M 70 50 Q 85 55 110 45" /></g><g fill="none"><path class="pulse-path pulse-delay-1" d="M -10 25 Q 20 35 45 30" /><path class="pulse-path pulse-delay-2" d="M 55 30 Q 80 35 110 25" /><path class="pulse-path pulse-delay-3" d="M -10 45 Q 15 55 30 50" /><path class="pulse-path pulse-delay-4" d="M 70 50 Q 85 55 110 45" /></g></svg>`,
             force: `<svg class="force" viewBox="0 0 100 100"><line class="icon-stroke draw-frame" x1="20" y1="20" x2="80" y2="20" /><line class="icon-stroke draw-frame" x1="20" y1="20" x2="20" y2="25" /><line class="icon-stroke draw-frame" x1="80" y1="20" x2="80" y2="25" /><g class="swing-left"><line class="icon-stroke" x1="30" y1="20" x2="30" y2="65" stroke-width="1.5" /><circle class="icon-stroke" cx="30" cy="70" r="5" fill="#111" /><circle class="icon-fill" cx="30" cy="70" r="2" /></g><g><line class="icon-stroke draw-frame" x1="40" y1="20" x2="40" y2="65" stroke-width="1.5" /><circle class="icon-stroke" cx="40" cy="70" r="5" fill="#111" /><line class="icon-stroke draw-frame" x1="50" y1="20" x2="50" y2="65" stroke-width="1.5" /><circle class="icon-stroke" cx="50" cy="70" r="5" fill="#111" /><line class="icon-stroke draw-frame" x1="60" y1="20" x2="60" y2="65" stroke-width="1.5" /><circle class="icon-stroke" cx="60" cy="70" r="5" fill="#111" /></g><g class="swing-right"><line class="icon-stroke" x1="70" y1="20" x2="70" y2="65" stroke-width="1.5" /><circle class="icon-stroke" cx="70" cy="70" r="5" fill="#111" /><circle class="icon-fill" cx="70" cy="70" r="2" /></g><circle class="icon-fill impact-flash" cx="50" cy="70" r="10" opacity="0" /></svg>`,
             freq: `<svg class="freq" viewBox="0 0 100 100"><g class="wave-group"><path class="icon-stroke wave-line wave-1" d="M 0 35 Q 25 20 50 35 T 100 35 T 150 35 T 200 35" /><path class="icon-stroke wave-line wave-2" d="M 0 50 Q 25 35 50 50 T 100 50 T 150 50 T 200 50" /><path class="icon-stroke wave-line wave-3" d="M 0 65 Q 25 50 50 65 T 100 65 T 150 65 T 200 65" /></g></svg>`,
-            angle: `<svg class="angle" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M25 75 L75 75 M25 75 L60 35" /><path class="icon-stroke draw-anim-delayed" d="M40 75 A15 15 0 0 1 45 60" /></svg>`,
-            transfer: `<svg class="transfer" viewBox="0 0 100 100"><g class="icon-stroke draw-anim"><path d="M20 35 L70 35 M60 25 L70 35 L60 45" /><path d="M80 65 L30 65 M40 55 L30 65 L40 75" /></g></svg>`,
-            fuel: `<svg class="fuel" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M25 80 L25 35 A15 15 0 0 1 55 35 L55 80 Z" /><path class="icon-stroke draw-anim-delayed" d="M60 45 L70 45 L70 65 A5 5 0 0 0 80 65 L80 35 L75 30" /><rect class="icon-fill capacity-fill" x="30" y="50" width="20" height="25" style="transform-origin: 50% 75px;" /></svg>`,
+            angle: `<svg class="angle" viewBox="0 0 100 100"><path class="icon-stroke draw-fixed" d="M 20 20 L 20 80 L 80 80" /><circle class="icon-stroke angle-arc" cx="20" cy="80" r="35" /><g class="icon-stroke rotating-arm"><line x1="20" y1="80" x2="65" y2="80" /><path d="M 58 74 L 65 80 L 58 86" /></g><circle class="icon-fill vertex-point" cx="20" cy="80" r="4" /></svg>`,
+            transfer: `<svg class="transfer" viewBox="0 0 100 100"><g class="arrow-right"><line class="icon-stroke" x1="20" y1="35" x2="80" y2="35" /><path class="icon-stroke" d="M 70 25 L 80 35 L 70 45" /></g><g class="arrow-left"><line class="icon-stroke" x1="20" y1="65" x2="80" y2="65" /><path class="icon-stroke" d="M 30 55 L 20 65 L 30 75" /></g></svg>`,
+            fuel: `<svg class="fuel" viewBox="0 0 100 100"><g class="fuel-tank"><path class="icon-stroke" d="M 25 35 L 75 35 L 75 85 L 25 85 Z" /><path class="icon-stroke" d="M 35 45 L 65 75" style="opacity: 0.6; stroke-width: 2;" /><path class="icon-stroke" d="M 65 45 L 35 75" style="opacity: 0.6; stroke-width: 2;" /><rect class="icon-stroke" x="32" y="42" width="36" height="36" rx="2" style="opacity: 0.6; stroke-width: 2;" /><path class="icon-stroke" d="M 28 35 L 28 25 Q 28 20 35 20 L 65 20 Q 72 20 72 25 L 72 35" /><path class="icon-stroke" d="M 42 20 L 42 35 M 58 20 L 58 35" /><path class="icon-stroke" d="M 68 22 L 82 22 L 85 28" stroke-width="3" /></g><path class="icon-fill fuel-drop" d="M 85 28 Q 80 38 85 43 Q 90 38 85 28 Z" /></svg>`,
             light: `<svg class="light" viewBox="0 0 100 100"><circle class="icon-stroke draw-anim" cx="50" cy="50" r="15" /><g class="icon-stroke fade-ticks"><line x1="50" y1="25" x2="50" y2="15" /><line x1="50" y1="75" x2="50" y2="85" /><line x1="25" y1="50" x2="15" y2="50" /><line x1="75" y1="50" x2="85" y2="50" /><line x1="32" y1="32" x2="25" y2="25" /><line x1="68" y1="32" x2="75" y2="25" /><line x1="32" y1="68" x2="25" y2="75" /><line x1="68" y1="68" x2="75" y2="75" /></g></svg>`,
             sound: `<svg class="sound" viewBox="0 0 100 100"><g class="icon-stroke draw-anim"><rect x="28" y="40" width="8" height="30" rx="2" fill="#00ff41" class="bar" /><rect x="42" y="30" width="8" height="40" rx="2" fill="#00ff41" class="bar" /><rect x="56" y="35" width="8" height="35" rx="2" fill="#00ff41" class="bar" /><rect x="70" y="45" width="8" height="25" rx="2" fill="#00ff41" class="bar" /></g></svg>`,
             type: `<svg class="type" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M30 30 L70 30 M50 30 L50 75 M35 75 L65 75" /></svg>`,
@@ -5222,6 +5478,163 @@
             overlay.classList.remove('active');
         }
 
+        // =========================================
+        // LIVE SEARCH SYSTEM
+        // =========================================
+        const liveSearch = {
+            searchInput: null,
+            dropdown: null,
+
+            init: function () {
+                this.searchInput = document.getElementById('global-search');
+                this.dropdown = document.getElementById('live-search-results');
+
+                if (!this.searchInput || !this.dropdown) return;
+
+                // Listen for input
+                this.searchInput.addEventListener('input', (e) => {
+                    const query = e.target.value.trim().toLowerCase();
+                    if (query.length < 1) {
+                        this.hideDropdown();
+                        return;
+                    }
+                    this.performSearch(query);
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!this.searchInput.contains(e.target) && !this.dropdown.contains(e.target)) {
+                        this.hideDropdown();
+                    }
+                });
+
+                // Handle keyboard navigation
+                this.searchInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        this.hideDropdown();
+                        this.searchInput.blur();
+                    }
+                });
+            },
+
+            performSearch: function (query) {
+                const results = [];
+                const maxResults = 12;
+
+                // Search through categories
+                DATA.categories.forEach(cat => {
+                    if (cat.name.toLowerCase().includes(query)) {
+                        results.push({
+                            type: 'category',
+                            categoryId: cat.id,
+                            categoryName: cat.name,
+                            name: cat.name,
+                            display: `${cat.name} (Category)`
+                        });
+                    }
+
+                    // Search through converters in each category
+                    const catData = DATA[cat.id];
+                    if (catData && catData.converters) {
+                        catData.converters.forEach(conv => {
+                            if (conv.title.toLowerCase().includes(query)) {
+                                results.push({
+                                    type: 'converter',
+                                    categoryId: cat.id,
+                                    categoryName: cat.name,
+                                    converterId: conv.id,
+                                    name: conv.title,
+                                    display: conv.title
+                                });
+                            }
+                        });
+                    }
+
+                    // Search through unit names
+                    if (catData && catData.factors) {
+                        Object.keys(catData.factors).forEach(unit => {
+                            const unitName = unit.replace(/_/g, ' ');
+                            if (unitName.toLowerCase().includes(query)) {
+                                const isDuplicate = results.some(r =>
+                                    r.type === 'unit' && r.categoryId === cat.id && r.unitName === unitName
+                                );
+                                if (!isDuplicate) {
+                                    results.push({
+                                        type: 'unit',
+                                        categoryId: cat.id,
+                                        categoryName: cat.name,
+                                        unitName: unitName,
+                                        name: `${unitName} (${cat.name})`,
+                                        display: unitName
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+
+                // Limit results
+                const limitedResults = results.slice(0, maxResults);
+
+                this.renderResults(limitedResults, query);
+            },
+
+            renderResults: function (results, query) {
+                if (results.length === 0) {
+                    this.dropdown.innerHTML = `<div class="live-search-no-results">No results found for "${query}"</div>`;
+                    this.showDropdown();
+                    return;
+                }
+
+                let html = '';
+                results.forEach(result => {
+                    const highlightedName = this.highlightMatch(result.display, query);
+                    html += `
+                        <div class="live-search-item" data-type="${result.type}" data-category="${result.categoryId}" data-converter="${result.converterId || ''}">
+                            <span class="search-cat">${result.categoryName}</span>
+                            <span class="search-name">${highlightedName}</span>
+                        </div>
+                    `;
+                });
+
+                this.dropdown.innerHTML = html;
+
+                // Add click handlers
+                this.dropdown.querySelectorAll('.live-search-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const type = item.dataset.type;
+                        const categoryId = item.dataset.category;
+                        const converterId = item.dataset.converter;
+
+                        this.hideDropdown();
+                        this.searchInput.value = '';
+
+                        if (type === 'category' || type === 'unit') {
+                            app.showCategory(categoryId);
+                        } else if (type === 'converter' && converterId) {
+                            app.state.category = categoryId;
+                            app.showConverter(converterId);
+                        }
+                    });
+                });
+
+                this.showDropdown();
+            },
+
+            highlightMatch: function (text, query) {
+                const regex = new RegExp(`(${query})`, 'gi');
+                return text.replace(regex, '<mark>$1</mark>');
+            },
+
+            showDropdown: function () {
+                this.dropdown.classList.add('active');
+            },
+
+            hideDropdown: function () {
+                this.dropdown.classList.remove('active');
+            }
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
 
             // Initialize Lucide Icons
@@ -5270,6 +5683,9 @@
             }, 20); // 20ms * 100 = 2000ms = 2 seconds
 
             app.init();
+
+            // Initialize Live Search
+            liveSearch.init();
         });
 
     </script>
