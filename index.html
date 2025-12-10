@@ -7,7 +7,7 @@
         href="https://raw.githubusercontent.com/ankushchowrasia/universalunitconconverter/03eb0fa83270da69d759bf5cae2fdbf76d85d92d/universal%20unit%20converter.png"
         type="image/png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unit Converter Hub - 110 Converters</title>
+    <title>Universal Unit Converter - 250+ Converters</title>
     <meta name="description" content="Universal Unit Converter. Matrix Theme.">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -1221,72 +1221,316 @@
             }
         }
 
-        /* 13 Power - bulb glow */
-        .power .bulb {
+        /* 13 Power - Power Grid Animation */
+        .power .icon-stroke {
             stroke: #00ff41;
             stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
             fill: none;
-            filter: drop-shadow(0 0 10px #00ff41);
-            animation: bulbGlow 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
         }
 
-        @keyframes bulbGlow {
-            0% {
-                opacity: .8
-            }
+        .power .draw-tower {
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: draw-structure 2s ease-out forwards;
+        }
 
-            50% {
-                opacity: 1
+        .power .pulse-path {
+            stroke: #fff;
+            stroke-width: 4;
+            stroke-dasharray: 10 100;
+            stroke-dashoffset: 100;
+            filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 10px #00ff41);
+            animation: flow-pulse 1.5s linear infinite;
+            opacity: 0.8;
+        }
+
+        .power .pulse-delay-1 {
+            animation-delay: 0s;
+        }
+
+        .power .pulse-delay-2 {
+            animation-delay: 0.5s;
+        }
+
+        .power .pulse-delay-3 {
+            animation-delay: 0.2s;
+        }
+
+        .power .pulse-delay-4 {
+            animation-delay: 0.7s;
+        }
+
+        @keyframes draw-structure {
+            0% {
+                stroke-dashoffset: 200;
+                opacity: 0;
             }
 
             100% {
-                opacity: .8
+                stroke-dashoffset: 0;
+                opacity: 1;
             }
         }
 
-        /* 14 Force - spring stretch */
-        .force .spring {
-            stroke: #00ff41;
-            stroke-width: 3;
-            fill: none;
-            animation: stretch 1.6s ease-in-out infinite;
-            filter: drop-shadow(0 0 6px #00ff41);
-        }
-
-        @keyframes stretch {
+        @keyframes flow-pulse {
             0% {
-                transform: scaleY(1)
+                stroke-dashoffset: 100;
+                opacity: 0;
             }
 
-            50% {
-                transform: scaleY(1.12)
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
             }
 
             100% {
-                transform: scaleY(1)
+                stroke-dashoffset: -100;
+                opacity: 0;
+            }
+        }
+
+        .power .tower-hum {
+            transform-origin: 50% 90%;
+            animation: hum 0.1s linear infinite;
+        }
+
+        @keyframes hum {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            25% {
+                transform: translate(0.5px, 0);
+            }
+
+            50% {
+                transform: translate(0, 0);
+            }
+
+            75% {
+                transform: translate(-0.5px, 0);
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        /* 14 Force - Newton's Cradle Animation */
+        .force .icon-stroke {
+            stroke: #00ff41;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .force .icon-fill {
+            fill: #00ff41;
+            stroke: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .force .draw-frame {
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: draw-force-frame 1.5s ease-out forwards;
+        }
+
+        .force .swing-left {
+            transform-origin: 30px 20px;
+            animation: left-cradle 1.2s linear infinite;
+        }
+
+        .force .swing-right {
+            transform-origin: 70px 20px;
+            animation: right-cradle 1.2s linear infinite;
+        }
+
+        .force .impact-flash {
+            opacity: 0;
+            transform-origin: 50% 70%;
+            animation: impact-flash-anim 1.2s linear infinite;
+        }
+
+        @keyframes draw-force-frame {
+            0% {
+                stroke-dashoffset: 200;
+                opacity: 0;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        @keyframes left-cradle {
+            0% {
+                transform: rotate(30deg);
+                animation-timing-function: ease-in;
+            }
+
+            25% {
+                transform: rotate(0deg);
+                animation-timing-function: linear;
+            }
+
+            50% {
+                transform: rotate(0deg);
+                animation-timing-function: linear;
+            }
+
+            75% {
+                transform: rotate(0deg);
+                animation-timing-function: ease-out;
+            }
+
+            100% {
+                transform: rotate(30deg);
+            }
+        }
+
+        @keyframes right-cradle {
+            0% {
+                transform: rotate(0deg);
+                animation-timing-function: linear;
+            }
+
+            25% {
+                transform: rotate(0deg);
+                animation-timing-function: ease-out;
+            }
+
+            50% {
+                transform: rotate(-30deg);
+                animation-timing-function: ease-in;
+            }
+
+            75% {
+                transform: rotate(0deg);
+                animation-timing-function: linear;
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        @keyframes impact-flash-anim {
+
+            0%,
+            24% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            25% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+
+            35% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            74% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            75% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+
+            85% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            100% {
+                opacity: 0;
             }
         }
 
         /* 15 Frequency - sine oscillation */
-        .freq .wave {
-            stroke: #00ff41;
-            stroke-width: 3;
-            fill: none;
-            animation: osc 1.2s ease-in-out infinite;
-            filter: drop-shadow(0 0 6px #00ff41);
+        /* 15 Frequency - Oscillating Waves */
+        .cat-icon .freq {
+            overflow: hidden;
+            /* Fix overflow on mobile */
         }
 
-        @keyframes osc {
-            0% {
-                transform: translateY(0)
-            }
+        .freq .icon-stroke {
+            stroke: #00ff41;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
 
-            50% {
-                transform: translateY(-4px)
+        .freq .wave-group {
+            animation: vertical-bob 3s ease-in-out infinite alternate;
+        }
+
+        .freq .wave-line {
+            stroke-dasharray: 250;
+            stroke-dashoffset: 250;
+            animation:
+                draw-wave-in 2s ease-out forwards,
+                flow-loop-wave 2s linear infinite;
+        }
+
+        .freq .wave-1 {
+            animation-delay: 0s, 0s;
+        }
+
+        .freq .wave-2 {
+            animation-delay: 0.1s, 0s;
+        }
+
+        .freq .wave-3 {
+            animation-delay: 0.2s, 0s;
+        }
+
+        @keyframes draw-wave-in {
+            0% {
+                stroke-dashoffset: 250;
+                opacity: 0;
             }
 
             100% {
-                transform: translateY(0)
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        @keyframes flow-loop-wave {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-100px);
+            }
+        }
+
+        @keyframes vertical-bob {
+            0% {
+                transform: translateY(-2px);
+            }
+
+            100% {
+                transform: translateY(2px);
             }
         }
 
@@ -1561,29 +1805,197 @@
             z-index: 10;
         }
 
-        header {
+        /* =========================================
+           NEW MODERN HEADER DESIGN
+           ========================================= */
+
+        /* Top Navigation Bar */
+        .top-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 40px;
-            padding: 20px;
-            border: 2px solid var(--primary);
-            border-radius: 16px;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3), inset 0 0 10px rgba(0, 255, 65, 0.1);
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
+            padding: 12px 24px;
+            background: rgba(0, 0, 0, 0.85);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
         }
 
-        .logo h1 {
-            font-size: 1.5rem;
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(0, 255, 65, 0.5));
+        }
+
+        .nav-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        /* Hamburger Menu Button */
+        .hamburger-btn {
+            width: 44px;
+            height: 44px;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-btn:hover {
+            background: rgba(0, 255, 65, 0.1);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+        }
+
+        .hamburger-btn span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Slide Menu */
+        .slide-menu {
+            position: fixed;
+            top: 65px;
+            right: -280px;
+            width: 260px;
+            height: auto;
+            max-height: calc(100vh - 80px);
+            background: rgba(10, 10, 10, 0.98);
+            border: 1px solid var(--primary);
+            border-radius: 12px 0 0 12px;
+            padding: 20px;
+            z-index: 999;
+            transition: right 0.3s ease;
+            box-shadow: -5px 0 30px rgba(0, 255, 65, 0.2);
+        }
+
+        .slide-menu.open {
+            right: 0;
+        }
+
+        .slide-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: rgba(0, 30, 10, 0.4);
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slide-menu-item:hover {
+            background: rgba(0, 255, 65, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+        }
+
+        .slide-menu-item svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--primary);
+        }
+
+        .slide-menu-item span {
+            font-size: 0.95rem;
+        }
+
+        /* Menu Overlay */
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+        }
+
+        .menu-overlay.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 50px 20px 40px;
+            background: linear-gradient(180deg, rgba(0, 30, 10, 0.3) 0%, transparent 100%);
+        }
+
+        .hero-welcome {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-size: clamp(1.8rem, 5vw, 3rem);
             font-weight: 800;
             color: #ffffff;
+            margin-bottom: 16px;
+            text-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
         }
 
+        .hero-title .highlight {
+            color: var(--primary);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Hide old header */
+        header {
+            display: none !important;
+        }
+
+        /* Keep these for compatibility */
         .header-controls {
-            display: flex;
-            gap: 12px;
-            align-items: center;
+            display: none;
         }
 
         .header-icon-btn {
@@ -3128,10 +3540,12 @@
         }
 
         /* 3. Tablet Portrait (768px - 991px) */
+        /* 3. Tablet Portrait (768px - 991px) */
         @media (max-width: 991px) {
             .category-grid {
-                grid-template-columns: repeat(2, 1fr);
-                /* 2 Columns */
+                grid-template-columns: repeat(3, 1fr);
+                /* Tablet: 3 Columns as requested */
+                gap: 20px;
             }
 
             .site-footer {
@@ -3140,6 +3554,7 @@
         }
 
         /* 4. Mobile (≤ 768px) - The Major Breakpoint */
+        /* 4. Mobile / Small Tablet (≤ 768px) */
         @media (max-width: 768px) {
 
             /* Header Stacking */
@@ -3159,7 +3574,6 @@
 
             .logo h1 {
                 font-size: 1.4rem;
-                /* Smaller title */
             }
 
             /* Search Bar */
@@ -3169,28 +3583,25 @@
                 margin-right: 10px;
             }
 
-            /* Category Grid Single Column */
+            /* Tablet Layout Maintenance (3 cols until mobile break) */
             .category-grid {
-                grid-template-columns: 1fr;
-                /* Full width cards */
+                /* Keep tablet layout (3 cols) or default to 2 if 3 is too tight, but user asked for specific mobile 2 col at 480px. */
+                /* Let's reset the dangerous single-column override from the original code */
                 gap: 20px;
                 padding: 10px 0;
             }
 
+            /* Remove horizontal card forcing from previous 768px logic */
             .category-card {
-                display: flex;
-                flex-direction: row;
-                /* Horizontal layout for cards on mobile */
-                align-items: center;
-                justify-content: flex-start;
                 padding: 20px;
-                gap: 20px;
-                text-align: left;
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
             }
 
             .cat-icon {
-                margin-bottom: 0;
-                transform: scale(0.8);
+                margin-bottom: 16px;
+                transform: scale(0.9);
             }
 
             .cat-desc {
@@ -3207,47 +3618,46 @@
                 flex-direction: column;
             }
 
-            .conv-input,
-            .conv-select {
-                width: 100%;
+            .unit-select {
+                min-width: 100%;
             }
 
-            .controls {
-                flex-direction: column;
-                width: 100%;
+            .input-group input {
+                font-size: 2rem;
             }
 
             .btn {
                 width: 100%;
             }
+        }
 
-            /* Footer Stacking */
-            .footer-content {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-                gap: 40px;
-            }
+        /* Footer Stacking */
+        .footer-content {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 40px;
+        }
 
-            .footer-brand {
-                align-items: center;
-                width: 100%;
-            }
+        .footer-brand {
+            align-items: center;
+            width: 100%;
+        }
 
-            .footer-logo {
-                flex-direction: column;
-                gap: 12px;
-                margin-bottom: 16px;
-            }
+        .footer-logo {
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
 
-            .footer-logo-icon {
-                margin: 0 auto;
-            }
+        .footer-logo-icon {
+            margin: 0 auto;
+        }
 
-            .footer-tagline {
-                max-width: 100%;
-                margin: 0 auto;
-            }
+        .footer-tagline {
+            max-width: 100%;
+            margin: 0 auto;
+
 
             .footer-bottom {
                 flex-direction: column;
@@ -3261,43 +3671,119 @@
             }
         }
 
-        /* 5. Small Mobile (≤ 576px) */
-        @media (max-width: 576px) {
-            :root {
-                --sp-container: 16px;
-                /* Tight padding */
+        /* 5. Small Mobile (≤ 480px) - Specific Redesign */
+        @media (max-width: 480px) {
+
+            /* Top Navigation - Compact */
+            .top-nav {
+                padding: 8px 12px;
+            }
+
+            .nav-logo {
+                width: 32px;
+                height: 32px;
+            }
+
+            .nav-title {
+                font-size: 0.9rem;
+            }
+
+            .hamburger-btn {
+                width: 38px;
+                height: 38px;
+                padding: 8px;
+            }
+
+            /* Hero Section - Compact */
+            .hero-section {
+                padding: 30px 15px 25px;
+            }
+
+            .hero-welcome {
+                font-size: 0.75rem;
+            }
+
+            .hero-title {
+                font-size: 1.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 0.8rem;
+            }
+
+            /* Slide Menu - Responsive */
+            .slide-menu {
+                width: 220px;
+                right: -240px;
+                top: 50px;
+                padding: 15px;
+            }
+
+            .slide-menu-item {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+
+            /* Search Bar */
+            .search-container {
+                margin: 0 10px;
+                padding: 0;
+            }
+
+            .search-input {
+                padding: 10px 16px;
+                height: 44px;
+                font-size: 0.95rem;
+            }
+
+            /* Category Grid: 2 Columns */
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                /* Force 2 cols */
+                gap: 12px;
+                /* Reduced gap */
+                padding: 10px 5px;
             }
 
             .category-card {
-                padding: 16px;
-                /* Compact cards */
+                padding: 12px 8px;
+                /* Compact card padding */
+                min-height: 140px;
+                /* Ensure proportional resizing */
+                flex-direction: column;
+                /* Ensure vertical stack */
+                justify-content: center;
+                text-align: center;
             }
 
-            .result-value {
-                font-size: 1.5rem;
-                /* Prevent overflow */
+            .cat-icon {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 8px;
+                transform: scale(0.85);
+                /* Slightly smaller icon */
             }
-        }
 
-        /* 6. Ultra Small (≤ 390px) - iPhone SE / Foldable outer screens */
-        @media (max-width: 390px) {
+            .category-card h3 {
+                font-size: 0.9rem;
+                /* Smaller text */
+            }
+
+            .cat-desc {
+                font-size: 0.75rem;
+                display: none;
+                /* Hide desc on very small screens for cleanliness */
+            }
+
+            /* Footer Adjustments */
+            .footer-content {
+                gap: 20px;
+            }
+
             .header-icon-btn {
                 width: 36px;
                 height: 36px;
                 font-size: 1rem;
-            }
-
-            .header-controls {
-                gap: 10px;
-            }
-
-            .logo h1 {
-                font-size: 1.2rem;
-            }
-
-            .footer-credit-btn {
-                width: 100%;
-                text-align: center;
             }
         }
     </style>
@@ -3426,8 +3912,54 @@
             History</button>
     </aside>
 
+    <!-- New Top Navigation Bar -->
+    <nav class="top-nav">
+        <div class="nav-brand">
+            <img src="https://raw.githubusercontent.com/ankushchowrasia/universalunitconconverter/03eb0fa83270da69d759bf5cae2fdbf76d85d92d/universal%20unit%20converter.png"
+                alt="Logo" class="nav-logo">
+            <span class="nav-title">Universal Unit Converter</span>
+        </div>
+        <button class="hamburger-btn" id="hamburger-btn" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <!-- Slide Menu -->
+    <div class="slide-menu" id="slide-menu">
+        <div class="slide-menu-item" onclick="toggleThemePanel(); closeMenu();">
+            <i data-lucide="palette"></i>
+            <span>Change Theme</span>
+        </div>
+        <div class="slide-menu-item" onclick="calc.open(); closeMenu();">
+            <i data-lucide="calculator"></i>
+            <span>Calculator</span>
+        </div>
+        <div class="slide-menu-item" onclick="quiz.open(); closeMenu();">
+            <i data-lucide="gamepad-2"></i>
+            <span>Quiz Mode</span>
+        </div>
+        <div class="slide-menu-item"
+            onclick="document.getElementById('history-panel').classList.add('open'); closeMenu();">
+            <i data-lucide="clock"></i>
+            <span>History</span>
+        </div>
+    </div>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menu-overlay" onclick="closeMenu()"></div>
+
     <div class="container">
-        <header>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <p class="hero-welcome">Welcome to</p>
+            <h1 class="hero-title">Universal Unit Converter</span></h1>
+            <p class="hero-subtitle">A Hub which contains 250+ converters for daily usage with additional features</p>
+        </section>
+
+        <!-- Old header kept hidden for compatibility -->
+        <header style="display:none !important;">
             <div class="logo">
                 <h1>Unit Converter Hub</h1>
             </div>
@@ -3446,10 +3978,7 @@
                     <i data-lucide="clock"></i>
                 </button>
             </div>
-
         </header>
-
-
 
         <div class="search-container">
             <span class="search-icon">🔍</span>
@@ -3459,6 +3988,7 @@
         </div>
 
         <section id="home-view" class="view-section active">
+            <h2 style="text-align: center; margin-bottom: 30px; color: var(--primary);">All Categories</h2>
             <div class="category-grid" id="category-grid"></div>
         </section>
 
@@ -3605,9 +4135,9 @@
             energy: `<svg class="energy" viewBox="0 0 100 100"><path class="icon-stroke draw-shell" d="M 25 30 L 75 30 L 75 40 L 80 40 L 80 60 L 75 60 L 75 70 L 25 70 Z" /><g class="icon-fill"><rect class="charge-bar bar-1" x="30" y="35" width="12" height="30" rx="2" style="transform-origin: 36px 50px;" /><rect class="charge-bar bar-2" x="45" y="35" width="12" height="30" rx="2" style="transform-origin: 51px 50px;" /><rect class="charge-bar bar-3" x="60" y="35" width="12" height="30" rx="2" style="transform-origin: 66px 50px;" /></g><path class="icon-stroke draw-bolt bolt-pulse" stroke-width="2" fill="none" d="M 50 20 L 45 45 L 55 45 L 50 75" /></svg>`,
             pressure: `<svg class="pressure" viewBox="0 0 100 100"><line class="icon-stroke draw-anim" x1="20" y1="80" x2="80" y2="80" /><rect class="icon-stroke block-combined" x="35" y="40" width="30" height="40" /><g class="arrow-group"><line class="icon-stroke draw-anim" x1="50" y1="10" x2="50" y2="35" /><path class="icon-stroke draw-anim" d="M 40 25 L 50 35 L 60 25" /></g></svg>`,
             density: `<svg class="density" viewBox="0 0 100 100"><rect class="icon-stroke volume-box" x="10" y="10" width="80" height="80" rx="10" stroke-width="1.5" /><g class="icon-stroke draw-anim"><circle class="particle-center" cx="50" cy="50" r="6" style="transform-origin: 50px 50px;" /><circle class="particle-move top-left" cx="25" cy="25" r="6" /><circle class="particle-move top-right" cx="75" cy="25" r="6" /><circle class="particle-move bottom-left" cx="25" cy="75" r="6" /><circle class="particle-move bottom-right" cx="75" cy="75" r="6" /></g></svg>`,
-            power: `<svg class="power" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M40 70 L40 55 A15 15 0 1 1 60 55 L60 70 M35 70 L65 70 M38 75 L62 75" /><circle class="icon-fill bulb-pulse" cx="50" cy="40" r="6" /></svg>`,
-            force: `<svg class="force" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M25 50 L40 30 L40 45 L60 45 L60 30 L75 50 L60 70 L60 55 L40 55 L40 70 Z" /></svg>`,
-            freq: `<svg class="freq" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M10 50 Q25 20 40 50 Q55 80 70 50 Q85 20 100 50" /></svg>`,
+            power: `<svg class="power" viewBox="0 0 100 100"><g class="tower-hum"><path class="icon-stroke draw-tower" d="M 35 90 L 50 15 L 65 90" /><line class="icon-stroke draw-tower" x1="45" y1="30" x2="55" y2="30" /><line class="icon-stroke draw-tower" x1="30" y1="45" x2="70" y2="45" /><line class="icon-stroke draw-tower" x1="25" y1="60" x2="75" y2="60" /><line class="icon-stroke draw-tower" x1="30" y1="45" x2="30" y2="50" stroke-width="2" /><line class="icon-stroke draw-tower" x1="70" y1="45" x2="70" y2="50" stroke-width="2" /></g><g class="icon-stroke" stroke-width="1.5" opacity="0.7"><path d="M -10 25 Q 20 35 45 30" /><path d="M 55 30 Q 80 35 110 25" /><path d="M -10 45 Q 15 55 30 50" /><path d="M 70 50 Q 85 55 110 45" /></g><g fill="none"><path class="pulse-path pulse-delay-1" d="M -10 25 Q 20 35 45 30" /><path class="pulse-path pulse-delay-2" d="M 55 30 Q 80 35 110 25" /><path class="pulse-path pulse-delay-3" d="M -10 45 Q 15 55 30 50" /><path class="pulse-path pulse-delay-4" d="M 70 50 Q 85 55 110 45" /></g></svg>`,
+            force: `<svg class="force" viewBox="0 0 100 100"><line class="icon-stroke draw-frame" x1="20" y1="20" x2="80" y2="20" /><line class="icon-stroke draw-frame" x1="20" y1="20" x2="20" y2="25" /><line class="icon-stroke draw-frame" x1="80" y1="20" x2="80" y2="25" /><g class="swing-left"><line class="icon-stroke" x1="30" y1="20" x2="30" y2="65" stroke-width="1.5" /><circle class="icon-stroke" cx="30" cy="70" r="5" fill="#111" /><circle class="icon-fill" cx="30" cy="70" r="2" /></g><g><line class="icon-stroke draw-frame" x1="40" y1="20" x2="40" y2="65" stroke-width="1.5" /><circle class="icon-stroke" cx="40" cy="70" r="5" fill="#111" /><line class="icon-stroke draw-frame" x1="50" y1="20" x2="50" y2="65" stroke-width="1.5" /><circle class="icon-stroke" cx="50" cy="70" r="5" fill="#111" /><line class="icon-stroke draw-frame" x1="60" y1="20" x2="60" y2="65" stroke-width="1.5" /><circle class="icon-stroke" cx="60" cy="70" r="5" fill="#111" /></g><g class="swing-right"><line class="icon-stroke" x1="70" y1="20" x2="70" y2="65" stroke-width="1.5" /><circle class="icon-stroke" cx="70" cy="70" r="5" fill="#111" /><circle class="icon-fill" cx="70" cy="70" r="2" /></g><circle class="icon-fill impact-flash" cx="50" cy="70" r="10" opacity="0" /></svg>`,
+            freq: `<svg class="freq" viewBox="0 0 100 100"><g class="wave-group"><path class="icon-stroke wave-line wave-1" d="M 0 35 Q 25 20 50 35 T 100 35 T 150 35 T 200 35" /><path class="icon-stroke wave-line wave-2" d="M 0 50 Q 25 35 50 50 T 100 50 T 150 50 T 200 50" /><path class="icon-stroke wave-line wave-3" d="M 0 65 Q 25 50 50 65 T 100 65 T 150 65 T 200 65" /></g></svg>`,
             angle: `<svg class="angle" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M25 75 L75 75 M25 75 L60 35" /><path class="icon-stroke draw-anim-delayed" d="M40 75 A15 15 0 0 1 45 60" /></svg>`,
             transfer: `<svg class="transfer" viewBox="0 0 100 100"><g class="icon-stroke draw-anim"><path d="M20 35 L70 35 M60 25 L70 35 L60 45" /><path d="M80 65 L30 65 M40 55 L30 65 L40 75" /></g></svg>`,
             fuel: `<svg class="fuel" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M25 80 L25 35 A15 15 0 0 1 55 35 L55 80 Z" /><path class="icon-stroke draw-anim-delayed" d="M60 45 L70 45 L70 65 A5 5 0 0 0 80 65 L80 35 L75 30" /><rect class="icon-fill capacity-fill" x="30" y="50" width="20" height="25" style="transform-origin: 50% 75px;" /></svg>`,
@@ -4663,6 +5193,33 @@
                 if (progress < 1) requestAnimationFrame(update);
             };
             requestAnimationFrame(update);
+        }
+
+
+        // Hamburger Menu Functions
+        function toggleMenu() {
+            const hamburger = document.getElementById('hamburger-btn');
+            const slideMenu = document.getElementById('slide-menu');
+            const overlay = document.getElementById('menu-overlay');
+
+            hamburger.classList.toggle('active');
+            slideMenu.classList.toggle('open');
+            overlay.classList.toggle('active');
+
+            // Re-initialize Lucide icons for the slide menu
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
+        function closeMenu() {
+            const hamburger = document.getElementById('hamburger-btn');
+            const slideMenu = document.getElementById('slide-menu');
+            const overlay = document.getElementById('menu-overlay');
+
+            hamburger.classList.remove('active');
+            slideMenu.classList.remove('open');
+            overlay.classList.remove('active');
         }
 
         document.addEventListener('DOMContentLoaded', () => {
