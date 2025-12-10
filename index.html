@@ -1732,26 +1732,52 @@
             }
         }
 
-        /* 19 Illuminance - rays glow */
-        .light .rays {
+        /* 19 Illuminance - Animated Sun with Rays */
+        .light .icon-stroke {
             stroke: #00ff41;
-            stroke-width: 3;
+            stroke-width: 3.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
             fill: none;
-            animation: rays 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 8px #00ff41);
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
         }
 
-        @keyframes rays {
-            0% {
-                opacity: .7
-            }
+        .light .light-source {
+            animation: light-source-pulse 3s ease-in-out infinite alternate;
+            transform-origin: center;
+        }
 
-            50% {
-                opacity: 1
+        .light .light-rays {
+            animation: light-rays-glow 3s ease-in-out infinite alternate;
+            transform-origin: center;
+        }
+
+        @keyframes light-source-pulse {
+            0% {
+                stroke-width: 3.5;
+                filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+                transform: scale(1);
             }
 
             100% {
-                opacity: .7
+                stroke-width: 4;
+                filter: drop-shadow(0 0 5px rgba(0, 255, 65, 0.8)) drop-shadow(0 0 10px rgba(0, 255, 65, 0.6));
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes light-rays-glow {
+            0% {
+                opacity: 0.6;
+                stroke-width: 3;
+                transform: scale(0.9);
+            }
+
+            100% {
+                opacity: 1;
+                stroke-width: 4;
+                transform: scale(1.1);
+                filter: drop-shadow(0 0 6px rgba(0, 255, 65, 0.8)) drop-shadow(0 0 12px rgba(0, 255, 65, 0.6));
             }
         }
 
@@ -1788,79 +1814,177 @@
             }
         }
 
-        /* 21 Typography - letter stroke draw */
-        .type .ltr {
+        /* 21 Typography - AC Letters with Draw Animation */
+        .type .icon-stroke {
             stroke: #00ff41;
-            stroke-width: 3;
-            fill: none;
-            stroke-dasharray: 120;
-            stroke-dashoffset: 120;
-            animation: drawText 1.6s ease forwards, glow 2.6s infinite;
-        }
-
-        @keyframes drawText {
-            to {
-                stroke-dashoffset: 0
-            }
-        }
-
-        /* 22 Cooking - steam rising */
-        .cook .steam {
-            stroke: #00ff41;
-            stroke-width: 3;
-            fill: none;
+            stroke-width: 3.5;
             stroke-linecap: round;
-            animation: steam 1.8s ease-in-out infinite;
+            stroke-linejoin: round;
+            fill: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
         }
 
-        @keyframes steam {
+        .type .draw-anim {
+            stroke-dasharray: 150;
+            stroke-dashoffset: 150;
+            animation: type-draw-stroke 3s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+        }
+
+        .type .letter-a-left {
+            animation-delay: 0s;
+        }
+
+        .type .letter-a-right {
+            animation-delay: 0.3s;
+        }
+
+        .type .letter-a-bar {
+            animation-delay: 0.6s;
+        }
+
+        .type .letter-c {
+            animation-delay: 0.9s;
+        }
+
+        .type .baseline {
+            animation-delay: 1.2s;
+        }
+
+        @keyframes type-draw-stroke {
             0% {
-                transform: translateY(6px);
-                opacity: .5
+                stroke-dashoffset: 150;
+                opacity: 0;
             }
 
-            50% {
-                transform: translateY(-6px);
-                opacity: 1
+            30% {
+                opacity: 1;
             }
 
             100% {
-                transform: translateY(6px);
-                opacity: .5
+                stroke-dashoffset: 0;
+                opacity: 1;
             }
         }
 
-        /* 23 Clothing/Shoes - shoe bounce */
-        .shoe {
-            transform-origin: 50% 50%;
-            animation: shoeBounce 1.6s ease-in-out infinite;
+        /* 22 Cooking - Pot with Rising Steam */
+        .cook .icon-stroke {
+            stroke: #00ff41;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
         }
 
-        @keyframes shoeBounce {
+        .cook .steam-line {
+            animation: cook-rise-fade 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            opacity: 0;
+        }
+
+        .cook .steam-1 {
+            animation-delay: 0s;
+        }
+
+        .cook .steam-2 {
+            animation-delay: 0.8s;
+        }
+
+        .cook .steam-3 {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes cook-rise-fade {
+            0% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+
+            25% {
+                opacity: 1;
+            }
+
+            75% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+        }
+
+        /* 23 Clothing/Shoes - T-Shirt with Bouncing Sneaker */
+        .shoe .icon-stroke {
+            stroke: #00ff41;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
+        }
+
+        .shoe .t-shirt {
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.4));
+        }
+
+        .shoe .sneaker {
+            animation: shoe-bounce 2s ease-in-out infinite;
+            transform-origin: 70px 85px;
+        }
+
+        @keyframes shoe-bounce {
 
             0%,
             100% {
-                transform: translateY(0)
+                transform: translateY(0) rotate(0deg);
             }
 
             50% {
-                transform: translateY(-6px)
+                transform: translateY(-5px) rotate(-3deg);
             }
         }
 
-        /* 24 Time Zones - globe rotate */
-        .tz .globe {
-            transform-origin: 50% 50%;
-            animation: globeSpin 6s linear infinite;
+        /* 24 Time Zones - Globe with Clock */
+        .tz .icon-stroke {
             stroke: #00ff41;
             stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
             fill: none;
-            filter: drop-shadow(0 0 6px #00ff41);
+            filter: drop-shadow(0 0 2px rgba(0, 255, 65, 0.6)) drop-shadow(0 0 4px rgba(0, 255, 65, 0.4));
         }
 
-        @keyframes globeSpin {
-            to {
-                transform: rotate(360deg)
+        .tz .globe-lines {
+            animation: tz-globe-spin 4s linear infinite;
+        }
+
+        .tz .minute-hand {
+            transform-origin: 75px 35px;
+            animation: tz-clock-tick 3s linear infinite;
+        }
+
+        .tz .hour-hand {
+            transform-origin: 75px 35px;
+            animation: tz-clock-tick 36s linear infinite;
+        }
+
+        @keyframes tz-globe-spin {
+            0% {
+                transform: translateX(-20px);
+            }
+
+            100% {
+                transform: translateX(20px);
+            }
+        }
+
+        @keyframes tz-clock-tick {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
             }
         }
 
@@ -2067,12 +2191,16 @@
             display: block;
         }
 
-        /* Hero Section - Competition Ready */
+        /* =============================================
+           HERO SECTION - COMPETITION READY
+           Exact specifications as requested
+           ============================================= */
         .hero-section {
             text-align: center;
-            padding: clamp(40px, 8vw, 80px) 20px clamp(30px, 6vw, 60px);
+            padding: clamp(25px, 5vw, 60px) 15px clamp(20px, 4vw, 45px);
             background: linear-gradient(180deg, rgba(0, 40, 15, 0.4) 0%, rgba(0, 20, 5, 0.2) 50%, transparent 100%);
             position: relative;
+            overflow: hidden;
         }
 
         .hero-section::before {
@@ -2081,71 +2209,77 @@
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 80%;
+            width: 70%;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.5), transparent);
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.4), transparent);
         }
 
-        /* Welcome You - 2x the title size */
+        /* 1) "Welcome You" 
+           - Color: neon green (#00ff41)
+           - Mobile: 1.5rem, scales to 3rem on desktop
+        */
         .hero-welcome {
-            font-size: clamp(2.4rem, 8vw, 5rem);
+            font-size: clamp(1.5rem, 3vw, 3rem);
             color: #00ff41;
-            margin-bottom: clamp(10px, 2vw, 20px);
-            letter-spacing: 4px;
-            font-weight: 900;
+            margin: 0 0 clamp(8px, 1.5vw, 16px) 0;
+            letter-spacing: 3px;
+            font-weight: 800;
             text-transform: uppercase;
             text-shadow:
-                0 0 10px rgba(0, 255, 65, 0.8),
-                0 0 30px rgba(0, 255, 65, 0.6),
-                0 0 60px rgba(0, 255, 65, 0.4),
-                0 0 100px rgba(0, 255, 65, 0.2);
+                0 0 8px rgba(0, 255, 65, 0.7),
+                0 0 20px rgba(0, 255, 65, 0.5),
+                0 0 40px rgba(0, 255, 65, 0.3);
             animation: welcomeGlow 3s ease-in-out infinite alternate;
         }
 
         @keyframes welcomeGlow {
             0% {
                 text-shadow:
-                    0 0 10px rgba(0, 255, 65, 0.8),
-                    0 0 30px rgba(0, 255, 65, 0.6),
-                    0 0 60px rgba(0, 255, 65, 0.4),
-                    0 0 100px rgba(0, 255, 65, 0.2);
-                filter: brightness(1);
+                    0 0 8px rgba(0, 255, 65, 0.7),
+                    0 0 20px rgba(0, 255, 65, 0.5),
+                    0 0 40px rgba(0, 255, 65, 0.3);
             }
 
             100% {
                 text-shadow:
-                    0 0 15px rgba(0, 255, 65, 1),
-                    0 0 40px rgba(0, 255, 65, 0.8),
-                    0 0 80px rgba(0, 255, 65, 0.5),
-                    0 0 120px rgba(0, 255, 65, 0.3);
-                filter: brightness(1.1);
+                    0 0 12px rgba(0, 255, 65, 0.9),
+                    0 0 30px rgba(0, 255, 65, 0.7),
+                    0 0 60px rgba(0, 255, 65, 0.4);
             }
         }
 
-        /* Universal Unit Converter - Base size (1x) */
+        /* 2) "Universal Unit Converter"
+           - Color: white (#ffffff)
+           - Mobile: 0.75rem, scales to 2.2rem on desktop
+           - Must remain on ONE LINE
+        */
         .hero-title {
-            font-size: clamp(1.2rem, 4vw, 2.5rem);
+            font-size: clamp(0.75rem, 4vw, 2.2rem);
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: clamp(15px, 3vw, 25px);
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            margin: 0 0 clamp(10px, 2vw, 20px) 0;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.25);
             white-space: nowrap;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .hero-title .highlight {
             color: #ffffff;
         }
 
-        /* Subtitle - 0.5x the title size */
+        /* 3) Sub-heading
+           - Color: white (#ffffff)
+           - Mobile: 0.8rem, scales to 1.2rem
+        */
         .hero-subtitle {
-            font-size: clamp(0.6rem, 2vw, 1.25rem);
-            color: rgba(255, 255, 255, 0.7);
-            max-width: 550px;
+            font-size: clamp(0.8rem, 2vw, 1.2rem);
+            color: #ffffff;
+            max-width: 480px;
             margin: 0 auto;
-            line-height: 1.8;
-            padding: 0 15px;
+            line-height: 1.6;
+            padding: 0 10px;
             font-weight: 400;
+            opacity: 0.85;
         }
 
         /* Hide old header */
@@ -2205,57 +2339,56 @@
             transform: scale(1.1);
         }
 
-        /* Search Container - Premium Polished */
+        /* =============================================
+           SEARCH BAR - COMPETITION READY
+           ============================================= */
         .search-container {
             position: relative;
-            width: 100%;
-            max-width: clamp(320px, 85vw, 650px);
-            margin: 0 auto clamp(40px, 6vw, 60px);
-            padding: 0 20px;
+            width: calc(100% - 30px);
+            max-width: 550px;
+            margin: 0 auto clamp(25px, 4vw, 45px);
+            padding: 0;
         }
 
         .search-input {
             width: 100%;
-            padding: clamp(14px, 2.5vw, 20px) clamp(20px, 4vw, 30px) clamp(14px, 2.5vw, 20px) clamp(50px, 8vw, 60px);
-            border-radius: 60px;
+            padding: clamp(12px, 2vw, 16px) clamp(16px, 3vw, 24px) clamp(12px, 2vw, 16px) clamp(45px, 7vw, 55px);
+            border-radius: 50px;
             border: 2px solid var(--primary);
-            background: rgba(0, 10, 5, 0.9);
+            background: rgba(0, 15, 8, 0.85);
             color: #ffffff;
             box-shadow:
-                0 0 20px rgba(0, 255, 65, 0.25),
-                0 0 40px rgba(0, 255, 65, 0.1),
-                inset 0 0 10px rgba(0, 255, 65, 0.05);
-            font-size: clamp(0.95rem, 2.5vw, 1.15rem);
-            font-weight: 500;
+                0 0 15px rgba(0, 255, 65, 0.2),
+                inset 0 0 8px rgba(0, 255, 65, 0.05);
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            font-weight: 400;
             outline: none;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
         }
 
         .search-input::placeholder {
-            color: rgba(255, 255, 255, 0.85);
-            font-weight: 400;
+            color: #ffffff;
+            opacity: 1;
         }
 
         .search-input:focus {
             border-color: #00ff41;
             box-shadow:
-                0 0 30px rgba(0, 255, 65, 0.4),
-                0 0 60px rgba(0, 255, 65, 0.2),
-                inset 0 0 15px rgba(0, 255, 65, 0.1);
-            transform: scale(1.01);
+                0 0 25px rgba(0, 255, 65, 0.35),
+                inset 0 0 12px rgba(0, 255, 65, 0.08);
         }
 
         .search-icon {
             position: absolute;
-            left: 40px;
+            left: 18px;
             top: 50%;
             transform: translateY(-50%);
             color: #00ff41;
             stroke: #00ff41;
-            width: 22px;
-            height: 22px;
+            width: 18px;
+            height: 18px;
             pointer-events: none;
-            filter: drop-shadow(0 0 6px rgba(0, 255, 65, 0.6));
+            filter: drop-shadow(0 0 4px rgba(0, 255, 65, 0.5));
         }
 
         /* Live Search Dropdown */
@@ -2692,15 +2825,7 @@
             color: var(--text);
         }
 
-        .back-btn {
-            padding: 8px 16px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            cursor: pointer;
-            color: var(--text);
-            font-weight: 600;
-        }
+        /* Back button styles defined below with page-header */
 
         /* History Panel */
         .history-panel {
@@ -2776,26 +2901,37 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 30px;
+            margin-bottom: clamp(20px, 4vw, 30px);
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
+        /* Polished Back Button - Mobile Optimized */
         .back-btn {
-            padding: 14px 28px;
-            font-size: 1.1rem;
+            padding: clamp(8px, 1.5vw, 12px) clamp(14px, 2.5vw, 22px);
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
             font-weight: 600;
             border: 2px solid var(--primary);
-            border-radius: 12px;
-            background: rgba(0, 40, 15, 0.6);
+            border-radius: 25px;
+            background: rgba(0, 30, 10, 0.7);
             color: var(--primary);
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 0 12px rgba(0, 255, 65, 0.2);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.15);
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .back-btn:hover {
-            background: rgba(0, 80, 30, 0.8);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
-            transform: translateX(-4px);
+            background: rgba(0, 60, 25, 0.9);
+            box-shadow: 0 0 18px rgba(0, 255, 65, 0.4);
+            transform: translateX(-3px);
+        }
+
+        .back-btn:active {
+            transform: scale(0.98);
         }
 
 
@@ -3946,11 +4082,11 @@
             }
 
             .hero-welcome {
-                font-size: 1.5 rem;
+                font-size: 0.75rem;
             }
 
             .hero-title {
-                font-size: 0.75 rem;
+                font-size: 1.5rem;
             }
 
             .hero-subtitle {
@@ -4397,12 +4533,12 @@
             angle: `<svg class="angle" viewBox="0 0 100 100"><path class="icon-stroke draw-fixed" d="M 20 20 L 20 80 L 80 80" /><circle class="icon-stroke angle-arc" cx="20" cy="80" r="35" /><g class="icon-stroke rotating-arm"><line x1="20" y1="80" x2="65" y2="80" /><path d="M 58 74 L 65 80 L 58 86" /></g><circle class="icon-fill vertex-point" cx="20" cy="80" r="4" /></svg>`,
             transfer: `<svg class="transfer" viewBox="0 0 100 100"><g class="arrow-right"><line class="icon-stroke" x1="20" y1="35" x2="80" y2="35" /><path class="icon-stroke" d="M 70 25 L 80 35 L 70 45" /></g><g class="arrow-left"><line class="icon-stroke" x1="20" y1="65" x2="80" y2="65" /><path class="icon-stroke" d="M 30 55 L 20 65 L 30 75" /></g></svg>`,
             fuel: `<svg class="fuel" viewBox="0 0 100 100"><g class="fuel-tank"><path class="icon-stroke" d="M 25 35 L 75 35 L 75 85 L 25 85 Z" /><path class="icon-stroke" d="M 35 45 L 65 75" style="opacity: 0.6; stroke-width: 2;" /><path class="icon-stroke" d="M 65 45 L 35 75" style="opacity: 0.6; stroke-width: 2;" /><rect class="icon-stroke" x="32" y="42" width="36" height="36" rx="2" style="opacity: 0.6; stroke-width: 2;" /><path class="icon-stroke" d="M 28 35 L 28 25 Q 28 20 35 20 L 65 20 Q 72 20 72 25 L 72 35" /><path class="icon-stroke" d="M 42 20 L 42 35 M 58 20 L 58 35" /><path class="icon-stroke" d="M 68 22 L 82 22 L 85 28" stroke-width="3" /></g><path class="icon-fill fuel-drop" d="M 85 28 Q 80 38 85 43 Q 90 38 85 28 Z" /></svg>`,
-            light: `<svg class="light" viewBox="0 0 100 100"><circle class="icon-stroke draw-anim" cx="50" cy="50" r="15" /><g class="icon-stroke fade-ticks"><line x1="50" y1="25" x2="50" y2="15" /><line x1="50" y1="75" x2="50" y2="85" /><line x1="25" y1="50" x2="15" y2="50" /><line x1="75" y1="50" x2="85" y2="50" /><line x1="32" y1="32" x2="25" y2="25" /><line x1="68" y1="32" x2="75" y2="25" /><line x1="32" y1="68" x2="25" y2="75" /><line x1="68" y1="68" x2="75" y2="75" /></g></svg>`,
+            light: `<svg class="light" viewBox="0 0 100 100"><circle class="icon-stroke light-source" cx="50" cy="50" r="18" /><g class="icon-stroke light-rays"><line x1="50" y1="20" x2="50" y2="10" /><line x1="50" y1="80" x2="50" y2="90" /><line x1="20" y1="50" x2="10" y2="50" /><line x1="80" y1="50" x2="90" y2="50" /><line x1="29" y1="29" x2="22" y2="22" /><line x1="71" y1="29" x2="78" y2="22" /><line x1="29" y1="71" x2="22" y2="78" /><line x1="71" y1="71" x2="78" y2="78" /></g></svg>`,
             sound: `<svg class="sound" viewBox="0 0 100 100"><g class="icon-stroke draw-anim"><rect x="28" y="40" width="8" height="30" rx="2" fill="#00ff41" class="bar" /><rect x="42" y="30" width="8" height="40" rx="2" fill="#00ff41" class="bar" /><rect x="56" y="35" width="8" height="35" rx="2" fill="#00ff41" class="bar" /><rect x="70" y="45" width="8" height="25" rx="2" fill="#00ff41" class="bar" /></g></svg>`,
-            type: `<svg class="type" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M30 30 L70 30 M50 30 L50 75 M35 75 L65 75" /></svg>`,
-            cook: `<svg class="cook" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M25 55 L25 75 A5 5 0 0 0 30 80 L70 80 A5 5 0 0 0 75 75 L75 55 L25 55 M20 55 L80 55" /><g class="icon-stroke fade-ticks steam"><path d="M35 45 Q32 38 38 32" /><path d="M50 45 Q47 38 53 32" /><path d="M65 45 Q62 38 68 32" /></g></svg>`,
-            shoe: `<svg class="shoe" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M20 60 L20 70 L85 70 L85 55 Q75 45 55 50 L45 55 Q35 45 25 55 L20 60" /></svg>`,
-            tz: `<svg class="tz" viewBox="0 0 100 100"><circle class="icon-stroke draw-anim" cx="50" cy="50" r="30" /><ellipse class="icon-stroke draw-anim-delayed" cx="50" cy="50" rx="12" ry="30" /><line class="icon-stroke fade-ticks" x1="20" y1="50" x2="80" y2="50" /></svg>`,
+            type: `<svg class="type" viewBox="0 0 100 100"><path class="icon-stroke draw-anim letter-a-left" d="M 15 75 L 30 25" /><path class="icon-stroke draw-anim letter-a-right" d="M 30 25 L 45 75" /><line class="icon-stroke draw-anim letter-a-bar" x1="22" y1="55" x2="38" y2="55" /><path class="icon-stroke draw-anim letter-c" d="M 85 35 A 20 20 0 1 0 85 65" /><line class="icon-stroke draw-anim baseline" x1="10" y1="85" x2="90" y2="85" style="stroke-width: 2;" /></svg>`,
+            cook: `<svg class="cook" viewBox="0 0 100 100"><g class="pot-group"><path class="icon-stroke" d="M 25 50 L 75 50 L 75 75 Q 75 85 65 85 L 35 85 Q 25 85 25 75 Z" /><line class="icon-stroke" x1="22" y1="50" x2="78" y2="50" /><path class="icon-stroke" d="M 25 58 C 20 58 20 68 25 68" /><path class="icon-stroke" d="M 75 58 C 80 58 80 68 75 68" /></g><g class="steam-group"><path class="icon-stroke steam-line steam-1" d="M 35 40 Q 40 35 35 30 Q 30 25 35 20" /><path class="icon-stroke steam-line steam-2" d="M 50 38 Q 55 33 50 28 Q 45 23 50 18" /><path class="icon-stroke steam-line steam-3" d="M 65 40 Q 70 35 65 30 Q 60 25 65 20" /></g></svg>`,
+            shoe: `<svg class="shoe" viewBox="0 0 100 100"><g class="t-shirt"><path class="icon-stroke" d="M 30 25 L 15 35 L 22 45 L 30 40 L 30 75 L 70 75 L 70 40 L 78 45 L 85 35 L 70 25 Q 50 35 30 25 Z" /><path class="icon-stroke" d="M 30 25 Q 50 35 70 25" style="stroke-width: 1.5; opacity: 0.6;" /></g><g class="sneaker"><path class="icon-stroke" style="fill: #111; stroke-width: 3;" d="M 55 85 L 88 85 Q 95 85 95 78 Q 95 72 85 70 L 75 62 L 55 65 Q 52 65 52 75 Q 52 85 55 85 Z" /><path class="icon-stroke" d="M 54 80 L 92 80" style="stroke-width: 1.5; opacity: 0.8;" /><line class="icon-stroke" x1="70" y1="65" x2="78" y2="67" style="stroke-width: 2;" /><line class="icon-stroke" x1="72" y1="70" x2="80" y2="72" style="stroke-width: 2;" /></g></svg>`,
+            tz: `<svg class="tz" viewBox="0 0 100 100"><defs><clipPath id="globe-clip"><circle cx="45" cy="55" r="30" /></clipPath></defs><circle class="icon-stroke" cx="45" cy="55" r="30" /><g clip-path="url(#globe-clip)"><g class="globe-lines"><path class="icon-stroke" d="M 15 55 Q 45 65 75 55" style="stroke-width: 2; opacity: 0.7;" /><path class="icon-stroke" d="M 15 45 Q 45 35 75 45" style="stroke-width: 2; opacity: 0.7;" /><path class="icon-stroke" d="M 45 25 Q 25 55 45 85" style="stroke-width: 2;" /><path class="icon-stroke" d="M 65 25 Q 45 55 65 85" style="stroke-width: 2;" /></g></g><circle cx="75" cy="35" r="16" fill="#111" /><circle class="icon-stroke" cx="75" cy="35" r="14" /><line class="icon-stroke minute-hand" x1="75" y1="35" x2="75" y2="25" style="stroke-width: 2.5;" /><line class="icon-stroke hour-hand" x1="75" y1="35" x2="82" y2="35" style="stroke-width: 2.5;" /><circle fill="#00ff41" cx="75" cy="35" r="2" /></svg>`,
         };
 
         const DATA = {
