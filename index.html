@@ -6607,9 +6607,42 @@
             },
             convert: function () {
                 const inputEl = document.getElementById('input-val');
-                const val = parseFloat(inputEl.value);
-                if (isNaN(val)) { document.getElementById('output-val').value = ''; return; }
-                const from = document.getElementById('unit-from').value; const to = document.getElementById('unit-to').value;
+                const rawVal = inputEl.value.trim();
+
+                // Handle empty input gracefully
+                if (rawVal === '') {
+                    batchDOM(() => {
+                        document.getElementById('output-val').value = '';
+                        document.getElementById('result-display').textContent = '—';
+                        document.getElementById('result-unit-label').textContent = '';
+                    });
+                    return;
+                }
+
+                const val = parseFloat(rawVal);
+
+                // Validate input - block invalid numbers
+                if (isNaN(val) || !isFinite(val)) {
+                    batchDOM(() => {
+                        document.getElementById('output-val').value = '';
+                        document.getElementById('result-display').textContent = '—';
+                    });
+                    return;
+                }
+
+                // Overflow protection - limit extreme values
+                const MAX_SAFE = 1e15;
+                const MIN_SAFE = 1e-15;
+                if (Math.abs(val) > MAX_SAFE) {
+                    batchDOM(() => {
+                        document.getElementById('output-val').value = 'Overflow';
+                        document.getElementById('result-display').textContent = '∞';
+                    });
+                    return;
+                }
+
+                const from = document.getElementById('unit-from').value;
+                const to = document.getElementById('unit-to').value;
                 const cat = this.state.category;
                 let res = 0; let form = '';
 
@@ -6655,7 +6688,16 @@
                 if (cat === 'clothing') {
                     disp = parseFloat(res.toFixed(1));
                 } else {
-                    disp = (Math.abs(res) < 1e-6 && res !== 0) ? res.toExponential(4) : parseFloat(res.toFixed(6));
+                    // Handle result overflow
+                    if (!isFinite(res)) {
+                        disp = '∞';
+                    } else if (Math.abs(res) > 1e15) {
+                        disp = res.toExponential(4);
+                    } else if (Math.abs(res) < 1e-15 && res !== 0) {
+                        disp = res.toExponential(4);
+                    } else {
+                        disp = parseFloat(res.toFixed(6));
+                    }
                 }
 
                 // Batch DOM updates to prevent layout thrashing
