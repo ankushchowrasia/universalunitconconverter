@@ -9,6 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unit Converter Hub - 110 Converters</title>
     <meta name="description" content="Universal Unit Converter. Matrix Theme.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
@@ -2001,39 +2004,7 @@
             }
         }
 
-
-        #bg-image {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            background-image: url('https://raw.githubusercontent.com/ankushchowrasia/universalunitconconverter/9fdd8e6a855969cdb8af11308bfe41672fdf4f3e/unnamed.jpg');
-            background-size: cover;
-            background-position: center bottom;
-            opacity: 0.3;
-            animation: bgPan 10s ease-in-out infinite alternate;
-        }
-
-        @media (max-width: 768px) {
-            #bg-image {
-                background-size: auto 150vh;
-                /* Force vertical overflow for movement */
-            }
-        }
-
-        @keyframes bgPan {
-            0% {
-                background-position: center bottom;
-            }
-
-            100% {
-                background-position: center top;
-            }
-        }
-
+        /* REMOVED BACKGROUND IMAGE CSS HERE */
 
         .container {
             max-width: 1400px;
@@ -2080,10 +2051,59 @@
         }
 
         .nav-title {
+            font-family: 'Outfit', sans-serif;
             font-size: 1.1rem;
             font-weight: 700;
             color: #ffffff;
             letter-spacing: 0.5px;
+        }
+
+        /* Nav Controls Wrapper */
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle-btn {
+            width: 42px;
+            height: 42px;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            box-sizing: border-box;
+        }
+
+        .theme-toggle-btn:hover {
+            background: rgba(0, 255, 65, 0.1);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+        }
+
+        .theme-toggle-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--primary);
+            stroke-width: 2;
+        }
+
+        body.light-mode .theme-toggle-btn {
+            border-color: #333333;
+        }
+
+        body.light-mode .theme-toggle-btn:hover {
+            background: rgba(0, 0, 0, 0.06);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode .theme-toggle-btn svg {
+            stroke: #333333;
         }
 
         /* Hamburger Menu Button */
@@ -2207,10 +2227,12 @@
            ============================================= */
         .hero-section {
             text-align: center;
-            padding: clamp(25px, 5vw, 60px) 15px clamp(20px, 4vw, 45px);
+            padding: clamp(30px, 5vw, 70px) 15px clamp(25px, 4vw, 50px);
+            /* Kept subtle gradient for depth, but it sits on black body */
             background: linear-gradient(180deg, rgba(0, 40, 15, 0.4) 0%, rgba(0, 20, 5, 0.2) 50%, transparent 100%);
             position: relative;
             overflow: hidden;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.1);
         }
 
         .hero-section::before {
@@ -2219,77 +2241,88 @@
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 70%;
+            width: 80%;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.4), transparent);
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.5), transparent);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.8);
         }
 
         /* 1) "Welcome You" 
            - Color: neon green (#00ff41)
-           - Mobile: 1.5rem, scales to 3rem on desktop
+           - LARGEST FONT
+           - GLOW ANIMATION RESTORED (Reduced intensity)
         */
         .hero-welcome {
-            font-size: clamp(15rem, 6vw, 3rem);
+            font-family: 'Outfit', sans-serif;
+            /* Changed to strong sans-serif */
+            font-size: clamp(2.5rem, 8vw, 5rem);
             color: #00ff41;
-            margin: 0 0 clamp(8px, 1.5vw, 16px) 0;
-            letter-spacing: 3px;
-            font-weight: 800;
+            margin: 0 0 clamp(10px, 1.5vw, 20px) 0;
+            letter-spacing: 2px;
+            font-weight: 900;
+            /* Extra Bold */
             text-transform: uppercase;
+            line-height: 1.1;
+            /* Reduced initial static glow */
             text-shadow:
-                0 0 8px rgba(0, 255, 65, 0.7),
-                0 0 20px rgba(0, 255, 65, 0.5),
-                0 0 40px rgba(0, 255, 65, 0.3);
+                0 0 5px rgba(0, 255, 65, 0.6),
+                0 0 10px rgba(0, 255, 65, 0.3);
             animation: welcomeGlow 3s ease-in-out infinite alternate;
         }
 
         @keyframes welcomeGlow {
             0% {
                 text-shadow:
-                    0 0 8px rgba(0, 255, 65, 0.7),
-                    0 0 20px rgba(0, 255, 65, 0.5),
-                    0 0 40px rgba(0, 255, 65, 0.3);
+                    0 0 5px rgba(0, 255, 65, 0.6),
+                    0 0 10px rgba(0, 255, 65, 0.3);
+                opacity: 0.95;
             }
 
             100% {
                 text-shadow:
-                    0 0 12px rgba(0, 255, 65, 0.9),
-                    0 0 30px rgba(0, 255, 65, 0.7),
-                    0 0 60px rgba(0, 255, 65, 0.4);
+                    0 0 10px rgba(0, 255, 65, 0.8),
+                    0 0 20px rgba(0, 255, 65, 0.4);
+                /* Reduced max glow radius */
+                opacity: 1;
+                transform: scale(1.01);
+                /* Reduced scale pulsing */
             }
         }
 
         /* 2) "Universal Unit Converter"
            - Color: white (#ffffff)
-           - Mobile: 0.75rem, scales to 2.2rem on desktop
-           - Must remain on ONE LINE
+           - MEDIUM FONT (Smaller than Welcome)
         */
         .hero-title {
-            font-size: clamp(0.75rem, 4vw, 2.2rem);
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            /* Smaller than welcome */
             font-weight: 700;
             color: #ffffff;
-            margin: 0 0 clamp(10px, 2vw, 20px) 0;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.25);
+            margin: 0 0 clamp(12px, 2vw, 24px) 0;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
             white-space: nowrap;
-            letter-spacing: 0.5px;
-        }
-
-        .hero-title .highlight {
-            color: #ffffff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         /* 3) Sub-heading
-           - Color: white (#ffffff)
-           - Mobile: 0.8rem, scales to 1.2rem
+           - Color: NEON GREEN (#00ff41)
+           - SMALLEST FONT
         */
         .hero-subtitle {
-            font-size: clamp(0.8rem, 2vw, 1.2rem);
-            color: #ffffff;
-            max-width: 480px;
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+            /* Smallest */
+            color: #00ff41;
+            /* Changed to Green */
+            max-width: 600px;
             margin: 0 auto;
             line-height: 1.6;
-            padding: 0 10px;
+            padding: 0 15px;
             font-weight: 400;
-            opacity: 0.85;
+            letter-spacing: 0.5px;
+            opacity: 0.9;
         }
 
         /* Hide old header */
@@ -2749,6 +2782,11 @@
             box-shadow: var(--shadow);
         }
 
+        /* Set converter names to white */
+        .converter-item strong {
+            color: #ffffff;
+        }
+
         .converter-item:hover {
             transform: translateX(5px);
             border-color: var(--secondary);
@@ -3045,6 +3083,268 @@
             letter-spacing: 0.5px;
             margin-bottom: 6px;
         }
+
+        /* =============================================
+           FEATURE 1: COMPARISON MODE
+           ============================================= */
+        .mode-toggle {
+            display: flex;
+            gap: 0;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid var(--primary);
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .mode-btn:first-child {
+            border-right: 1px solid var(--primary);
+        }
+
+        .mode-btn.active {
+            background: var(--primary);
+            color: #000;
+        }
+
+        .mode-btn:hover:not(.active) {
+            background: rgba(0, 255, 65, 0.1);
+        }
+
+        .comparison-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .comparison-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 16px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .comparison-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+        }
+
+        .comparison-card .unit-name {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .comparison-card .unit-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            word-break: break-all;
+        }
+
+        /* =============================================
+           FEATURE 2: SHARE BUTTON
+           ============================================= */
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .share-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* =============================================
+           FEATURE 3: UNIT RELATIONSHIP GRAPH
+           ============================================= */
+        .unit-graph-section {
+            margin-top: 20px;
+        }
+
+        .unit-graph-panel {
+            background: rgba(0, 20, 0, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .unit-graph-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+            background: rgba(0, 40, 10, 0.5);
+            user-select: none;
+        }
+
+        .unit-graph-header:hover {
+            background: rgba(0, 60, 15, 0.6);
+        }
+
+        .unit-graph-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 16px;
+        }
+
+        .unit-graph-panel.open .unit-graph-content {
+            max-height: 300px;
+            padding: 16px;
+        }
+
+        .unit-graph {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .unit-node {
+            padding: 8px 16px;
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            background: var(--surface);
+            color: var(--text);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .unit-node.active {
+            border-color: var(--primary);
+            background: rgba(0, 255, 65, 0.15);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .unit-arrow {
+            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* =============================================
+           FEATURE 4: ACCESSIBILITY
+           ============================================= */
+        /* Focus States */
+        :focus-visible {
+            outline: 3px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary);
+            color: #000;
+            padding: 8px 16px;
+            z-index: 10000;
+            font-weight: bold;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* High Contrast Mode */
+        body.high-contrast {
+            --bg: #000000;
+            --surface: #000000;
+            --text: #FFFFFF;
+            --text-muted: #FFFF00;
+            --border: #FFFFFF;
+            --primary: #FFFF00;
+            --secondary: #FFFF00;
+        }
+
+        body.high-contrast .category-card,
+        body.high-contrast .converter-ui,
+        body.high-contrast .comparison-card,
+        body.high-contrast .unit-node {
+            border-width: 3px;
+        }
+
+        body.high-contrast .btn-primary {
+            background: #FFFF00;
+            color: #000000;
+        }
+
+        body.high-contrast .mode-btn.active {
+            background: #FFFF00;
+            color: #000000;
+        }
+
+        /* Accessibility Toggle in Slide Menu */
+        .accessibility-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: rgba(0, 30, 10, 0.4);
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .accessibility-toggle label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: var(--primary);
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+
 
         /* Calculator Popup Styles */
         .calc-trigger {
@@ -3627,43 +3927,7 @@
             border-color: #ff4444;
         }
 
-        /* Theme Switcher */
-        .theme-panel {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            background: var(--surface);
-            border: 2px solid var(--primary);
-            border-radius: 12px;
-            padding: 16px;
-            z-index: 2000;
-            display: none;
-        }
 
-        .theme-panel.active {
-            display: block;
-        }
-
-        .theme-option {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 16px;
-            cursor: pointer;
-            border-radius: 8px;
-            margin-bottom: 8px;
-        }
-
-        .theme-option:hover {
-            background: rgba(0, 255, 65, 0.1);
-        }
-
-        .theme-color {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            border: 2px solid var(--border);
-        }
 
         /* Conversion Table Modal */
         .table-modal {
@@ -3775,29 +4039,175 @@
             background: rgba(0, 60, 20, 0.5);
         }
 
-        /* Theme Variations */
-        body.theme-cyberpunk {
-            --primary: #FF00FF;
-            --secondary: #AA00AA;
-            --text-light: #FF00FF;
-            --text-muted-light: #FF77FF;
-            --border-light: #330033;
-        }
-
-        body.theme-light {
-            --bg: #F5F5F5;
+        /* Light Mode Theme - White + Black */
+        body.light-mode {
+            --bg: #FFFFFF;
             --surface: #FFFFFF;
-            --text: #333333;
-            --text-muted: #666666;
-            --border: #DDDDDD;
-            --primary: #2196F3;
-            --secondary: #1976D2;
+            --text: #000000;
+            --text-muted: #333333;
+            --border: #CCCCCC;
+            --primary: #000000;
+            --secondary: #222222;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 0 15px rgba(0, 0, 0, 0.2);
         }
 
-        body.theme-oled {
-            --bg: #000000;
-            --surface: #000000;
-            --border: #111111;
+        body.light-mode .category-card,
+        body.light-mode .converter-ui,
+        body.light-mode .calc-popup,
+        body.light-mode .reference-section {
+            background: #FFFFFF;
+            border-color: #CCCCCC;
+        }
+
+        body.light-mode .toast {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(30, 30, 30, 0.95));
+            color: #FFFFFF;
+        }
+
+        body.light-mode .top-nav {
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid #CCCCCC;
+        }
+
+        body.light-mode .slide-menu {
+            background: #FFFFFF;
+            border-color: #CCCCCC;
+        }
+
+        body.light-mode .slide-menu-item {
+            background: #F5F5F5;
+            border-color: #CCCCCC;
+            color: #000000;
+        }
+
+        body.light-mode .slide-menu-item:hover {
+            background: #EEEEEE;
+            border-color: #000000;
+        }
+
+        body.light-mode .slide-menu-item svg {
+            stroke: #000000;
+        }
+
+        body.light-mode .btn-primary {
+            background: #000000;
+            color: #FFFFFF;
+        }
+
+        body.light-mode .btn-primary:hover {
+            background: #333333;
+        }
+
+        body.light-mode .btn-outline {
+            border-color: #000000;
+            color: #000000;
+        }
+
+        body.light-mode .hero-welcome,
+        body.light-mode .hero-subtitle {
+            color: #000000;
+            text-shadow: none;
+        }
+
+        body.light-mode .hero-title {
+            color: #000000;
+            text-shadow: none;
+        }
+
+        body.light-mode .cat-title {
+            color: #000000;
+        }
+
+        body.light-mode .cat-icon svg,
+        body.light-mode .cat-icon .icon-stroke {
+            stroke: #000000 !important;
+        }
+
+        body.light-mode .nav-title {
+            color: #000000;
+        }
+
+        body.light-mode .hamburger-btn {
+            border-color: #000000;
+        }
+
+        body.light-mode .hamburger-btn span {
+            background: #000000;
+        }
+
+        body.light-mode .search-input {
+            background: #FFFFFF;
+            border-color: #000000;
+            color: #000000;
+        }
+
+        body.light-mode .search-input::placeholder {
+            color: #666666;
+        }
+
+        body.light-mode .search-icon {
+            color: #000000;
+            stroke: #000000;
+        }
+
+        body.light-mode .conv-input,
+        body.light-mode .conv-select {
+            background: #FFFFFF;
+            border-color: #CCCCCC;
+            color: #000000;
+        }
+
+        body.light-mode .result-value {
+            color: #000000;
+        }
+
+        body.light-mode .result-box {
+            background: #F5F5F5;
+            border-color: #000000;
+        }
+
+        /* Footer - Keep dark even in light mode */
+        body.light-mode .site-footer {
+            background: linear-gradient(180deg, #0a0a0a, #000000) !important;
+        }
+
+        body.light-mode .footer-tagline {
+            color: #00ff41 !important;
+        }
+
+        body.light-mode .footer-logo-text,
+        body.light-mode .footer-logo-text span,
+        body.light-mode .footer-logo-text strong {
+            color: #FFFFFF !important;
+        }
+
+        body.light-mode .footer-socials .social-icon {
+            border-color: #00ff41 !important;
+            color: #00ff41 !important;
+        }
+
+        body.light-mode .footer-socials .social-icon svg {
+            stroke: #00ff41 !important;
+        }
+
+        body.light-mode .footer-bottom {
+            color: #00ff41 !important;
+            border-top-color: #222222 !important;
+        }
+
+        body.light-mode .footer-credit,
+        body.light-mode .footer-credit span {
+            color: #00ff41 !important;
+        }
+
+        body.light-mode .footer-credit a {
+            color: #00ff41 !important;
+            border-color: #00ff41 !important;
+        }
+
+        body.light-mode .letter-style {
+            stroke: #00ff41 !important;
         }
 
         /* Ingredient Selector */
@@ -4186,10 +4596,14 @@
 
         /* Enhanced Root Variables for Fluid Scaling */
         :root {
-            /* Fluid Typography System */
-            --fs-hero-welcome: clamp(1.2rem, 2.5vw + 0.5rem, 2.5rem);
-            --fs-hero-title: clamp(1rem, 3vw + 0.5rem, 2.5rem);
-            --fs-hero-subtitle: clamp(0.75rem, 1.5vw + 0.4rem, 1.1rem);
+            /* Fluid Typography System - Updated Hierarchy */
+            --fs-hero-welcome: clamp(2.5rem, 8vw, 5rem);
+            /* Largest */
+            --fs-hero-title: clamp(1.5rem, 5vw, 3rem);
+            /* Medium */
+            --fs-hero-subtitle: clamp(0.85rem, 2.5vw, 1.1rem);
+            /* Smallest */
+
             --fs-card-title: clamp(0.85rem, 1.2vw + 0.4rem, 1.2rem);
             --fs-card-desc: clamp(0.7rem, 0.8vw + 0.3rem, 0.9rem);
             --fs-nav-title: clamp(0.85rem, 1vw + 0.4rem, 1.1rem);
@@ -4474,11 +4888,13 @@
             }
 
             .hero-welcome {
-                font-size: 3rem !important;
+                font-size: 5rem !important;
+                /* Increased from 3rem to maintain hierarchy */
             }
 
             .hero-title {
-                font-size: 2.8rem !important;
+                font-size: 3rem !important;
+                /* Kept smaller than Welcome */
             }
         }
 
@@ -4608,17 +5024,23 @@
                 display: none;
             }
 
+            /* FIXED HIERARCHY FOR SMALL MOBILE */
             .hero-welcome {
-                font-size: 1rem !important;
+                font-size: 1.8rem !important;
+                /* Much larger than title */
                 letter-spacing: 2px;
+                margin-bottom: 5px;
             }
 
             .hero-title {
-                font-size: 0.95rem !important;
+                font-size: 1.1rem !important;
+                /* Significantly smaller */
+                line-height: 1.2;
             }
 
             .hero-subtitle {
-                font-size: 0.72rem !important;
+                font-size: 0.75rem !important;
+                margin-top: 5px;
             }
 
             .search-input {
@@ -4896,14 +5318,8 @@
 
             /* Paint containment for heavy sections */
             .site-footer,
-            .hero-section,
-            #bg-image {
+            .hero-section {
                 contain: layout paint;
-            }
-
-            /* Background optimization - disable fixed attachment */
-            #bg-image {
-                background-attachment: scroll !important;
             }
 
             /* Disable hover effects on touch devices */
@@ -4965,10 +5381,63 @@
                 box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
             }
         }
+
+        /* ============ PERFORMANCE OPTIMIZATIONS ============ */
+
+        /* GPU acceleration for animated elements */
+        .category-card,
+        .converter-item,
+        .btn,
+        .toast,
+        .slide-menu,
+        .calc-popup,
+        .history-panel,
+        .ref-panel {
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        /* Layout containment for better rendering */
+        .category-grid,
+        .converter-list,
+        .history-list,
+        .ref-section {
+            contain: layout style;
+        }
+
+        /* Reduce expensive animations on low-end devices */
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Optimize scrolling containers */
+        .history-list,
+        .converter-list,
+        #search-results {
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: auto;
+        }
+
+        /* Hide off-screen elements completely */
+        .view-section:not(.active) {
+            visibility: hidden;
+            pointer-events: none;
+        }
     </style>
 </head>
 
 <body>
+    <!-- Accessibility: Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <div id="preloader">
         <img src="https://raw.githubusercontent.com/ankushchowrasia/universalunitconconverter/03eb0fa83270da69d759bf5cae2fdbf76d85d92d/universal%20unit%20converter.png"
             alt="Logo" class="loader-logo">
@@ -4977,7 +5446,7 @@
             <div class="loader-progress" id="loader-prog"></div>
         </div>
     </div>
-    <div id="bg-image"></div>
+    <!-- REMOVED #bg-image DIV HERE -->
 
     <!-- Calculator Popup -->
     <div class="calc-overlay" id="calc-overlay" onclick="if(event.target === this) calc.close()">
@@ -5016,31 +5485,6 @@
         </div>
     </div>
 
-    <!-- Theme Panel -->
-    <div class="theme-panel" id="theme-panel">
-        <div
-            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border);">
-            <span style="color: var(--primary); font-weight: bold;">🎨 Choose Theme</span>
-            <button class="btn-icon" onclick="toggleThemePanel()"
-                style="width: 32px; height: 32px; font-size: 1.2rem;">✕</button>
-        </div>
-        <div class="theme-option" onclick="setTheme('matrix')">
-            <span class="theme-color" style="background: #00FF41;"></span>
-            <span>Matrix Green</span>
-        </div>
-        <div class="theme-option" onclick="setTheme('cyberpunk')">
-            <span class="theme-color" style="background: #FF00FF;"></span>
-            <span>Cyberpunk Pink</span>
-        </div>
-        <div class="theme-option" onclick="setTheme('light')">
-            <span class="theme-color" style="background: #2196F3;"></span>
-            <span>Classic Light</span>
-        </div>
-        <div class="theme-option" onclick="setTheme('oled')">
-            <span class="theme-color" style="background: #000000; border: 2px solid #333;"></span>
-            <span>OLED Dark</span>
-        </div>
-    </div>
 
 
     <!-- Quiz Overlay -->
@@ -5105,18 +5549,24 @@
                 alt="Logo" class="nav-logo">
             <span class="nav-title">Universal Unit Converter</span>
         </div>
-        <button class="hamburger-btn" id="hamburger-btn" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
+        <div class="nav-controls">
+            <button class="theme-toggle-btn" id="navbar-theme-toggle" onclick="toggleDarkMode()"
+                title="Switch to Light Mode">
+                <i data-lucide="moon" id="navbar-theme-icon"></i>
+            </button>
+            <button class="hamburger-btn" id="hamburger-btn" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
     </nav>
 
     <!-- Slide Menu -->
     <div class="slide-menu" id="slide-menu">
-        <div class="slide-menu-item" onclick="toggleThemePanel(); closeMenu();">
-            <i data-lucide="palette"></i>
-            <span>Change Theme</span>
+        <div class="slide-menu-item" onclick="toggleDarkMode(); closeMenu();">
+            <i data-lucide="moon" id="theme-toggle-icon"></i>
+            <span id="theme-toggle-text">Light Mode</span>
         </div>
         <div class="slide-menu-item" onclick="calc.open(); closeMenu();">
             <i data-lucide="calculator"></i>
@@ -5131,6 +5581,17 @@
             <i data-lucide="clock"></i>
             <span>History</span>
         </div>
+        <!-- Accessibility: High Contrast Toggle -->
+        <div class="accessibility-toggle" role="switch" aria-checked="false" id="contrast-toggle-container">
+            <label for="contrast-toggle">
+                <i data-lucide="eye"></i>
+                <span>High Contrast</span>
+            </label>
+            <div class="toggle-switch" id="contrast-toggle" onclick="toggleHighContrast()" tabindex="0" role="switch"
+                aria-label="Toggle high contrast mode"
+                onkeydown="if(event.key==='Enter'||event.key===' '){toggleHighContrast();event.preventDefault();}">
+            </div>
+        </div>
     </div>
 
     <!-- Menu Overlay -->
@@ -5139,7 +5600,7 @@
     <div class="container">
         <!-- Hero Section -->
         <section class="hero-section">
-            <p class="hero-welcome">Welcome You</p>
+            <p class="hero-welcome">Welcome To</p>
             <h1 class="hero-title">Universal Unit Converter</h1>
             <p class="hero-subtitle">A Hub which contains 250+ converters for daily usage with additional features</p>
         </section>
@@ -5150,8 +5611,9 @@
                 <h1>Unit Converter Hub</h1>
             </div>
             <div class="header-controls">
-                <button class="header-icon-btn" id="theme-toggle" title="Change Theme" onclick="toggleThemePanel()">
-                    <i data-lucide="palette"></i>
+                <button class="header-icon-btn" id="theme-toggle" title="Toggle Dark/Light Mode"
+                    onclick="toggleDarkMode()">
+                    <i data-lucide="moon"></i>
                 </button>
                 <button class="header-icon-btn" title="Calculator" onclick="calc.open()">
                     <i data-lucide="calculator"></i>
@@ -5195,41 +5657,82 @@
                 <button class="back-btn" onclick="app.navigate('category')">← Back List</button>
                 <button class="fav-btn" id="fav-toggle" title="Add to Favorites">★</button>
             </div>
-            <div class="converter-ui">
+            <div class="converter-ui" id="main-content">
                 <h3 class="conv-title" id="conv-page-title">Converter</h3>
 
-                <div class="input-group">
-                    <label>From</label>
-                    <div class="input-wrapper">
-                        <input type="number" class="conv-input" id="input-val" placeholder="0" oninput="app.convert()">
-                        <select class="conv-select" id="unit-from"
-                            onchange="app.convert(); app.updateDynamicReference()"></select>
-                    </div>
+                <!-- Comparison Mode Toggle -->
+                <div class="mode-toggle" role="tablist" aria-label="Converter mode">
+                    <button class="mode-btn active" role="tab" aria-selected="true" id="mode-single"
+                        onclick="app.setMode('single')" tabindex="0">Single Converter</button>
+                    <button class="mode-btn" role="tab" aria-selected="false" id="mode-compare"
+                        onclick="app.setMode('compare')" tabindex="-1">Comparison Mode</button>
                 </div>
 
-                <div style="text-align:center; margin:-10px 0 10px; color:var(--text-muted);">↓</div>
-
-                <div class="input-group">
-                    <label>To</label>
-                    <div class="input-wrapper">
-                        <input type="number" class="conv-input" id="output-val" readonly placeholder="0">
-                        <select class="conv-select" id="unit-to"
-                            onchange="app.convert(); app.updateDynamicReference()"></select>
+                <!-- Single Converter Mode -->
+                <div id="single-mode-ui">
+                    <div class="input-group">
+                        <label>From</label>
+                        <div class="input-wrapper">
+                            <input type="number" class="conv-input" id="input-val" placeholder="0"
+                                oninput="app.convert()">
+                            <select class="conv-select" id="unit-from"
+                                onchange="app.convert(); app.updateDynamicReference()"></select>
+                        </div>
                     </div>
-                </div>
 
-                <div class="result-box">
-                    <div id="result-display" class="result-value">0</div>
-                    <div id="result-unit-label" style="font-size:0.9rem; margin-top:5px; color:var(--text-muted);">
+                    <div style="text-align:center; margin:-10px 0 10px; color:var(--text-muted);">↓</div>
+
+                    <div class="input-group">
+                        <label>To</label>
+                        <div class="input-wrapper">
+                            <input type="number" class="conv-input" id="output-val" readonly placeholder="0">
+                            <select class="conv-select" id="unit-to"
+                                onchange="app.convert(); app.updateDynamicReference()"></select>
+                        </div>
                     </div>
-                </div>
-                <div class="formula-display" id="formula-text"
-                    style="text-align:center; color:var(--text-muted); font-style:italic;"></div>
 
-                <div class="controls">
-                    <button class="btn btn-primary" onclick="calc.open()" title="Open Calculator">🧮</button>
-                    <button class="btn btn-outline" onclick="app.reset()">Reset</button>
-                    <button class="btn btn-secondary" onclick="app.copyResult()">Copy</button>
+                    <div class="result-box">
+                        <div id="result-display" class="result-value">0</div>
+                        <div id="result-unit-label" style="font-size:0.9rem; margin-top:5px; color:var(--text-muted);">
+                        </div>
+                    </div>
+                    <div class="formula-display" id="formula-text"
+                        style="text-align:center; color:var(--text-muted); font-style:italic;"></div>
+
+                    <div class="controls">
+                        <button class="btn btn-primary" onclick="calc.open()" title="Open Calculator"
+                            aria-label="Open calculator">🧮</button>
+                        <button class="btn btn-outline" onclick="app.reset()"
+                            aria-label="Reset converter">Reset</button>
+                        <button class="btn btn-secondary" onclick="app.copyResult()"
+                            aria-label="Copy result">Copy</button>
+                        <button class="btn btn-outline share-btn" onclick="app.shareLink()"
+                            title="Share conversion link" aria-label="Share link">
+                            <i data-lucide="share-2"></i>
+                        </button>
+                    </div>
+                </div><!-- End single-mode-ui -->
+
+                <!-- Comparison Mode Results -->
+                <div id="compare-mode-ui" style="display:none;">
+                    <div class="input-group">
+                        <label>Value to Compare</label>
+                        <div class="input-wrapper">
+                            <input type="number" class="conv-input" id="compare-input" placeholder="Enter value"
+                                oninput="app.runComparison()" aria-label="Value to compare">
+                            <select class="conv-select" id="compare-base" onchange="app.runComparison()"
+                                aria-label="Base unit for comparison"></select>
+                        </div>
+                    </div>
+                    <div class="comparison-results" id="comparison-results" role="region" aria-live="polite">
+                        <!-- Comparison cards rendered dynamically -->
+                    </div>
+                    <div class="controls" style="margin-top:20px;">
+                        <button class="btn btn-outline share-btn" onclick="app.shareLink()" title="Share comparison"
+                            aria-label="Share link">
+                            <i data-lucide="share-2"></i> Share
+                        </button>
+                    </div>
                 </div>
 
 
@@ -5260,6 +5763,22 @@
                         <div class="ref-content" id="ref-notes-content"></div>
                     </div>
                 </div>
+
+                <!-- Unit Relationship Graph -->
+                <div class="unit-graph-section">
+                    <div class="unit-graph-panel" id="unit-graph-panel" aria-expanded="false">
+                        <div class="unit-graph-header" onclick="app.toggleGraphPanel()" role="button" tabindex="0"
+                            aria-controls="unit-graph-content"
+                            onkeydown="if(event.key==='Enter'||event.key===' '){app.toggleGraphPanel();event.preventDefault();}">
+                            📊 Unit Relationships <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="unit-graph-content" id="unit-graph-content" role="region">
+                            <div class="unit-graph" id="unit-graph">
+                                <!-- Graph nodes rendered dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </div>
@@ -5285,7 +5804,7 @@
                             style="color: white !important;"> Converter</strong>
                     </div>
                 </div>
-                <p class="footer-tagline">A hub with more than 240+ Converters, a one-stop-shop for students and
+                <p class="footer-tagline">A hub with more than 250+ Converters, a one-stop-shop for students and
                     professionals.</p>
             </div>
             <div class="footer-socials">
@@ -5319,7 +5838,151 @@
 
     <script>
 
+        // =========================================
+        // PERFORMANCE OPTIMIZATION LAYER
+        // =========================================
+
+        // Debounce - delay execution until after delay period of inactivity
+        const debounce = (fn, delay = 150) => {
+            let timer;
+            return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => fn.apply(this, args), delay);
+            };
+        };
+
+        // Throttle - limit execution rate
+        const throttle = (fn, limit = 100) => {
+            let inThrottle;
+            return (...args) => {
+                if (!inThrottle) {
+                    fn.apply(this, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            };
+        };
+
+        // Memoization for expensive calculations
+        const memoize = (fn, maxCacheSize = 500) => {
+            const cache = new Map();
+            return (...args) => {
+                const key = args.join('|');
+                if (cache.has(key)) return cache.get(key);
+                const result = fn.apply(this, args);
+                cache.set(key, result);
+                if (cache.size > maxCacheSize) {
+                    cache.delete(cache.keys().next().value);
+                }
+                return result;
+            };
+        };
+
+        // DOM Element Cache - caches getElementById results
+        const elementCache = new Map();
+        const $ = (id) => {
+            if (!elementCache.has(id)) {
+                elementCache.set(id, document.getElementById(id));
+            }
+            return elementCache.get(id);
+        };
+
+        // Clear specific element from cache when needed
+        const clearElementCache = (id) => {
+            if (id) elementCache.delete(id);
+            else elementCache.clear();
+        };
+
+        // Batch DOM updates using requestAnimationFrame
+        let pendingUpdates = [];
+        let rafScheduled = false;
+        const batchDOM = (updateFn) => {
+            pendingUpdates.push(updateFn);
+            if (!rafScheduled) {
+                rafScheduled = true;
+                requestAnimationFrame(() => {
+                    const updates = pendingUpdates;
+                    pendingUpdates = [];
+                    rafScheduled = false;
+                    updates.forEach(fn => fn());
+                });
+            }
+        };
+
+        // Pre-computed category lookup for O(1) access
+        let categoryMapCache = null;
+        const buildCategoryMap = () => {
+            if (!categoryMapCache) {
+                categoryMapCache = new Map();
+                Object.keys(DATA).forEach(key => {
+                    if (key !== 'categories') categoryMapCache.set(key, DATA[key]);
+                });
+            }
+            return categoryMapCache;
+        };
+
+        // Memoized conversion factor calculator
+        const getConversionFactor = memoize((catId, from, to) => {
+            const cat = DATA[catId];
+            if (!cat || !cat.factors) return null;
+            const fFrom = cat.factors[from];
+            const fTo = cat.factors[to];
+            if (!fFrom || !fTo) return null;
+            return fFrom / fTo;
+        });
+
+        // Optimized number formatter with caching
+        const formatCache = new Map();
+        const formatNum = (num) => {
+            if (isNaN(num) || num === null) return '0';
+            const key = num.toString();
+            if (formatCache.has(key)) return formatCache.get(key);
+            let result;
+            if (Math.abs(num) >= 1e9 || (Math.abs(num) < 0.0001 && num !== 0)) {
+                result = num.toExponential(4);
+            } else {
+                result = parseFloat(num.toPrecision(6)).toString();
+            }
+            if (formatCache.size > 200) formatCache.clear();
+            formatCache.set(key, result);
+            return result;
+        };
+
+        // Passive event listener options
+        let passiveSupported = false;
+        try {
+            const opts = { get passive() { passiveSupported = true; return false; } };
+            window.addEventListener('test', null, opts);
+            window.removeEventListener('test', null, opts);
+        } catch (e) { }
+        const passiveOpts = passiveSupported ? { passive: true } : false;
+
+        // Lazy reference loader - only renders when panel is opened
+        const lazyRef = {
+            loaded: new Set(),
+            isLoaded: function (catId) { return this.loaded.has(catId); },
+            markLoaded: function (catId) { this.loaded.add(catId); }
+        };
+
+        // IntersectionObserver for lazy loading cards (reuse single instance)
+        let cardObserver = null;
+        const getCardObserver = (callback) => {
+            if (!cardObserver) {
+                cardObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            callback(entry.target);
+                            cardObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { rootMargin: '50px', threshold: 0.1 });
+            }
+            return cardObserver;
+        };
+
+        // =========================================
         // 24 Category Animated SVG Icon Definitions
+        // =========================================
         const SVG_ICONS = {
             length: `<svg class="length" viewBox="0 0 100 100"><line class="icon-stroke draw-anim" x1="10" y1="40" x2="90" y2="40" /><g class="icon-stroke fade-ticks"><line x1="10" y1="40" x2="10" y2="50" /><line x1="30" y1="40" x2="30" y2="46" /><line x1="50" y1="40" x2="50" y2="52" /><line x1="70" y1="40" x2="70" y2="46" /><line x1="90" y1="40" x2="90" y2="50" /></g><g class="icon-stroke draw-anim-delayed"><line x1="10" y1="70" x2="90" y2="70" /><polyline points="15 65 10 70 15 75" /><polyline points="85 65 90 70 85 75" /></g></svg>`,
             weight: `<svg class="weight" viewBox="0 0 100 100"><path class="icon-stroke draw-anim" d="M 50 85 L 50 25 M 35 85 L 65 85" /><g class="balance-sway"><line class="icon-stroke draw-anim" x1="15" y1="25" x2="85" y2="25" /><path class="icon-stroke draw-anim-delayed" d="M 15 25 L 15 55 M 5 55 Q 15 70 25 55 Z" /><path class="icon-stroke draw-anim-delayed" d="M 85 25 L 85 55 M 75 55 Q 85 70 95 55 Z" /></g></svg>`,
@@ -5408,27 +6071,41 @@
             },
 
             clothing: {
-                shoe_mens: { us: [6, 7, 8, 9, 10, 11, 12, 13], uk: [5.5, 6.5, 7.5, 8.5, 9.5, 10.5, 11.5, 12.5], eu: [39, 40, 41, 42.5, 44, 45, 46, 47], cm: [24.5, 25.4, 26, 26.7, 27.3, 28, 28.8, 29.4] },
-                shoe_womens: { us: [5, 6, 7, 8, 9, 10, 11], uk: [3, 4, 5, 6, 7, 8, 9], eu: [35, 36, 37.5, 38.5, 40, 41, 42], cm: [22, 22.9, 23.5, 24.1, 24.6, 25.4, 26] },
-                sizes: { XS: 1, S: 2, M: 3, L: 4, XL: 5, XXL: 6 },
-                factors: { us_m: 1, uk_m: 1, eu_m: 1, cm_m: 1, us_w: 1, uk_w: 1, eu_w: 1, cm_w: 1 },
-                converters: [{ id: 'us_uk_m', title: 'US ⇄ UK (Men)', pair: ['us_m', 'uk_m'] }, { id: 'us_eu_m', title: 'US ⇄ EU (Men)', pair: ['us_m', 'eu_m'] }, { id: 'us_cm_m', title: 'US ⇄ CM (Men)', pair: ['us_m', 'cm_m'] }, { id: 'uk_eu_m', title: 'UK ⇄ EU (Men)', pair: ['uk_m', 'eu_m'] }, { id: 'eu_cm_m', title: 'EU ⇄ CM (Men)', pair: ['eu_m', 'cm_m'] }, { id: 'us_uk_w', title: 'US ⇄ UK (Women)', pair: ['us_w', 'uk_w'] }, { id: 'us_eu_w', title: 'US ⇄ EU (Women)', pair: ['us_w', 'eu_w'] }, { id: 'us_cm_w', title: 'US ⇄ CM (Women)', pair: ['us_w', 'cm_w'] }, { id: 'uk_eu_w', title: 'UK ⇄ EU (Women)', pair: ['uk_w', 'eu_w'] }, { id: 'eu_cm_w', title: 'EU ⇄ CM (Women)', pair: ['eu_w', 'cm_w'] }, { id: 'custom', title: 'Universal Size Converter', type: 'custom', all: !0 }]
+                // Corrected keys for display labels (replace _ with space)
+                factors: {
+                    'US_Men': 1, 'UK_Men': 1, 'EU_Men': 1, 'CM_Men': 1,
+                    'US_Women': 1, 'UK_Women': 1, 'EU_Women': 1, 'CM_Women': 1
+                },
+                converters: [
+                    { id: 'us_uk_m', title: 'US ⇄ UK (Men)', pair: ['US_Men', 'UK_Men'] },
+                    { id: 'us_eu_m', title: 'US ⇄ EU (Men)', pair: ['US_Men', 'EU_Men'] },
+                    { id: 'us_cm_m', title: 'US ⇄ CM (Men)', pair: ['US_Men', 'CM_Men'] },
+                    { id: 'uk_eu_m', title: 'UK ⇄ EU (Men)', pair: ['UK_Men', 'EU_Men'] },
+                    { id: 'eu_cm_m', title: 'EU ⇄ CM (Men)', pair: ['EU_Men', 'CM_Men'] },
+                    { id: 'us_uk_w', title: 'US ⇄ UK (Women)', pair: ['US_Women', 'UK_Women'] },
+                    { id: 'us_eu_w', title: 'US ⇄ EU (Women)', pair: ['US_Women', 'EU_Women'] },
+                    { id: 'us_cm_w', title: 'US ⇄ CM (Women)', pair: ['US_Women', 'CM_Women'] },
+                    { id: 'uk_eu_w', title: 'UK ⇄ EU (Women)', pair: ['UK_Women', 'EU_Women'] },
+                    { id: 'eu_cm_w', title: 'EU ⇄ CM (Women)', pair: ['EU_Women', 'CM_Women'] },
+                    { id: 'custom', title: 'Universal Shoe Size Converter', type: 'custom', all: !0 }
+                ]
             },
 
             timezone: {
-                zones: [
-                    { city: 'New York', offset: -5, tz: 'America/New_York' },
-                    { city: 'London', offset: 0, tz: 'Europe/London' },
-                    { city: 'Paris', offset: 1, tz: 'Europe/Paris' },
-                    { city: 'Dubai', offset: 4, tz: 'Asia/Dubai' },
-                    { city: 'Mumbai', offset: 5.5, tz: 'Asia/Kolkata' },
-                    { city: 'Singapore', offset: 8, tz: 'Asia/Singapore' },
-                    { city: 'Tokyo', offset: 9, tz: 'Asia/Tokyo' },
-                    { city: 'Sydney', offset: 10, tz: 'Australia/Sydney' },
-                    { city: 'Los Angeles', offset: -8, tz: 'America/Los_Angeles' },
-                    { city: 'Berlin', offset: 1, tz: 'Europe/Berlin' }
-                ],
-                factors: { utc: 0 },
+                // Zones with offset in minutes and DST type (null = no DST)
+                zones: {
+                    'New York': { tz: 'America/New_York', offset: -300, dst: 'usa' },
+                    'Los Angeles': { tz: 'America/Los_Angeles', offset: -480, dst: 'usa' },
+                    'London': { tz: 'Europe/London', offset: 0, dst: 'eu' },
+                    'Paris': { tz: 'Europe/Paris', offset: 60, dst: 'eu' },
+                    'Berlin': { tz: 'Europe/Berlin', offset: 60, dst: 'eu' },
+                    'Dubai': { tz: 'Asia/Dubai', offset: 240, dst: null },
+                    'Mumbai': { tz: 'Asia/Kolkata', offset: 330, dst: null },
+                    'Singapore': { tz: 'Asia/Singapore', offset: 480, dst: null },
+                    'Tokyo': { tz: 'Asia/Tokyo', offset: 540, dst: null },
+                    'Sydney': { tz: 'Australia/Sydney', offset: 600, dst: 'aus' }
+                },
+                units: ['New York', 'Los Angeles', 'London', 'Paris', 'Berlin', 'Dubai', 'Mumbai', 'Singapore', 'Tokyo', 'Sydney'],
                 converters: [{ id: 'ny_london', title: 'New York ⇄ London', pair: ['New York', 'London'] }, { id: 'london_tokyo', title: 'London ⇄ Tokyo', pair: ['London', 'Tokyo'] }, { id: 'ny_la', title: 'New York ⇄ Los Angeles', pair: ['New York', 'Los Angeles'] }, { id: 'london_dubai', title: 'London ⇄ Dubai', pair: ['London', 'Dubai'] }, { id: 'tokyo_sydney', title: 'Tokyo ⇄ Sydney', pair: ['Tokyo', 'Sydney'] }, { id: 'ny_mumbai', title: 'New York ⇄ Mumbai', pair: ['New York', 'Mumbai'] }, { id: 'london_singapore', title: 'London ⇄ Singapore', pair: ['London', 'Singapore'] }, { id: 'paris_tokyo', title: 'Paris ⇄ Tokyo', pair: ['Paris', 'Tokyo'] }, { id: 'berlin_ny', title: 'Berlin ⇄ New York', pair: ['Berlin', 'New York'] }, { id: 'dubai_tokyo', title: 'Dubai ⇄ Tokyo', pair: ['Dubai', 'Tokyo'] }, { id: 'custom', title: 'World Clock', type: 'custom', all: !0 }]
             }
         };
@@ -5692,6 +6369,20 @@
                 context: 'Fuel efficiency is critical for vehicle comparison, trip planning, cost calculation, and environmental impact.',
                 notes: '⚠️ L/100km is inverse of km/L. Lower L/100km means better efficiency. US and UK gallons differ!'
             },
+            clothing: {
+                units: {
+                    'US_Men': { name: 'US Men', def: 'US/Canada standard sizing for men.' },
+                    'UK_Men': { name: 'UK Men', def: 'UK/Commonwealth sizing. Generally US Size - 1.' },
+                    'EU_Men': { name: 'EU Men', def: 'European standard (Paris Point). Generally US + 33.' },
+                    'CM_Men': { name: 'CM (Foot)', def: 'Length of the foot in centimeters.' },
+                    'US_Women': { name: 'US Women', def: 'US/Canada standard sizing for women.' },
+                    'UK_Women': { name: 'UK Women', def: 'UK sizing for women. Generally US - 2.' },
+                    'EU_Women': { name: 'EU Women', def: 'European sizing for women. Generally US + 31.' },
+                    'CM_Women': { name: 'CM (Foot)', def: 'Length of the foot in centimeters.' }
+                },
+                context: 'Shoe sizing standards vary significantly by region and manufacturer. These conversions use standard industry approximations.',
+                notes: '⚠️ Shoe sizes are approximate and may vary by brand. CM represents foot length, not shoe length. Half sizes are supported.'
+            },
             illuminance: {
                 units: {
                     lux: { name: 'Lux', def: 'SI unit of illuminance. Lumens per square meter.' },
@@ -5717,6 +6408,22 @@
                 },
                 context: 'Sound measurements are used in audio engineering, noise control, hearing protection, and acoustic design.',
                 notes: '⚠️ Sound uses logarithmic scales. +10 dB = 10× intensity, +20 dB = 100× intensity. Hearing is non-linear.'
+            },
+            timezone: {
+                units: {
+                    'New York': { name: 'New York', def: 'Eastern Time Zone (ET). UTC-05:00 standard, UTC-04:00 during DST (Mar-Nov).' },
+                    'Los Angeles': { name: 'Los Angeles', def: 'Pacific Time Zone (PT). UTC-08:00 standard, UTC-07:00 during DST (Mar-Nov).' },
+                    'London': { name: 'London', def: 'Greenwich Mean Time (GMT). UTC+00:00 standard, UTC+01:00 during BST (Mar-Oct).' },
+                    'Paris': { name: 'Paris', def: 'Central European Time (CET). UTC+01:00 standard, UTC+02:00 during CEST (Mar-Oct).' },
+                    'Berlin': { name: 'Berlin', def: 'Central European Time (CET). UTC+01:00 standard, UTC+02:00 during CEST (Mar-Oct).' },
+                    'Dubai': { name: 'Dubai', def: 'Gulf Standard Time (GST). UTC+04:00. No daylight saving time.' },
+                    'Mumbai': { name: 'Mumbai', def: 'India Standard Time (IST). UTC+05:30. No daylight saving time.' },
+                    'Singapore': { name: 'Singapore', def: 'Singapore Standard Time (SST). UTC+08:00. No daylight saving time.' },
+                    'Tokyo': { name: 'Tokyo', def: 'Japan Standard Time (JST). UTC+09:00. No daylight saving time.' },
+                    'Sydney': { name: 'Sydney', def: 'Australian Eastern Time (AET). UTC+10:00 standard, UTC+11:00 during AEDT (Oct-Apr).' }
+                },
+                context: 'Time zone conversions are essential for international business, travel planning, scheduling meetings across regions, and understanding global events.',
+                notes: '⚠️ DST (Daylight Saving Time) is automatically detected and applied. Conversions use the formula: Local → UTC → Target. Day changes (+1/-1 day) are shown when time crosses midnight.'
             }
         };
 
@@ -5724,6 +6431,9 @@
             state: { view: 'home', category: null, converter: null, favorites: JSON.parse(localStorage.getItem('unit_favorites')) || [], history: JSON.parse(localStorage.getItem('unit_history')) || [] },
             init: function () { this.renderCategories(); this.setupSearch(); this.setupHistory(); },
             navigate: function (view, dataId = null) {
+                // CRITICAL: Reset all converter UI state before navigation
+                this.resetConverterUI();
+
                 const viewOrder = { home: 0, category: 1, converter: 2 };
                 const currentView = this.state.view;
                 const isForward = viewOrder[view] > viewOrder[currentView];
@@ -5767,38 +6477,74 @@
             },
 
             renderCategories: function () {
-                const grid = document.getElementById('category-grid'); grid.innerHTML = '';
+                const grid = document.getElementById('category-grid');
+                // Use DocumentFragment for efficient DOM manipulation
+                const fragment = document.createDocumentFragment();
+
                 if (this.state.favorites.length > 0) {
-                    const row = document.createElement('div'); row.style.gridColumn = "1/-1"; row.innerHTML = `<h3 style="margin-bottom:15px">⭐ Favorites</h3>`; grid.appendChild(row);
+                    const row = document.createElement('div'); row.style.gridColumn = "1/-1"; row.innerHTML = `<h3 style="margin-bottom:15px">⭐ Favorites</h3>`; fragment.appendChild(row);
                     const favGrid = document.createElement('div'); favGrid.className = "converter-list"; favGrid.style.gridColumn = "1/-1"; favGrid.style.marginBottom = "30px";
                     this.state.favorites.forEach(fid => {
                         let cObj, cCat; DATA.categories.forEach(ct => { const found = DATA[ct.id].converters.find(x => x.id === fid); if (found) { cObj = found; cCat = ct.id; } });
                         if (cObj) {
-                            const item = document.createElement('div'); item.className = 'converter-item'; item.innerHTML = `<strong>${cObj.title}</strong><span>➝</span>`;
-                            item.onclick = () => { app.state.category = cCat; app.navigate('converter', cObj); }; favGrid.appendChild(item);
+                            const item = document.createElement('div'); item.className = 'converter-item';
+                            item.dataset.catId = cCat; item.dataset.convId = fid;
+                            item.innerHTML = `<strong>${cObj.title}</strong><span>➝</span>`;
+                            favGrid.appendChild(item);
                         }
                     });
-                    grid.appendChild(favGrid);
+                    fragment.appendChild(favGrid);
                 }
-                const hr = document.createElement('h3'); hr.style.gridColumn = "1/-1"; hr.innerText = "All Categories"; grid.appendChild(hr);
+                const hr = document.createElement('h3'); hr.style.gridColumn = "1/-1"; hr.innerText = "All Categories"; fragment.appendChild(hr);
                 DATA.categories.forEach(cat => {
                     const card = document.createElement('div'); card.className = 'category-card';
-                    // Check if icon is an SVG reference (starts with 'svg:')
+                    card.dataset.catId = cat.id;  // Use data attribute for event delegation
                     const iconHtml = cat.icon.startsWith('svg:') ? SVG_ICONS[cat.icon.substring(4)] : cat.icon;
                     card.innerHTML = `<span class="cat-icon">${iconHtml}</span><div class="cat-title">${cat.name}</div><div class="cat-desc">${DATA[cat.id].converters.length} Converters</div>`;
-                    card.onclick = () => app.navigate('category', cat.id);
-                    grid.appendChild(card);
+                    fragment.appendChild(card);
                 });
+
+                // Single batch DOM update
+                grid.innerHTML = '';
+                grid.appendChild(fragment);
+
+                // Event delegation - single handler for all categories
+                grid.onclick = (e) => {
+                    const card = e.target.closest('.category-card');
+                    const item = e.target.closest('.converter-item');
+                    if (card && card.dataset.catId) {
+                        app.navigate('category', card.dataset.catId);
+                    } else if (item && item.dataset.catId) {
+                        app.state.category = item.dataset.catId;
+                        const conv = DATA[item.dataset.catId].converters.find(c => c.id === item.dataset.convId);
+                        if (conv) app.navigate('converter', conv);
+                    }
+                };
             },
             renderConverterList: function (catId) {
-                const catData = DATA.categories.find(c => c.id === catId); document.getElementById('cat-view-title').textContent = catData.name;
-                const list = document.getElementById('converter-list'); list.innerHTML = '';
-                DATA[catId].converters.forEach(conv => {
+                const catData = DATA.categories.find(c => c.id === catId);
+                document.getElementById('cat-view-title').textContent = catData.name;
+                const list = document.getElementById('converter-list');
+                const fragment = document.createDocumentFragment();
+
+                DATA[catId].converters.forEach((conv, idx) => {
                     const item = document.createElement('div'); item.className = 'converter-item';
+                    item.dataset.idx = idx;  // Index for event delegation
                     item.innerHTML = `<strong>${conv.title}</strong><span style="color:var(--primary)">➝</span>`;
-                    item.onclick = () => { app.state.converter = conv; app.navigate('converter', conv); };
-                    list.appendChild(item);
+                    fragment.appendChild(item);
                 });
+
+                list.innerHTML = '';
+                list.appendChild(fragment);
+
+                // Event delegation - single handler
+                list.onclick = (e) => {
+                    const item = e.target.closest('.converter-item');
+                    if (item && item.dataset.idx !== undefined) {
+                        const conv = DATA[catId].converters[parseInt(item.dataset.idx)];
+                        if (conv) { app.state.converter = conv; app.navigate('converter', conv); }
+                    }
+                };
             },
             loadConverter: function (convObj) {
                 const catId = this.state.category;
@@ -5810,12 +6556,45 @@
                 const s1 = document.getElementById('unit-from'); const s2 = document.getElementById('unit-to');
                 s1.innerHTML = ''; s2.innerHTML = '';
                 let units = [];
+
+                // Stop any running World Clock from previous converter
+                this.stopWorldClock();
+
                 if (convObj.type === 'custom' || convObj.all) {
-                    units = (catId === 'temperature' || catId === 'fuel' || catId === 'sound') ? DATA[catId].units : Object.keys(DATA[catId].factors);
-                } else { units = convObj.pair; }
-                units.forEach(u => { const l = u.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()); s1.add(new Option(l, u)); s2.add(new Option(l, u)); });
+                    // Special handling for categories that use units array instead of factors
+                    if (catId === 'temperature' || catId === 'fuel' || catId === 'sound') {
+                        units = DATA[catId].units;
+                    } else if (catId === 'timezone') {
+                        units = DATA[catId].units;
+                        // Start World Clock for universal timezone converter
+                        setTimeout(() => this.startWorldClock(), 100);
+                    } else if (catId === 'clothing') {
+                        units = ['US_Men', 'UK_Men', 'EU_Men', 'CM_Men', 'US_Women', 'UK_Women', 'EU_Women', 'CM_Women'];
+                    } else {
+                        units = Object.keys(DATA[catId].factors);
+                    }
+                } else {
+                    units = convObj.pair;
+                }
+
+                units.forEach(u => {
+                    const l = u.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                    s1.add(new Option(l, u));
+                    s2.add(new Option(l, u));
+                });
 
                 if (!convObj.all) { s1.value = convObj.pair[0]; s2.value = convObj.pair[1]; }
+
+                // Set appropriate placeholder for timezone
+                const inputEl = document.getElementById('input-val');
+                if (catId === 'timezone') {
+                    inputEl.placeholder = 'Enter time (e.g., 10:30 or 14)';
+                    inputEl.type = 'text';
+                } else {
+                    inputEl.placeholder = 'Enter value';
+                    inputEl.type = 'number';
+                }
+
                 this.reset();
                 this.renderReference();
             },
@@ -5826,7 +6605,8 @@
                 localStorage.setItem('unit_favorites', JSON.stringify(this.state.favorites));
             },
             convert: function () {
-                const val = parseFloat(document.getElementById('input-val').value);
+                const inputEl = document.getElementById('input-val');
+                const val = parseFloat(inputEl.value);
                 if (isNaN(val)) { document.getElementById('output-val').value = ''; return; }
                 const from = document.getElementById('unit-from').value; const to = document.getElementById('unit-to').value;
                 const cat = this.state.category;
@@ -5835,20 +6615,114 @@
                 if (cat === 'temperature') { res = this.convertTemp(val, from, to); form = 'Temperature shift'; }
                 else if (cat === 'fuel') { res = this.convertFuel(val, from, to); form = 'Non-linear conversion'; }
                 else if (cat === 'sound') { res = this.convertSound(val, from, to); form = 'Logarithmic scale'; }
-                else {
-                    const f = DATA[cat].factors;
-                    const base = val * f[from];
-                    res = base / f[to];
-                    const r = f[from] / f[to];
-                    form = `Multiply by ${r < 0.01 || r > 1000 ? r.toExponential(4) : parseFloat(r.toFixed(6))}`;
+                else if (cat === 'clothing') {
+                    const data = this.convertShoe(val, from, to);
+                    res = data.res;
+                    form = data.form;
                 }
-                const disp = (Math.abs(res) < 1e-6 && res !== 0) ? res.toExponential(4) : parseFloat(res.toFixed(6));
-                document.getElementById('output-val').value = disp;
-                document.getElementById('result-display').textContent = disp;
-                document.getElementById('result-unit-label').textContent = to.replace(/_/g, ' ');
-                document.getElementById('formula-text').textContent = "Formula: " + form;
+                else if (cat === 'timezone') {
+                    // Timezone uses HH:MM format, treat input as hour
+                    const inputVal = document.getElementById('input-val').value;
+                    const result = this.convertTime(inputVal, from, to);
+                    // Display the formatted time in output
+                    batchDOM(() => {
+                        document.getElementById('output-val').value = result.formatted + result.dayLabel;
+                        document.getElementById('result-display').textContent = result.formatted;
+                        document.getElementById('result-unit-label').textContent = to + result.dayLabel;
+                        document.getElementById('formula-text').textContent = 'Formula: ' + this.getTimezoneFormula(from, to);
+                    });
+                    this.debounceHistory(inputVal, from, result.formatted + result.dayLabel, to);
+                    return; // Exit early, already updated DOM
+                }
+                else {
+                    // Use memoized conversion factor for better performance
+                    const cachedFactor = getConversionFactor(cat, from, to);
+                    if (cachedFactor !== null) {
+                        res = val * cachedFactor;
+                        form = `Multiply by ${cachedFactor < 0.01 || cachedFactor > 1000 ? cachedFactor.toExponential(4) : parseFloat(cachedFactor.toFixed(6))}`;
+                    } else {
+                        const f = DATA[cat].factors;
+                        const base = val * f[from];
+                        res = base / f[to];
+                        const r = f[from] / f[to];
+                        form = `Multiply by ${r < 0.01 || r > 1000 ? r.toExponential(4) : parseFloat(r.toFixed(6))}`;
+                    }
+                }
+
+                // Formatting: Shoe size gets 1 decimal place, others get standard formatting
+                let disp;
+                if (cat === 'clothing') {
+                    disp = parseFloat(res.toFixed(1));
+                } else {
+                    disp = (Math.abs(res) < 1e-6 && res !== 0) ? res.toExponential(4) : parseFloat(res.toFixed(6));
+                }
+
+                // Batch DOM updates to prevent layout thrashing
+                batchDOM(() => {
+                    document.getElementById('output-val').value = disp;
+                    document.getElementById('result-display').textContent = disp;
+                    document.getElementById('result-unit-label').textContent = to.replace(/_/g, ' ');
+                    document.getElementById('formula-text').innerHTML = form.replace(/\n/g, '<br>');
+                });
 
                 this.debounceHistory(val, from, disp, to);
+            },
+            convertShoe: function (v, f, t) {
+                if (f === t) return { res: v, form: 'No conversion' };
+
+                // --- 1. Normalize to CM (Base Unit) ---
+                let cm = 0;
+                let step1 = '';
+
+                // Men Formulas
+                if (f === 'US_Men') { cm = (v + 18) * 0.667; step1 = `CM ≈ (${v} + 18) × 0.667`; }
+                else if (f === 'UK_Men') { cm = (v + 19) * 0.667; step1 = `CM ≈ (${v} + 19) × 0.667`; }
+                else if (f === 'EU_Men') { cm = (v - 15) * 0.667; step1 = `CM ≈ (${v} - 15) × 0.667`; }
+                else if (f === 'CM_Men' || f === 'CM_Women') { cm = v; step1 = 'Base Unit'; }
+
+                // Women Formulas
+                else if (f === 'US_Women') { cm = (v + 17) * 0.667; step1 = `CM ≈ (${v} + 17) × 0.667`; }
+                else if (f === 'UK_Women') { cm = (v + 19) * 0.667; step1 = `CM ≈ (${v} + 19) × 0.667`; }
+                else if (f === 'EU_Women') { cm = (v - 14) * 0.667; step1 = `CM ≈ (${v} - 14) × 0.667`; }
+
+                // --- 2. Convert CM to Target ---
+                let res = 0;
+                let step2 = '';
+
+                // Men Formulas
+                if (t === 'US_Men') { res = (cm / 0.667) - 18; step2 = `US ≈ (CM ÷ 0.667) - 18`; }
+                else if (t === 'UK_Men') { res = (cm / 0.667) - 19; step2 = `UK ≈ (CM ÷ 0.667) - 19`; }
+                else if (t === 'EU_Men') { res = (cm / 0.667) + 15; step2 = `EU ≈ (CM ÷ 0.667) + 15`; }
+                else if (t === 'CM_Men' || t === 'CM_Women') { res = cm; step2 = ''; }
+
+                // Women Formulas
+                else if (t === 'US_Women') { res = (cm / 0.667) - 17; step2 = `US ≈ (CM ÷ 0.667) - 17`; }
+                else if (t === 'UK_Women') { res = (cm / 0.667) - 19; step2 = `UK ≈ (CM ÷ 0.667) - 19`; }
+                else if (t === 'EU_Women') { res = (cm / 0.667) + 14; step2 = `EU ≈ (CM ÷ 0.667) + 14`; }
+
+                // --- 3. Exact Standard Formulas for Specific Pairs ---
+
+                // Men Specifics
+                if (f === 'US_Men' && t === 'UK_Men') return { res: v - 1, form: 'UK = US − 1' };
+                if (f === 'UK_Men' && t === 'US_Men') return { res: v + 1, form: 'US = UK + 1' };
+                if (f === 'US_Men' && t === 'EU_Men') return { res: v + 33, form: 'EU = US + 33' };
+                if (f === 'EU_Men' && t === 'US_Men') return { res: v - 33, form: 'US = EU − 33' };
+                if (f === 'UK_Men' && t === 'EU_Men') return { res: v + 34, form: 'EU = UK + 34' };
+                if (f === 'EU_Men' && t === 'UK_Men') return { res: v - 34, form: 'UK = EU − 34' };
+
+                // Women Specifics
+                if (f === 'US_Women' && t === 'UK_Women') return { res: v - 2, form: 'UK = US − 2' };
+                if (f === 'UK_Women' && t === 'US_Women') return { res: v + 2, form: 'US = UK + 2' };
+                if (f === 'US_Women' && t === 'EU_Women') return { res: v + 31, form: 'EU = US + 31' };
+                if (f === 'EU_Women' && t === 'US_Women') return { res: v - 31, form: 'US = EU − 31' };
+                if (f === 'UK_Women' && t === 'EU_Women') return { res: v + 33, form: 'EU = UK + 33' };
+                if (f === 'EU_Women' && t === 'UK_Women') return { res: v - 33, form: 'UK = EU − 33' };
+
+                // Universal/Cross-Gender Display
+                let formulaText = `Step 1: ${step1}`;
+                if (step2) formulaText += `\nStep 2: ${step2}`;
+
+                return { res: res, form: formulaText };
             },
             timer: null,
             debounceHistory: function (v, f, r, t) {
@@ -5907,22 +6781,298 @@
                 if (t === 'sone') return Math.pow(2, (db - 40) / 10);
                 return db;
             },
-            reset: function () { document.getElementById('input-val').value = ''; document.getElementById('output-val').value = ''; document.getElementById('result-display').textContent = '0'; },
+            // =============================================
+            // TIMEZONE CONVERSION SYSTEM (UTC-based)
+            // =============================================
+            // Check if DST is active for a given region
+            isDSTActive: function (dstType, date = new Date()) {
+                if (!dstType) return false;
+                const year = date.getFullYear();
+                const month = date.getMonth(); // 0-11
+                const day = date.getDate();
+
+                if (dstType === 'usa') {
+                    // USA: 2nd Sunday of March → 1st Sunday of November
+                    const marchSecondSunday = this.getNthSunday(year, 2, 2); // March, 2nd Sunday
+                    const novFirstSunday = this.getNthSunday(year, 10, 1); // November, 1st Sunday
+                    const dstStart = new Date(year, 2, marchSecondSunday, 2, 0, 0);
+                    const dstEnd = new Date(year, 10, novFirstSunday, 2, 0, 0);
+                    return date >= dstStart && date < dstEnd;
+                }
+                else if (dstType === 'eu') {
+                    // EU: Last Sunday of March → Last Sunday of October
+                    const marchLastSunday = this.getLastSunday(year, 2); // March
+                    const octLastSunday = this.getLastSunday(year, 9); // October
+                    const dstStart = new Date(year, 2, marchLastSunday, 1, 0, 0);
+                    const dstEnd = new Date(year, 9, octLastSunday, 1, 0, 0);
+                    return date >= dstStart && date < dstEnd;
+                }
+                else if (dstType === 'aus') {
+                    // Australia (Sydney): 1st Sunday of October → 1st Sunday of April
+                    const octFirstSunday = this.getNthSunday(year, 9, 1); // October, 1st Sunday
+                    const aprFirstSunday = this.getNthSunday(year, 3, 1); // April, 1st Sunday
+                    const dstStart = new Date(year, 9, octFirstSunday, 2, 0, 0);
+                    const dstEnd = new Date(year, 3, aprFirstSunday, 3, 0, 0);
+                    // DST in southern hemisphere spans year end
+                    return date >= dstStart || date < dstEnd;
+                }
+                return false;
+            },
+            // Get the nth Sunday of a month (n=1 for 1st, n=2 for 2nd, etc.)
+            getNthSunday: function (year, month, n) {
+                const firstDay = new Date(year, month, 1);
+                const dayOfWeek = firstDay.getDay();
+                const firstSunday = 1 + ((7 - dayOfWeek) % 7);
+                return firstSunday + (n - 1) * 7;
+            },
+            // Get the last Sunday of a month
+            getLastSunday: function (year, month) {
+                const lastDay = new Date(year, month + 1, 0);
+                const dayOfWeek = lastDay.getDay();
+                return lastDay.getDate() - dayOfWeek;
+            },
+            // Get timezone offset in minutes including DST
+            getTimezoneOffset: function (city, date = new Date()) {
+                const zone = DATA.timezone.zones[city];
+                if (!zone) return 0;
+                let offset = zone.offset;
+                if (this.isDSTActive(zone.dst, date)) {
+                    offset += 60; // Add 60 minutes for DST
+                }
+                return offset;
+            },
+            // Format offset as UTC string
+            formatOffset: function (offsetMinutes) {
+                const sign = offsetMinutes >= 0 ? '+' : '-';
+                const absMinutes = Math.abs(offsetMinutes);
+                const hours = Math.floor(absMinutes / 60);
+                const mins = absMinutes % 60;
+                return `UTC${sign}${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
+            },
+            // Convert time between timezones using UTC as intermediate
+            convertTime: function (inputTimeStr, fromCity, toCity) {
+                // Parse input time (HH:MM or decimal hours)
+                let hours, minutes;
+                if (typeof inputTimeStr === 'string' && inputTimeStr.includes(':')) {
+                    const parts = inputTimeStr.split(':');
+                    hours = parseInt(parts[0]) || 0;
+                    minutes = parseInt(parts[1]) || 0;
+                } else {
+                    const decimalHours = parseFloat(inputTimeStr) || 0;
+                    hours = Math.floor(decimalHours);
+                    minutes = Math.round((decimalHours - hours) * 60);
+                }
+
+                // Get offsets including DST
+                const fromOffset = this.getTimezoneOffset(fromCity);
+                const toOffset = this.getTimezoneOffset(toCity);
+
+                // Convert to total minutes
+                const localMinutes = hours * 60 + minutes;
+
+                // Local → UTC → Target
+                // UTC = Local - SourceOffset
+                // Target = UTC + TargetOffset
+                const utcMinutes = localMinutes - fromOffset;
+                const targetMinutes = utcMinutes + toOffset;
+
+                // Handle day rollover
+                let dayOffset = 0;
+                let normalizedMinutes = targetMinutes;
+                if (targetMinutes < 0) {
+                    dayOffset = -1;
+                    normalizedMinutes = targetMinutes + 1440; // Add 24 hours
+                } else if (targetMinutes >= 1440) {
+                    dayOffset = 1;
+                    normalizedMinutes = targetMinutes - 1440; // Subtract 24 hours
+                }
+
+                const resultHours = Math.floor(normalizedMinutes / 60);
+                const resultMinutes = normalizedMinutes % 60;
+
+                return {
+                    hours: resultHours,
+                    minutes: resultMinutes,
+                    dayOffset: dayOffset,
+                    fromOffset: fromOffset,
+                    toOffset: toOffset,
+                    formatted: `${String(resultHours).padStart(2, '0')}:${String(resultMinutes).padStart(2, '0')}`,
+                    dayLabel: dayOffset === 1 ? ' (+1 day)' : dayOffset === -1 ? ' (-1 day)' : ''
+                };
+            },
+            // Get timezone formula string
+            getTimezoneFormula: function (fromCity, toCity) {
+                const fromOffset = this.getTimezoneOffset(fromCity);
+                const toOffset = this.getTimezoneOffset(toCity);
+                const diff = toOffset - fromOffset;
+                const diffHours = diff / 60;
+                const diffStr = diff >= 0 ? `+${diffHours}` : `${diffHours}`;
+                return `${toCity} = ${fromCity} ${diffStr}h (${this.formatOffset(fromOffset)} → ${this.formatOffset(toOffset)})`;
+            },
+            // Render World Clock for Universal timezone converter
+            renderWorldClock: function () {
+                const container = document.getElementById('timezone-display');
+                if (!container) return;
+
+                const now = new Date();
+                let html = '';
+
+                DATA.timezone.units.forEach(city => {
+                    const offset = this.getTimezoneOffset(city, now);
+                    const zone = DATA.timezone.zones[city];
+                    const isDST = this.isDSTActive(zone.dst, now);
+
+                    // Calculate local time for this city
+                    const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
+                    const cityTime = new Date(utcTime + (offset * 60000));
+                    const timeStr = cityTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+
+                    html += `
+                        <div class="timezone-card">
+                            <div class="timezone-city">${city}</div>
+                            <div class="timezone-time">${timeStr}</div>
+                            <div class="timezone-offset">${this.formatOffset(offset)}${isDST ? ' (DST)' : ''}</div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = html;
+            },
+            // Start World Clock auto-update
+            worldClockInterval: null,
+            startWorldClock: function () {
+                this.renderWorldClock();
+                if (this.worldClockInterval) clearInterval(this.worldClockInterval);
+                this.worldClockInterval = setInterval(() => this.renderWorldClock(), 60000);
+            },
+            stopWorldClock: function () {
+                if (this.worldClockInterval) {
+                    clearInterval(this.worldClockInterval);
+                    this.worldClockInterval = null;
+                }
+            },
+            // Timezone comparison mode
+            runTimezoneComparison: function () {
+                const inputEl = document.getElementById('compare-input');
+                const baseEl = document.getElementById('compare-base');
+                const resultsDiv = document.getElementById('comparison-results');
+                if (!inputEl || !baseEl || !resultsDiv) return;
+
+                const inputTime = inputEl.value;
+                const baseCity = baseEl.value;
+
+                if (!inputTime || !baseCity) {
+                    resultsDiv.innerHTML = '<p style="color:var(--text-muted);text-align:center;">Enter a time (HH:MM) to see all zones</p>';
+                    return;
+                }
+
+                let html = '';
+                DATA.timezone.units.forEach(city => {
+                    if (city === baseCity) return;
+                    const result = this.convertTime(inputTime, baseCity, city);
+                    html += `
+                        <div class="comparison-card">
+                            <div class="unit-name">${city}</div>
+                            <div class="unit-value">${result.formatted}${result.dayLabel}</div>
+                            <div style="font-size:0.75rem;color:var(--text-muted);">${this.formatOffset(result.toOffset)}</div>
+                        </div>
+                    `;
+                });
+
+                resultsDiv.innerHTML = html || '<p style="color:var(--text-muted);text-align:center;">No other zones</p>';
+            },
+            // =============================================
+            // COMPREHENSIVE UI RESET FUNCTION
+            // Ensures complete state isolation between converters
+            // =============================================
+            resetConverterUI: function () {
+                // 1. Clear pending timers/debounce
+                if (this.timer) {
+                    clearTimeout(this.timer);
+                    this.timer = null;
+                }
+
+                // 2. Stop World Clock if running
+                this.stopWorldClock();
+
+                // 3. Clear input/output fields
+                const inputEl = document.getElementById('input-val');
+                const outputEl = document.getElementById('output-val');
+                if (inputEl) inputEl.value = '';
+                if (outputEl) outputEl.value = '';
+
+                // 4. Reset result display
+                const resultDisplay = document.getElementById('result-display');
+                const resultLabel = document.getElementById('result-unit-label');
+                if (resultDisplay) resultDisplay.textContent = '—';
+                if (resultLabel) resultLabel.textContent = '';
+
+                // 5. Clear formula text
+                const formulaText = document.getElementById('formula-text');
+                if (formulaText) formulaText.innerHTML = '';
+
+                // 6. Collapse all reference panels
+                document.querySelectorAll('.ref-panel').forEach(panel => {
+                    panel.classList.remove('open');
+                });
+
+                // 7. Clear reference panel contents
+                const refSections = ['ref-definitions-content', 'ref-formula-content', 'ref-context-content', 'ref-notes-content'];
+                refSections.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.innerHTML = '';
+                });
+
+                // 8. Reset comparison mode if active
+                const compareInput = document.getElementById('compare-input');
+                const compareResults = document.getElementById('comparison-results');
+                if (compareInput) compareInput.value = '';
+                if (compareResults) compareResults.innerHTML = '';
+
+                // 9. Reset to single mode (not comparison)
+                const singleBtn = document.getElementById('mode-single');
+                const compareBtn = document.getElementById('mode-compare');
+                const singleUI = document.getElementById('single-mode-ui');
+                const compareUI = document.getElementById('compare-mode-ui');
+                if (singleBtn) singleBtn.classList.add('active');
+                if (compareBtn) compareBtn.classList.remove('active');
+                if (singleUI) singleUI.style.display = 'block';
+                if (compareUI) compareUI.style.display = 'none';
+
+                // 10. Clear timezone display
+                const timezoneDisplay = document.getElementById('timezone-display');
+                if (timezoneDisplay) timezoneDisplay.innerHTML = '';
+
+                // 11. Clear calculator state
+                if (typeof calc !== 'undefined' && calc.clear) {
+                    calc.clear();
+                }
+
+                // 12. Reset comparison mode flag if it exists
+                if (typeof comparisonMode !== 'undefined') {
+                    comparisonMode = false;
+                }
+            },
+            // Backward-compatible reset alias
+            reset: function () {
+                this.resetConverterUI();
+            },
             copyResult: function () { const v = document.getElementById('output-val').value; if (v) { navigator.clipboard.writeText(v); showToast('✓ Copied to clipboard!'); } },
 
             setupSearch: function () {
                 const inp = document.getElementById('global-search'); const res = document.getElementById('search-results');
-                inp.oninput = (e) => {
-                    const q = e.target.value.toLowerCase();
+                // Debounced search handler to prevent excessive DOM updates
+                const performSearch = debounce((q) => {
                     if (q.length < 2) { res.style.display = 'none'; return; }
                     const hits = [];
                     DATA.categories.forEach(c => { DATA[c.id].converters.forEach(cv => { if (cv.title.toLowerCase().includes(q) || c.name.toLowerCase().includes(q)) hits.push({ c: c.id, cv: cv }); }); });
                     if (hits.length) {
-                        res.innerHTML = hits.map(h => `<div class="search-item">${DATA.categories.find(x => x.id === h.c).name} > ${h.cv.title}</div>`).join('');
+                        res.innerHTML = hits.slice(0, 10).map(h => `<div class="search-item">${DATA.categories.find(x => x.id === h.c).name} > ${h.cv.title}</div>`).join('');
                         res.style.display = 'block';
                         Array.from(document.getElementsByClassName('search-item')).forEach((el, i) => { el.onclick = () => { app.state.category = hits[i].c; app.navigate('converter', hits[i].cv); res.style.display = 'none'; inp.value = ''; } });
                     } else res.style.display = 'none';
-                };
+                }, 100);
+                inp.oninput = (e) => performSearch(e.target.value.toLowerCase());
                 document.onclick = (e) => { if (!e.target.closest('.search-container')) res.style.display = 'none'; }
             },
             setupHistory: function () { document.getElementById('history-toggle').onclick = () => document.getElementById('history-panel').classList.toggle('open'); this.renderHistoryPanel(); },
@@ -5942,6 +7092,11 @@
                 if (catId === 'temperature') return { eq: 'Non-linear conversion using temperature scale formulas', note: 'Each scale has different zero points and scale factors.' };
                 if (catId === 'fuel') return { eq: 'Non-linear reciprocal conversion', note: 'Some units measure distance per fuel, others fuel per distance.' };
                 if (catId === 'sound') return { eq: 'Logarithmic conversion (dB = 20·log10(ratio))', note: 'Sound uses logarithmic scales based on human perception.' };
+                if (catId === 'timezone') return { eq: this.getTimezoneFormula(from, to), note: 'UTC-based conversion: Local → UTC → Target (DST applied automatically)' };
+                if (catId === 'clothing') {
+                    const result = this.convertShoe(1, from, to);
+                    return { eq: result.form.split('\n')[0], note: 'Linear offset formulas. Shoe sizes are approximate and vary by brand.' };
+                }
                 if (cat && cat.factors) {
                     const f = cat.factors[from] || 1;
                     const t = cat.factors[to] || 1;
@@ -6114,17 +7269,351 @@
             else if (e.key === 'Delete' || e.key.toLowerCase() === 'c') calc.clear();
         });
 
-        // Theme Functions
-        function setTheme(theme) {
-            document.body.classList.remove('theme-cyberpunk', 'theme-light', 'theme-oled');
-            if (theme !== 'matrix') document.body.classList.add('theme-' + theme);
-            localStorage.setItem('unit_theme', theme);
-            document.getElementById('theme-panel').classList.remove('active');
+        // Theme Functions - Dark/Light Mode Toggle
+        function toggleDarkMode() {
+            const isLight = document.body.classList.toggle('light-mode');
+            localStorage.setItem('unit_theme', isLight ? 'light' : 'dark');
+            updateThemeToggleUI();
         }
 
-        function toggleThemePanel() {
-            document.getElementById('theme-panel').classList.toggle('active');
+        function updateThemeToggleUI() {
+            const isLight = document.body.classList.contains('light-mode');
+
+            // Update slide menu toggle
+            const slideIcon = document.getElementById('theme-toggle-icon');
+            const slideText = document.getElementById('theme-toggle-text');
+            if (slideIcon) {
+                slideIcon.setAttribute('data-lucide', isLight ? 'sun' : 'moon');
+            }
+            if (slideText) {
+                slideText.textContent = isLight ? 'Dark Mode' : 'Light Mode';
+            }
+
+            // Update navbar toggle
+            const navbarIcon = document.getElementById('navbar-theme-icon');
+            const navbarBtn = document.getElementById('navbar-theme-toggle');
+            if (navbarIcon) {
+                navbarIcon.setAttribute('data-lucide', isLight ? 'sun' : 'moon');
+            }
+            if (navbarBtn) {
+                navbarBtn.title = isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode';
+            }
+
+            // Re-render lucide icons to update the icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
         }
+
+        // =============================================
+        // FEATURE 4: HIGH CONTRAST TOGGLE
+        // =============================================
+        function toggleHighContrast() {
+            const isHC = document.body.classList.toggle('high-contrast');
+            localStorage.setItem('unit_high_contrast', isHC ? 'on' : 'off');
+            const toggle = document.getElementById('contrast-toggle');
+            const container = document.getElementById('contrast-toggle-container');
+            if (toggle) toggle.classList.toggle('active', isHC);
+            if (container) container.setAttribute('aria-checked', isHC);
+            showToast(isHC ? 'High contrast enabled' : 'High contrast disabled');
+        }
+
+        // =============================================
+        // FEATURE 1: COMPARISON MODE
+        // =============================================
+        let comparisonMode = false;
+
+        // Add comparison mode methods to app object
+        app.setMode = function (mode) {
+            comparisonMode = (mode === 'compare');
+            const singleBtn = document.getElementById('mode-single');
+            const compareBtn = document.getElementById('mode-compare');
+            const singleUI = document.getElementById('single-mode-ui');
+            const compareUI = document.getElementById('compare-mode-ui');
+
+            if (singleBtn && compareBtn) {
+                singleBtn.classList.toggle('active', !comparisonMode);
+                compareBtn.classList.toggle('active', comparisonMode);
+                singleBtn.setAttribute('aria-selected', !comparisonMode);
+                compareBtn.setAttribute('aria-selected', comparisonMode);
+                singleBtn.tabIndex = comparisonMode ? -1 : 0;
+                compareBtn.tabIndex = comparisonMode ? 0 : -1;
+            }
+
+            if (singleUI) singleUI.style.display = comparisonMode ? 'none' : 'block';
+            if (compareUI) {
+                compareUI.style.display = comparisonMode ? 'block' : 'none';
+                if (comparisonMode) {
+                    this.populateCompareSelect();
+                    document.getElementById('compare-input').focus();
+                }
+            }
+        };
+
+        app.populateCompareSelect = function () {
+            const select = document.getElementById('compare-base');
+            if (!select || !this.state.converter) return;
+            const cat = DATA[this.state.category];
+            if (!cat) return;
+
+            select.innerHTML = '';
+            const conv = this.state.converter;
+            // For clothing/shoe sizes, we want to show all available units in the dropdown
+            let units = [];
+            if (this.state.category === 'clothing') {
+                units = Object.keys(cat.factors);
+            } else {
+                units = conv.all ? Object.keys(cat.factors || {}) : [conv.from, conv.to];
+            }
+
+            units.forEach(u => {
+                const opt = document.createElement('option');
+                opt.value = u;
+                opt.textContent = u.replace(/_/g, ' ');
+                select.appendChild(opt);
+            });
+        };
+
+        app.runComparison = function () {
+            const input = document.getElementById('compare-input');
+            const base = document.getElementById('compare-base');
+            const resultsDiv = document.getElementById('comparison-results');
+            if (!input || !base || !resultsDiv) return;
+
+            const value = parseFloat(input.value);
+            const baseUnit = base.value;
+            if (isNaN(value) || !baseUnit) {
+                resultsDiv.innerHTML = '<p style="color:var(--text-muted);text-align:center;">Enter a value to see comparisons</p>';
+                return;
+            }
+
+            const catId = this.state.category;
+            const cat = DATA[catId];
+            let html = '';
+
+            // --- SHOE SIZE SPECIFIC LOGIC (Non-Linear) ---
+            if (catId === 'clothing') {
+                const units = Object.keys(cat.factors);
+                let cmBase = 0;
+
+                // Step 1: Normalize Input to CM (Foot Length)
+                // Formulas: 
+                // Men: CM = (US + 18) * 0.667 | CM = (UK + 19) * 0.667 | CM = (EU - 15) * 0.667
+                // Women: CM = (US + 17) * 0.667 | CM = (UK + 19) * 0.667 | CM = (EU - 14) * 0.667
+
+                if (baseUnit === 'US_Men') cmBase = (value + 18) * 0.667;
+                else if (baseUnit === 'UK_Men') cmBase = (value + 19) * 0.667;
+                else if (baseUnit === 'EU_Men') cmBase = (value - 15) * 0.667;
+                else if (baseUnit === 'US_Women') cmBase = (value + 17) * 0.667;
+                else if (baseUnit === 'UK_Women') cmBase = (value + 19) * 0.667;
+                else if (baseUnit === 'EU_Women') cmBase = (value - 14) * 0.667;
+                else if (baseUnit === 'CM_Men' || baseUnit === 'CM_Women') cmBase = value;
+
+                // Step 2: Convert CM to All Other Systems
+                units.forEach(unit => {
+                    if (unit === baseUnit) return;
+
+                    let res = 0;
+                    // Men Formulas: US = (CM/0.667)-18 | UK = (CM/0.667)-19 | EU = (CM/0.667)+15
+                    if (unit === 'US_Men') res = (cmBase / 0.667) - 18;
+                    else if (unit === 'UK_Men') res = (cmBase / 0.667) - 19;
+                    else if (unit === 'EU_Men') res = (cmBase / 0.667) + 15;
+                    // Women Formulas: US = (CM/0.667)-17 | UK = (CM/0.667)-19 | EU = (CM/0.667)+14
+                    else if (unit === 'US_Women') res = (cmBase / 0.667) - 17;
+                    else if (unit === 'UK_Women') res = (cmBase / 0.667) - 19;
+                    else if (unit === 'EU_Women') res = (cmBase / 0.667) + 14;
+                    // CM
+                    else if (unit === 'CM_Men' || unit === 'CM_Women') res = cmBase;
+
+                    // Validation: Ensure no negative shoe sizes generally (unless specifically calculated small)
+                    // Display: Round to 1 decimal place
+                    html += `<div class="comparison-card">
+                        <div class="unit-name">${unit.replace(/_/g, ' ')}</div>
+                        <div class="unit-value">${parseFloat(res.toFixed(1))}</div>
+                    </div>`;
+                });
+
+                // Mandatory Note
+                html += '<div style="grid-column:1/-1; text-align:center; font-size:0.8rem; color:var(--text-muted); margin-top:10px; font-style:italic;">Shoe size conversions are approximate and may vary by brand.</div>';
+
+            }
+            // --- TEMPERATURE LOGIC (Existing) ---
+            else if (catId === 'temperature') {
+                DATA.temperature.units.forEach(u => {
+                    if (u !== baseUnit) {
+                        const res = app.convertTemp(value, baseUnit, u);
+                        html += `<div class="comparison-card">
+                            <div class="unit-name">${u}</div>
+                            <div class="unit-value">${res.toFixed(2)}</div>
+                        </div>`;
+                    }
+                });
+            }
+            // --- STANDARD LINEAR LOGIC ---
+            else if (cat && cat.factors) {
+                const baseFactor = cat.factors[baseUnit] || 1;
+                const units = Object.keys(cat.factors);
+
+                units.forEach(unit => {
+                    if (unit === baseUnit) return;
+                    const factor = cat.factors[unit];
+                    const result = value * baseFactor / factor;
+                    const formatted = formatNum(result);
+                    html += `<div class="comparison-card">
+                        <div class="unit-name">${unit.replace(/_/g, ' ')}</div>
+                        <div class="unit-value">${formatted}</div>
+                    </div>`;
+                });
+            } else {
+                html = '<p style="color:var(--text-muted);text-align:center;">Comparison not available</p>';
+            }
+
+            resultsDiv.innerHTML = html;
+        };
+
+        // =============================================
+        // FEATURE 2: SHAREABLE CONVERSION LINKS
+        // =============================================
+        app.shareLink = function () {
+            const params = new URLSearchParams();
+            params.set('cat', this.state.category || '');
+
+            if (comparisonMode) {
+                params.set('mode', 'compare');
+                params.set('val', document.getElementById('compare-input')?.value || '');
+                params.set('base', document.getElementById('compare-base')?.value || '');
+            } else {
+                params.set('mode', 'single');
+                params.set('from', document.getElementById('unit-from')?.value || '');
+                params.set('to', document.getElementById('unit-to')?.value || '');
+                params.set('val', document.getElementById('input-val')?.value || '');
+            }
+
+            if (this.state.converter) {
+                params.set('conv', this.state.converter.id || this.state.converter.title || '');
+            }
+
+            const url = `${location.origin}${location.pathname}?${params}`;
+            navigator.clipboard.writeText(url).then(() => {
+                showToast('✓ Link copied to clipboard!');
+            }).catch(() => {
+                // Fallback - show URL
+                prompt('Copy this link:', url);
+            });
+        };
+
+        app.parseURLState = function () {
+            const params = new URLSearchParams(location.search);
+            const cat = params.get('cat');
+            const mode = params.get('mode');
+            const val = params.get('val');
+
+            if (!cat) return;
+
+            // Navigate to category
+            this.state.category = cat;
+            const catData = DATA[cat];
+            if (!catData) return;
+
+            const convId = params.get('conv');
+            let converter = null;
+            if (convId) {
+                converter = catData.converters.find(c => c.id === convId || c.title === convId);
+            }
+
+            if (converter) {
+                // Navigate to converter
+                setTimeout(() => {
+                    this.navigate('converter', converter);
+
+                    setTimeout(() => {
+                        if (mode === 'compare') {
+                            this.setMode('compare');
+                            const compInput = document.getElementById('compare-input');
+                            const compBase = document.getElementById('compare-base');
+                            if (compInput && val) compInput.value = val;
+                            if (compBase && params.get('base')) compBase.value = params.get('base');
+                            this.runComparison();
+                        } else {
+                            const fromSel = document.getElementById('unit-from');
+                            const toSel = document.getElementById('unit-to');
+                            const inputVal = document.getElementById('input-val');
+                            if (fromSel && params.get('from')) fromSel.value = params.get('from');
+                            if (toSel && params.get('to')) toSel.value = params.get('to');
+                            if (inputVal && val) inputVal.value = val;
+                            this.convert();
+                        }
+                    }, 100);
+                }, 100);
+            } else {
+                this.navigate('category');
+            }
+        };
+
+        // =============================================
+        // FEATURE 3: UNIT RELATIONSHIP GRAPH
+        // =============================================
+        const UNIT_GRAPHS = {
+            length: ['mm', 'cm', 'm', 'km'],
+            weight: ['mg', 'g', 'kg', 't'],
+            volume: ['ml', 'l', 'gal'],
+            temperature: ['°C', '°F', 'K'],
+            area: ['m²', 'km²', 'ha', 'acre'],
+            speed: ['m/s', 'km/h', 'mph', 'knot'],
+            time: ['sec', 'min', 'hr', 'day'],
+            data: ['bit', 'byte', 'KB', 'MB', 'GB', 'TB'],
+            currency: ['USD', 'EUR', 'GBP', 'INR'],
+            energy: ['J', 'kJ', 'cal', 'kWh'],
+            pressure: ['Pa', 'kPa', 'bar', 'psi', 'atm'],
+            density: ['kg/m³', 'g/cm³', 'lb/ft³'],
+            power: ['W', 'kW', 'hp', 'BTU/h'],
+            force: ['N', 'kN', 'lbf', 'kgf'],
+            frequency: ['Hz', 'kHz', 'MHz', 'GHz'],
+            angle: ['°', 'rad', 'grad'],
+            datatransfer: ['bps', 'Kbps', 'Mbps', 'Gbps'],
+            fuel: ['km/l', 'mpg', 'l/100km'],
+            illuminance: ['lux', 'fc', 'cd/m²'],
+            sound: ['dB', 'dB(A)', 'sone']
+        };
+
+        app.toggleGraphPanel = function () {
+            const panel = document.getElementById('unit-graph-panel');
+            if (panel) {
+                panel.classList.toggle('open');
+                panel.setAttribute('aria-expanded', panel.classList.contains('open'));
+                if (panel.classList.contains('open')) {
+                    this.renderUnitGraph();
+                }
+            }
+        };
+
+        app.renderUnitGraph = function () {
+            const graphDiv = document.getElementById('unit-graph');
+            if (!graphDiv || !this.state.category) return;
+
+            const catId = this.state.category;
+            const units = UNIT_GRAPHS[catId] || [];
+
+            if (units.length === 0) {
+                graphDiv.innerHTML = '<span style="color:var(--text-muted);">Graph not available for this category</span>';
+                return;
+            }
+
+            const from = document.getElementById('unit-from')?.value || '';
+            const to = document.getElementById('unit-to')?.value || '';
+
+            let html = '';
+            units.forEach((unit, i) => {
+                const isActive = unit === from || unit === to;
+                html += `<span class="unit-node${isActive ? ' active' : ''}">${unit}</span>`;
+                if (i < units.length - 1) {
+                    html += '<span class="unit-arrow">→</span>';
+                }
+            });
+
+            graphDiv.innerHTML = html;
+        };
+
 
         // Voice Input
         const voice = {
@@ -6582,19 +8071,42 @@
             // Initialize Lucide Icons
             lucide.createIcons();
 
-            // Load saved theme
+            // Load saved theme (default to dark mode)
             const savedTheme = localStorage.getItem('unit_theme');
-            if (savedTheme) setTheme(savedTheme);
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+            }
+            updateThemeToggleUI();
+
+            // Load saved high contrast preference
+            const savedHC = localStorage.getItem('unit_high_contrast');
+            if (savedHC === 'on') {
+                document.body.classList.add('high-contrast');
+                const toggle = document.getElementById('contrast-toggle');
+                const container = document.getElementById('contrast-toggle-container');
+                if (toggle) toggle.classList.add('active');
+                if (container) container.setAttribute('aria-checked', 'true');
+            }
+
+            // Parse URL state for shareable links
+            setTimeout(() => {
+                app.parseURLState();
+            }, 500);
 
             // Fetch live currency rates
             fetchCurrencyRates();
 
-            // Add ripple effect to all buttons
+            // Add ripple effect to all buttons with passive listeners where possible
             document.querySelectorAll('.btn').forEach(btn => {
                 btn.style.position = 'relative';
                 btn.style.overflow = 'hidden';
                 btn.addEventListener('click', addRipple);
             });
+
+            // Use passive listeners for touch events to improve scroll performance
+            document.addEventListener('touchstart', () => { }, passiveOpts);
+            document.addEventListener('touchmove', () => { }, passiveOpts);
+            document.addEventListener('wheel', () => { }, passiveOpts);
 
             // Initialize 3D card tilt after a short delay (for dynamically loaded cards)
             setTimeout(() => initCardTilt(), 1500);
@@ -6634,3 +8146,6 @@
 </body>
 
 </html>
+<script async data-explicit-opt-in="true" data-cookie-opt-in="true"
+    data-deployment-id="dpl_GSD3UCWgxLi2FJpHknJY3QD3Qg32"
+    src="https://vercel.live/_next-live/feedback/feedback.js"></script>
