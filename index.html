@@ -2445,9 +2445,10 @@
             border-radius: 16px;
             max-height: 400px;
             overflow-y: auto;
-            z-index: 500;
+            z-index: 9999;
             display: none;
             box-shadow: 0 10px 40px rgba(0, 255, 65, 0.3);
+            pointer-events: auto;
         }
 
         .live-search-dropdown.active {
@@ -6429,7 +6430,7 @@
 
         const app = {
             state: { view: 'home', category: null, converter: null, favorites: JSON.parse(localStorage.getItem('unit_favorites')) || [], history: JSON.parse(localStorage.getItem('unit_history')) || [] },
-            init: function () { this.renderCategories(); this.setupSearch(); this.setupHistory(); },
+            init: function () { this.renderCategories(); this.setupHistory(); },
             navigate: function (view, dataId = null) {
                 // CRITICAL: Reset all converter UI state before navigation
                 this.resetConverterUI();
@@ -7060,20 +7061,88 @@
             copyResult: function () { const v = document.getElementById('output-val').value; if (v) { navigator.clipboard.writeText(v); showToast('✓ Copied to clipboard!'); } },
 
             setupSearch: function () {
-                const inp = document.getElementById('global-search'); const res = document.getElementById('search-results');
-                // Debounced search handler to prevent excessive DOM updates
+                const inp = document.getElementById('global-search');
+                const res = document.getElementById('search-results');
+
+                // Store current search hits for click handler
+                let currentHits = [];
+
+                // Event delegation on results container - handles all clicks reliably
+                res.addEventListener('click', (e) => {
+                    const item = e.target.closest('.search-item');
+                    if (!item) return;
+
+                    const idx = parseInt(item.dataset.idx);
+                    const hit = currentHits[idx];
+                    if (!hit) return;
+
+                    // Reset UI state before navigation
+                    this.resetConverterUI();
+
+                    // Set category and navigate to converter
+                    app.state.category = hit.c;
+                    app.navigate('converter', hit.cv);
+
+                    // Cleanup search UI
+                    res.style.display = 'none';
+                    inp.value = '';
+                    inp.blur();
+                });
+
+                // Debounced search handler
                 const performSearch = debounce((q) => {
-                    if (q.length < 2) { res.style.display = 'none'; return; }
-                    const hits = [];
-                    DATA.categories.forEach(c => { DATA[c.id].converters.forEach(cv => { if (cv.title.toLowerCase().includes(q) || c.name.toLowerCase().includes(q)) hits.push({ c: c.id, cv: cv }); }); });
-                    if (hits.length) {
-                        res.innerHTML = hits.slice(0, 10).map(h => `<div class="search-item">${DATA.categories.find(x => x.id === h.c).name} > ${h.cv.title}</div>`).join('');
+                    if (q.length < 2) {
+                        res.style.display = 'none';
+                        currentHits = [];
+                        return;
+                    }
+
+                    // Build search results
+                    currentHits = [];
+                    DATA.categories.forEach(c => {
+                        DATA[c.id].converters.forEach(cv => {
+                            if (cv.title.toLowerCase().includes(q) || c.name.toLowerCase().includes(q)) {
+                                currentHits.push({ c: c.id, cv: cv, catName: c.name });
+                            }
+                        });
+                    });
+
+                    if (currentHits.length) {
+                        // Generate search items with data attributes
+                        res.innerHTML = currentHits.slice(0, 10).map((h, i) =>
+                            `<div class="search-item" data-idx="${i}" data-cat="${h.c}" role="option" tabindex="0">
+                                <span class="search-cat">${h.catName}</span> › ${h.cv.title}
+                            </div>`
+                        ).join('');
                         res.style.display = 'block';
-                        Array.from(document.getElementsByClassName('search-item')).forEach((el, i) => { el.onclick = () => { app.state.category = hits[i].c; app.navigate('converter', hits[i].cv); res.style.display = 'none'; inp.value = ''; } });
-                    } else res.style.display = 'none';
+                    } else {
+                        res.style.display = 'none';
+                    }
                 }, 100);
+
                 inp.oninput = (e) => performSearch(e.target.value.toLowerCase());
-                document.onclick = (e) => { if (!e.target.closest('.search-container')) res.style.display = 'none'; }
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!e.target.closest('.search-container')) {
+                        res.style.display = 'none';
+                    }
+                });
+
+                // Keyboard support for search results
+                inp.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        res.style.display = 'none';
+                        inp.blur();
+                    } else if (e.key === 'Enter' && currentHits.length > 0) {
+                        // Select first result on Enter
+                        this.resetConverterUI();
+                        app.state.category = currentHits[0].c;
+                        app.navigate('converter', currentHits[0].cv);
+                        res.style.display = 'none';
+                        inp.value = '';
+                    }
+                });
             },
             setupHistory: function () { document.getElementById('history-toggle').onclick = () => document.getElementById('history-panel').classList.toggle('open'); this.renderHistoryPanel(); },
 
@@ -7922,7 +7991,7 @@
 
                 if (!this.searchInput || !this.dropdown) return;
 
-                // Listen for input
+                // Listen for input - live search on every keystroke
                 this.searchInput.addEventListener('input', (e) => {
                     const query = e.target.value.trim().toLowerCase();
                     if (query.length < 1) {
@@ -7930,6 +7999,14 @@
                         return;
                     }
                     this.performSearch(query);
+                });
+
+                // EVENT DELEGATION: Single click handler on dropdown container
+                this.dropdown.addEventListener('click', (e) => {
+                    const item = e.target.closest('.live-search-item');
+                    if (!item) return;
+
+                    this.handleSelection(item);
                 });
 
                 // Close dropdown when clicking outside
@@ -7944,8 +8021,43 @@
                     if (e.key === 'Escape') {
                         this.hideDropdown();
                         this.searchInput.blur();
+                    } else if (e.key === 'Enter') {
+                        // Select first visible result on Enter
+                        const firstItem = this.dropdown.querySelector('.live-search-item');
+                        if (firstItem && this.dropdown.classList.contains('active')) {
+                            e.preventDefault();
+                            this.handleSelection(firstItem);
+                        }
                     }
                 });
+            },
+
+            // Handle search result selection
+            handleSelection: function (item) {
+                const type = item.dataset.type;
+                const categoryId = item.dataset.category;
+                const converterId = item.dataset.converter;
+
+                // Cleanup search UI
+                this.hideDropdown();
+                this.searchInput.value = '';
+                this.searchInput.blur();
+
+                // Reset UI state before navigation
+                app.resetConverterUI();
+
+                if (type === 'category' || type === 'unit') {
+                    // Navigate to category view
+                    app.state.category = categoryId;
+                    app.navigate('category', categoryId);
+                } else if (type === 'converter' && converterId) {
+                    // Find converter object by ID and navigate
+                    app.state.category = categoryId;
+                    const converterObj = DATA[categoryId].converters.find(c => c.id === converterId);
+                    if (converterObj) {
+                        app.navigate('converter', converterObj);
+                    }
+                }
             },
 
             performSearch: function (query) {
@@ -8021,7 +8133,7 @@
                 results.forEach(result => {
                     const highlightedName = this.highlightMatch(result.display, query);
                     html += `
-                        <div class="live-search-item" data-type="${result.type}" data-category="${result.categoryId}" data-converter="${result.converterId || ''}">
+                        <div class="live-search-item" data-type="${result.type}" data-category="${result.categoryId}" data-converter="${result.converterId || ''}" role="option" tabindex="0">
                             <span class="search-cat">${result.categoryName}</span>
                             <span class="search-name">${highlightedName}</span>
                         </div>
@@ -8029,26 +8141,6 @@
                 });
 
                 this.dropdown.innerHTML = html;
-
-                // Add click handlers
-                this.dropdown.querySelectorAll('.live-search-item').forEach(item => {
-                    item.addEventListener('click', () => {
-                        const type = item.dataset.type;
-                        const categoryId = item.dataset.category;
-                        const converterId = item.dataset.converter;
-
-                        this.hideDropdown();
-                        this.searchInput.value = '';
-
-                        if (type === 'category' || type === 'unit') {
-                            app.showCategory(categoryId);
-                        } else if (type === 'converter' && converterId) {
-                            app.state.category = categoryId;
-                            app.showConverter(converterId);
-                        }
-                    });
-                });
-
                 this.showDropdown();
             },
 
