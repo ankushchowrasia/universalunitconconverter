@@ -5399,6 +5399,339 @@
             backface-visibility: hidden;
         }
 
+        /* ============================================
+           LIGHT MODE TEXT VISIBILITY FIX
+           Ensures all text is readable in light mode
+           ============================================ */
+        body.light-mode {
+            /* Background colors for light mode */
+            --bg: #f5f5f5;
+            --surface: #ffffff;
+            --text: #1a1a1a;
+            --text-muted: #666666;
+            --border: #e0e0e0;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Light mode text color overrides */
+        body.light-mode .converter-item strong,
+        body.light-mode .converter-item span,
+        body.light-mode .converter-item {
+            color: #1a1a1a !important;
+        }
+
+        body.light-mode .cat-title,
+        body.light-mode .category-card h3,
+        body.light-mode .category-card .cat-title {
+            color: #1a1a1a !important;
+        }
+
+        body.light-mode .cat-desc,
+        body.light-mode .category-card p {
+            color: #444444 !important;
+        }
+
+        body.light-mode .cat-icon,
+        body.light-mode .cat-icon svg,
+        body.light-mode .category-card svg {
+            color: #008F11 !important;
+            stroke: #008F11 !important;
+        }
+
+        /* Form inputs in light mode */
+        body.light-mode input,
+        body.light-mode select,
+        body.light-mode .unit-select {
+            background: #ffffff !important;
+            color: #1a1a1a !important;
+            border-color: #cccccc !important;
+        }
+
+        body.light-mode input::placeholder {
+            color: #888888 !important;
+        }
+
+        /* Result display */
+        body.light-mode .result-display,
+        body.light-mode #result-display {
+            color: #1a1a1a !important;
+        }
+
+        /* Labels and text */
+        body.light-mode label,
+        body.light-mode .label,
+        body.light-mode .unit-label {
+            color: #333333 !important;
+        }
+
+        /* Headers and titles */
+        body.light-mode h1,
+        body.light-mode h2,
+        body.light-mode h3,
+        body.light-mode h4,
+        body.light-mode h5,
+        body.light-mode h6 {
+            color: #1a1a1a !important;
+        }
+
+        /* Converter UI */
+        body.light-mode .converter-ui {
+            background: #ffffff !important;
+            border-color: #e0e0e0 !important;
+        }
+
+        /* Reference panels */
+        body.light-mode .ref-panel,
+        body.light-mode .ref-box {
+            background: #f8f8f8 !important;
+            color: #333333 !important;
+        }
+
+        body.light-mode .ref-box code {
+            background: rgba(0, 143, 17, 0.1) !important;
+            color: #006600 !important;
+        }
+
+        /* Comparison cards */
+        body.light-mode .comparison-card,
+        body.light-mode .timezone-card {
+            background: #ffffff !important;
+            color: #1a1a1a !important;
+            border-color: #e0e0e0 !important;
+        }
+
+        body.light-mode .comparison-card .unit-name,
+        body.light-mode .comparison-card .unit-value,
+        body.light-mode .timezone-card .timezone-city,
+        body.light-mode .timezone-card .timezone-time {
+            color: #1a1a1a !important;
+        }
+
+        /* Preserve primary accent color in buttons and links */
+        body.light-mode .btn-primary {
+            background: #008F11 !important;
+            color: #ffffff !important;
+        }
+
+        body.light-mode .btn-outline {
+            border-color: #008F11 !important;
+            color: #008F11 !important;
+        }
+
+        body.light-mode .btn-outline:hover {
+            background: #008F11 !important;
+            color: #ffffff !important;
+        }
+
+        /* MODE TOGGLE FIX - Uniform appearance in light mode */
+        body.light-mode .mode-toggle {
+            background: #e8e8e8 !important;
+            border-color: #008F11 !important;
+        }
+
+        body.light-mode .mode-btn {
+            background: #f0f0f0 !important;
+            color: #1a1a1a !important;
+            border-color: transparent !important;
+        }
+
+        body.light-mode .mode-btn.active {
+            background: #008F11 !important;
+            color: #ffffff !important;
+        }
+
+        body.light-mode .mode-btn:hover:not(.active) {
+            background: #e0e0e0 !important;
+        }
+
+        /* BACK BUTTON FIX */
+        body.light-mode .back-btn {
+            background: #f0f0f0 !important;
+            color: #1a1a1a !important;
+            border: 2px solid #cccccc !important;
+        }
+
+        body.light-mode .back-btn:hover {
+            background: #e0e0e0 !important;
+            border-color: #008F11 !important;
+            color: #008F11 !important;
+        }
+
+        /* CONVERTER HEADER FIX */
+        body.light-mode .page-header,
+        body.light-mode .page-header h2,
+        body.light-mode .page-header span,
+        body.light-mode #cat-view-title,
+        body.light-mode #conv-view-title {
+            color: #1a1a1a !important;
+        }
+
+        /* Converter title (e.g., "cm ⇄ m") */
+        body.light-mode .converter-ui h2,
+        body.light-mode .converter-ui .converter-title,
+        body.light-mode #converter-view h2 {
+            color: #1a1a1a !important;
+        }
+
+        /* Arrows and symbols */
+        body.light-mode .arrow,
+        body.light-mode .converter-arrow,
+        body.light-mode [class*="arrow"] {
+            color: #008F11 !important;
+        }
+
+        /* NAVIGATION ELEMENTS */
+        body.light-mode .top-nav {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-bottom: 1px solid #e0e0e0 !important;
+        }
+
+        body.light-mode .nav-title {
+            color: #1a1a1a !important;
+        }
+
+        body.light-mode .hamburger-btn {
+            background: #f0f0f0 !important;
+            border-color: #cccccc !important;
+        }
+
+        body.light-mode .hamburger-btn span {
+            background: #1a1a1a !important;
+        }
+
+        /* SLIDE MENU */
+        body.light-mode .slide-menu {
+            background: #ffffff !important;
+            border-right: 1px solid #e0e0e0 !important;
+        }
+
+        body.light-mode .slide-menu-item {
+            color: #1a1a1a !important;
+        }
+
+        body.light-mode .slide-menu-item:hover {
+            background: #f0f0f0 !important;
+        }
+
+        body.light-mode .slide-menu-item svg {
+            stroke: #008F11 !important;
+        }
+
+        /* FAVORITE BUTTON */
+        body.light-mode .fav-btn {
+            background: #f0f0f0 !important;
+            color: #888888 !important;
+            border-color: #cccccc !important;
+        }
+
+        body.light-mode .fav-btn.active {
+            color: #ffc107 !important;
+        }
+
+        /* SEARCH */
+        body.light-mode .search-input {
+            background: #ffffff !important;
+            color: #1a1a1a !important;
+            border-color: #cccccc !important;
+        }
+
+        body.light-mode .search-icon {
+            stroke: #666666 !important;
+        }
+
+        body.light-mode .live-search-dropdown {
+            background: #ffffff !important;
+            border-color: #008F11 !important;
+        }
+
+        body.light-mode .live-search-item {
+            color: #1a1a1a !important;
+        }
+
+        body.light-mode .live-search-item:hover {
+            background: #f0f0f0 !important;
+        }
+
+        body.light-mode .search-cat {
+            color: #666666 !important;
+        }
+
+        /* HISTORY PANEL */
+        body.light-mode .history-panel {
+            background: #ffffff !important;
+            border-left: 1px solid #e0e0e0 !important;
+        }
+
+        body.light-mode .history-item {
+            background: #f8f8f8 !important;
+            color: #1a1a1a !important;
+            border-color: #e0e0e0 !important;
+        }
+
+        /* CALCULATOR POPUP */
+        body.light-mode .calc-popup {
+            background: #ffffff !important;
+            border-color: #e0e0e0 !important;
+        }
+
+        body.light-mode .calc-btn {
+            background: #f0f0f0 !important;
+            color: #1a1a1a !important;
+            border-color: #e0e0e0 !important;
+        }
+
+        body.light-mode .calc-btn:hover {
+            background: #e0e0e0 !important;
+        }
+
+        body.light-mode .calc-btn.operator {
+            background: #008F11 !important;
+            color: #ffffff !important;
+        }
+
+        body.light-mode #calc-expr,
+        body.light-mode #calc-result {
+            color: #1a1a1a !important;
+        }
+
+        /* HERO SECTION */
+        body.light-mode .hero-section {
+            background: linear-gradient(180deg, rgba(0, 143, 17, 0.05) 0%, transparent 100%) !important;
+        }
+
+        body.light-mode .welcome-text,
+        body.light-mode .hero-title,
+        body.light-mode .hero-tagline {
+            color: #1a1a1a !important;
+        }
+
+        body.light-mode .hero-tagline {
+            color: #666666 !important;
+        }
+
+        /* FOOTER */
+        body.light-mode footer,
+        body.light-mode .footer {
+            background: #f5f5f5 !important;
+            color: #1a1a1a !important;
+        }
+
+        body.light-mode footer a,
+        body.light-mode .footer a {
+            color: #008F11 !important;
+        }
+
+        /* Remove glow/neon effects in light mode */
+        body.light-mode * {
+            text-shadow: none !important;
+        }
+
+        body.light-mode .category-card:hover,
+        body.light-mode .converter-item:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+        }
+
         /* Layout containment for better rendering */
         .category-grid,
         .converter-list,
@@ -6586,14 +6919,35 @@
 
                 if (!convObj.all) { s1.value = convObj.pair[0]; s2.value = convObj.pair[1]; }
 
-                // Set appropriate placeholder for timezone
+                // Set appropriate placeholder and field behavior for timezone
                 const inputEl = document.getElementById('input-val');
+                const outputEl = document.getElementById('output-val');
+
                 if (catId === 'timezone') {
-                    inputEl.placeholder = 'Enter time (e.g., 10:30 or 14)';
+                    // Input: time entry
+                    inputEl.placeholder = 'Enter time (e.g., 10:30)';
                     inputEl.type = 'text';
+                    inputEl.inputMode = 'text';
+                    inputEl.maxLength = 8; // HH:MM AM format max
+
+                    // Output: read-only display (users shouldn't enter destination time)
+                    outputEl.readOnly = true;
+                    outputEl.placeholder = 'Result';
+                    outputEl.setAttribute('aria-readonly', 'true');
+                    outputEl.style.cursor = 'default';
+                    outputEl.tabIndex = -1; // Prevent focus
                 } else {
+                    // Reset for non-timezone converters
                     inputEl.placeholder = 'Enter value';
                     inputEl.type = 'number';
+                    inputEl.removeAttribute('inputMode');
+                    inputEl.removeAttribute('maxLength');
+
+                    outputEl.readOnly = false;
+                    outputEl.placeholder = '';
+                    outputEl.removeAttribute('aria-readonly');
+                    outputEl.style.cursor = '';
+                    outputEl.tabIndex = 0;
                 }
 
                 this.reset();
@@ -6655,17 +7009,57 @@
                     form = data.form;
                 }
                 else if (cat === 'timezone') {
-                    // Timezone uses HH:MM format, treat input as hour
                     const inputVal = document.getElementById('input-val').value;
+
+                    // Validate time input first
+                    const validated = this.validateTimeInput(inputVal);
+
+                    if (!validated) {
+                        // Invalid input - show error
+                        batchDOM(() => {
+                            document.getElementById('output-val').value = '';
+                            document.getElementById('result-display').innerHTML =
+                                '<div style="text-align:center;color:var(--text-muted);">Invalid time format.<br><small>Use HH:MM (e.g., 09:30, 23:59)</small></div>';
+                            document.getElementById('result-unit-label').textContent = '';
+                            document.getElementById('formula-text').textContent = '';
+                        });
+                        return;
+                    }
+
+                    // Handle same city - no conversion needed
+                    if (from === to) {
+                        const time12 = this.formatTime12(validated.hours, validated.minutes);
+                        batchDOM(() => {
+                            document.getElementById('output-val').value = time12;
+                            document.getElementById('result-display').innerHTML =
+                                `<div style="text-align:center;">
+                                    <div style="font-size:1.5rem;font-weight:bold;">${time12}</div>
+                                    <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">Same timezone — no conversion needed</div>
+                                </div>`;
+                            document.getElementById('result-unit-label').textContent = to;
+                            document.getElementById('formula-text').textContent = '';
+                        });
+                        return;
+                    }
+
+                    // Valid input, different cities - perform conversion
                     const result = this.convertTime(inputVal, from, to);
-                    // Display the formatted time in output
+
+                    // Build formula text (only if meaningful)
+                    const formula = this.getSmartTimezoneFormula(from, to);
+
                     batchDOM(() => {
-                        document.getElementById('output-val').value = result.formatted + result.dayLabel;
-                        document.getElementById('result-display').textContent = result.formatted;
-                        document.getElementById('result-unit-label').textContent = to + result.dayLabel;
-                        document.getElementById('formula-text').textContent = 'Formula: ' + this.getTimezoneFormula(from, to);
+                        document.getElementById('output-val').value = result.time12 + result.dayLabel;
+                        document.getElementById('result-display').innerHTML =
+                            `<div style="text-align:center;">
+                                <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:4px;">${result.day}, ${result.date}</div>
+                                <div style="font-size:1.5rem;font-weight:bold;">${result.time12}</div>
+                                <div style="font-size:0.8rem;color:var(--primary);margin-top:4px;">${result.utcOffset}${result.dayLabel ? ' · ' + result.dayLabel.trim() : ''}</div>
+                            </div>`;
+                        document.getElementById('result-unit-label').textContent = to;
+                        document.getElementById('formula-text').innerHTML = formula;
                     });
-                    this.debounceHistory(inputVal, from, result.formatted + result.dayLabel, to);
+                    this.debounceHistory(inputVal, from, result.time12 + result.dayLabel, to);
                     return; // Exit early, already updated DOM
                 }
                 else {
@@ -6884,6 +7278,52 @@
                 }
                 return offset;
             },
+            // Validate time input - returns parsed hours/minutes or null if invalid
+            validateTimeInput: function (inputStr) {
+                if (!inputStr || typeof inputStr !== 'string') return null;
+
+                const trimmed = inputStr.trim();
+
+                // Match HH:MM format (24-hour)
+                const match24 = trimmed.match(/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/);
+                if (match24) {
+                    return {
+                        hours: parseInt(match24[1]),
+                        minutes: parseInt(match24[2]),
+                        valid: true
+                    };
+                }
+
+                // Match HH:MM AM/PM format (12-hour)
+                const match12 = trimmed.match(/^(0?[1-9]|1[0-2]):([0-5][0-9])\s*(AM|PM)$/i);
+                if (match12) {
+                    let hours = parseInt(match12[1]);
+                    const minutes = parseInt(match12[2]);
+                    const isPM = match12[3].toUpperCase() === 'PM';
+
+                    // Convert to 24-hour
+                    if (isPM && hours !== 12) hours += 12;
+                    if (!isPM && hours === 12) hours = 0;
+
+                    return {
+                        hours: hours,
+                        minutes: minutes,
+                        valid: true
+                    };
+                }
+
+                // Also accept plain hours (0-23) as shorthand
+                const matchHour = trimmed.match(/^([01]?[0-9]|2[0-3])$/);
+                if (matchHour) {
+                    return {
+                        hours: parseInt(matchHour[1]),
+                        minutes: 0,
+                        valid: true
+                    };
+                }
+
+                return null; // Invalid format
+            },
             // Format offset as UTC string
             formatOffset: function (offsetMinutes) {
                 const sign = offsetMinutes >= 0 ? '+' : '-';
@@ -6893,7 +7333,12 @@
                 return `UTC${sign}${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
             },
             // Convert time between timezones using UTC as intermediate
-            convertTime: function (inputTimeStr, fromCity, toCity) {
+            convertTime: function (inputTimeStr, fromCity, toCity, baseDate = new Date()) {
+                // Day and month names for formatting
+                const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'];
+
                 // Parse input time (HH:MM or decimal hours)
                 let hours, minutes;
                 if (typeof inputTimeStr === 'string' && inputTimeStr.includes(':')) {
@@ -6907,8 +7352,8 @@
                 }
 
                 // Get offsets including DST
-                const fromOffset = this.getTimezoneOffset(fromCity);
-                const toOffset = this.getTimezoneOffset(toCity);
+                const fromOffset = this.getTimezoneOffset(fromCity, baseDate);
+                const toOffset = this.getTimezoneOffset(toCity, baseDate);
 
                 // Convert to total minutes
                 const localMinutes = hours * 60 + minutes;
@@ -6933,17 +7378,46 @@
                 const resultHours = Math.floor(normalizedMinutes / 60);
                 const resultMinutes = normalizedMinutes % 60;
 
+                // Create target date with day offset
+                const targetDate = new Date(baseDate);
+                targetDate.setDate(targetDate.getDate() + dayOffset);
+
+                // 12-hour format
+                const hour12 = resultHours === 0 ? 12 : (resultHours > 12 ? resultHours - 12 : resultHours);
+                const amPm = resultHours < 12 ? 'AM' : 'PM';
+
+                // Format strings
+                const dayName = DAYS[targetDate.getDay()];
+                const fullDate = `${targetDate.getDate()} ${MONTHS[targetDate.getMonth()]} ${targetDate.getFullYear()}`;
+                const time24 = `${String(resultHours).padStart(2, '0')}:${String(resultMinutes).padStart(2, '0')}`;
+                const time12 = `${hour12}:${String(resultMinutes).padStart(2, '0')} ${amPm}`;
+                const utcOffsetStr = this.formatOffset(toOffset);
+
                 return {
                     hours: resultHours,
                     minutes: resultMinutes,
                     dayOffset: dayOffset,
                     fromOffset: fromOffset,
                     toOffset: toOffset,
-                    formatted: `${String(resultHours).padStart(2, '0')}:${String(resultMinutes).padStart(2, '0')}`,
-                    dayLabel: dayOffset === 1 ? ' (+1 day)' : dayOffset === -1 ? ' (-1 day)' : ''
+                    // Legacy format (kept for compatibility)
+                    formatted: time24,
+                    dayLabel: dayOffset === 1 ? ' (+1 day)' : dayOffset === -1 ? ' (-1 day)' : '',
+                    // Enhanced format
+                    day: dayName,
+                    date: fullDate,
+                    time24: time24,
+                    time12: time12,
+                    amPm: amPm,
+                    utcOffset: utcOffsetStr
                 };
             },
-            // Get timezone formula string
+            // Format time as 12-hour with AM/PM
+            formatTime12: function (hours, minutes) {
+                const hour12 = hours === 0 ? 12 : (hours > 12 ? hours - 12 : hours);
+                const amPm = hours < 12 ? 'AM' : 'PM';
+                return `${hour12}:${String(minutes).padStart(2, '0')} ${amPm}`;
+            },
+            // Get timezone formula string (legacy)
             getTimezoneFormula: function (fromCity, toCity) {
                 const fromOffset = this.getTimezoneOffset(fromCity);
                 const toOffset = this.getTimezoneOffset(toCity);
@@ -6952,12 +7426,42 @@
                 const diffStr = diff >= 0 ? `+${diffHours}` : `${diffHours}`;
                 return `${toCity} = ${fromCity} ${diffStr}h (${this.formatOffset(fromOffset)} → ${this.formatOffset(toOffset)})`;
             },
+            // Smart timezone formula - only shows meaningful formulas
+            getSmartTimezoneFormula: function (fromCity, toCity) {
+                // Same city - no formula needed
+                if (fromCity === toCity) {
+                    return '';
+                }
+
+                const fromOffset = this.getTimezoneOffset(fromCity);
+                const toOffset = this.getTimezoneOffset(toCity);
+                const diff = toOffset - fromOffset;
+
+                // Same offset - no meaningful conversion
+                if (diff === 0) {
+                    return '<span style="color:var(--text-muted);">Same UTC offset — times are equal</span>';
+                }
+
+                const diffHours = Math.abs(diff / 60);
+                const diffMins = Math.abs(diff % 60);
+                const sign = diff > 0 ? '+' : '−';
+
+                // Format difference
+                let diffStr = diffMins > 0
+                    ? `${diffHours}h ${diffMins}m`
+                    : `${diffHours}h`;
+
+                return `<strong>Formula:</strong><br>${toCity} = ${fromCity} ${sign} ${diffStr}<br><small style="color:var(--text-muted);">${this.formatOffset(fromOffset)} → ${this.formatOffset(toOffset)}</small>`;
+            },
             // Render World Clock for Universal timezone converter
             renderWorldClock: function () {
                 const container = document.getElementById('timezone-display');
                 if (!container) return;
 
                 const now = new Date();
+                const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
                 let html = '';
 
                 DATA.timezone.units.forEach(city => {
@@ -6968,12 +7472,23 @@
                     // Calculate local time for this city
                     const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
                     const cityTime = new Date(utcTime + (offset * 60000));
-                    const timeStr = cityTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+
+                    // Format day and date
+                    const dayName = DAYS[cityTime.getDay()];
+                    const dateStr = `${cityTime.getDate()} ${MONTHS[cityTime.getMonth()]}`;
+
+                    // Format 12-hour time with AM/PM
+                    const hours = cityTime.getHours();
+                    const minutes = cityTime.getMinutes();
+                    const hour12 = hours === 0 ? 12 : (hours > 12 ? hours - 12 : hours);
+                    const amPm = hours < 12 ? 'AM' : 'PM';
+                    const time12 = `${hour12}:${String(minutes).padStart(2, '0')} ${amPm}`;
 
                     html += `
                         <div class="timezone-card">
                             <div class="timezone-city">${city}</div>
-                            <div class="timezone-time">${timeStr}</div>
+                            <div style="font-size:0.75rem;color:var(--text-muted);">${dayName}, ${dateStr}</div>
+                            <div class="timezone-time">${time12}</div>
                             <div class="timezone-offset">${this.formatOffset(offset)}${isDST ? ' (DST)' : ''}</div>
                         </div>
                     `;
@@ -7009,6 +7524,13 @@
                     return;
                 }
 
+                // Validate time input
+                const validated = this.validateTimeInput(inputTime);
+                if (!validated) {
+                    resultsDiv.innerHTML = '<p style="color:var(--text-muted);text-align:center;">Invalid time format.<br><small>Use HH:MM (e.g., 09:30, 23:59)</small></p>';
+                    return;
+                }
+
                 let html = '';
                 DATA.timezone.units.forEach(city => {
                     if (city === baseCity) return;
@@ -7016,8 +7538,9 @@
                     html += `
                         <div class="comparison-card">
                             <div class="unit-name">${city}</div>
-                            <div class="unit-value">${result.formatted}${result.dayLabel}</div>
-                            <div style="font-size:0.75rem;color:var(--text-muted);">${this.formatOffset(result.toOffset)}</div>
+                            <div style="font-size:0.7rem;color:var(--text-muted);margin:2px 0;">${result.day}, ${result.date}</div>
+                            <div class="unit-value">${result.time12}${result.dayLabel}</div>
+                            <div style="font-size:0.75rem;color:var(--primary);margin-top:2px;">${result.utcOffset}</div>
                         </div>
                     `;
                 });
