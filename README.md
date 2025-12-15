@@ -88,20 +88,16 @@
 
 ## 📸 Screenshots
 
-> 📌 **Add your screenshots below with these recommended views:**
-
 | Screenshot | Description |
 |:----------:|:------------|
 | ![Desktop Home](screenshots/desktop-home.png) | **🖥️ Desktop View — Home Page** <br> Category grid with animated icons |
 | ![Desktop Converter](screenshots/desktop-converter.png) | **🖥️ Desktop View — Converter Page** <br> Single conversion with formula display |
-| ![Comparison Mode](screenshots/comparison-mode.png) | **📊 Comparison Mode** <br> Compare one value across all units |
-| ![Time Zone](screenshots/timezone.png) | **🌍 Time Zone Converter** <br> World clock with DST support |
+| ![Comparison Mode](screenshots/comparison-mode.png) | **📊 Mobile View - Comparison Mode** <br> Compare one value across all units |
+| ![Time Zone](screenshots/timezone.png) | **🌍 Mobile View - Time Zone Converter** <br> World clock with DST support |
 | ![Mobile Home](screenshots/mobile-home.png) | **📱 Mobile View — Home Page** <br> Responsive category grid |
 | ![Mobile Converter](screenshots/mobile-converter.png) | **📱 Mobile View — Converter** <br> Touch-optimized interface |
-| ![Light Mode](screenshots/light-mode.png) | **☀️ Light Mode** <br> Alternative theme |
-| ![History Panel](screenshots/history-panel.png) | **📜 History Panel** <br> Recent conversions sidebar |
-
-> 💡 **Tip:** Create a `/screenshots` folder in your repo and add images with the names above, or update the paths accordingly.
+| ![Light Mode](screenshots/light-mode.png) | **☀️ Mobile View - Light Mode** <br> Alternative theme |
+| ![History Panel](screenshots/history-panel.png) | **📜 Mobile View - History Panel** <br> Recent conversions sidebar |
 
 ---
 
