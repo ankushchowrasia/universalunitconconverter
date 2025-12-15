@@ -97,7 +97,7 @@
 | ![Mobile Home](assets/universalunitconverter.vercel.app_(Vivo%20Y51A)%20(3).png) | **📱 Mobile View — Home Page** <br> Responsive category grid |
 | ![Mobile Converter](assets/universalunitconverter.vercel.app_(Vivo%20Y51A)%20(4).png) | **📱 Mobile View — Converter** <br> Touch-optimized interface |
 | ![Light Mode](assets/Screenshot%202025-12-15%20115809.png) | **☀️ Mobile View - Light Mode** <br> Alternative theme |
-| ![History Panel](assets/universalunitconverter.vercel.app_(Vivo%20Y51A)%20(6).png) | **📜 Mobile View - History Panel** <br> Recent conversions sidebar |
+| ![History Panel](assets/Screenshot%202025-12-15%20182133.png) | **📜 Mobile View - History Panel** <br> Recent conversions sidebar |
 
 ---
 
