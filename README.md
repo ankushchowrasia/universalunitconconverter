@@ -90,14 +90,14 @@
 
 | Screenshot | Description |
 |:----------:|:------------|
-| ![Desktop Home](screenshots/desktop-home.png) | **🖥️ Desktop View — Home Page** <br> Category grid with animated icons |
-| ![Desktop Converter](screenshots/desktop-converter.png) | **🖥️ Desktop View — Converter Page** <br> Single conversion with formula display |
-| ![Comparison Mode](screenshots/comparison-mode.png) | **📊 Mobile View - Comparison Mode** <br> Compare one value across all units |
-| ![Time Zone](screenshots/timezone.png) | **🌍 Mobile View - Time Zone Converter** <br> World clock with DST support |
-| ![Mobile Home](screenshots/mobile-home.png) | **📱 Mobile View — Home Page** <br> Responsive category grid |
-| ![Mobile Converter](screenshots/mobile-converter.png) | **📱 Mobile View — Converter** <br> Touch-optimized interface |
-| ![Light Mode](screenshots/light-mode.png) | **☀️ Mobile View - Light Mode** <br> Alternative theme |
-| ![History Panel](screenshots/history-panel.png) | **📜 Mobile View - History Panel** <br> Recent conversions sidebar |
+| ![Desktop Home](assets/Screenshot%202025-12-15%20104733.png) | **🖥️ Desktop View — Home Page** <br> Category grid with animated icons |
+| ![Desktop Converter](assets/Screenshot%202025-12-15%20104820.png) | **🖥️ Desktop View — Converter Page** <br> Single conversion with formula display |
+| ![Comparison Mode](assets/universalunitconverter.vercel.app_(Vivo%20Y51A)%20(1).png) | **📊 Mobile View - Comparison Mode** <br> Compare one value across all units |
+| ![Time Zone](assets/Screenshot%202025-12-15%20115611.png) | **🌍 Mobile View - Time Zone Converter** <br> World clock with DST support |
+| ![Mobile Home](assets/universalunitconverter.vercel.app_(Vivo%20Y51A)%20(3).png) | **📱 Mobile View — Home Page** <br> Responsive category grid |
+| ![Mobile Converter](assets/universalunitconverter.vercel.app_(Vivo%20Y51A)%20(4).png) | **📱 Mobile View — Converter** <br> Touch-optimized interface |
+| ![Light Mode](assets/Screenshot%202025-12-15%20115809.png) | **☀️ Mobile View - Light Mode** <br> Alternative theme |
+| ![History Panel](assets/universalunitconverter.vercel.app_(Vivo%20Y51A)%20(6).png) | **📜 Mobile View - History Panel** <br> Recent conversions sidebar |
 
 ---
 
