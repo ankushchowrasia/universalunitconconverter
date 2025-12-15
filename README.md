@@ -7,7 +7,7 @@
 
 ### *A Premium, Feature-Rich Unit Conversion Hub with 250+ Converters*
 
-[![Live Demo]((https://universalunitconverter.vercel.app/))
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Click_Here-00FF41?style=for-the-badge)](https://universalunitconverter.vercel.app/)
 [![MIT License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
