@@ -5994,6 +5994,12 @@
             <div class="converter-ui" id="main-content">
                 <h3 class="conv-title" id="conv-page-title">Converter</h3>
 
+                <!-- Quick Info - Visible Description Section -->
+                <div class="quick-info" id="quick-info"
+                    style="background: linear-gradient(135deg, rgba(0,255,65,0.08), rgba(0,143,17,0.05)); border: 1px solid rgba(0,255,65,0.2); border-radius: 12px; padding: 12px 16px; margin-bottom: 16px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+                    <div id="quick-info-text">Select units to see conversion details</div>
+                </div>
+
                 <!-- Comparison Mode Toggle -->
                 <div class="mode-toggle" role="tablist" aria-label="Converter mode">
                     <button class="mode-btn active" role="tab" aria-selected="true" id="mode-single"
@@ -6010,7 +6016,7 @@
                             <input type="number" class="conv-input" id="input-val" placeholder="0"
                                 oninput="app.convert()">
                             <select class="conv-select" id="unit-from"
-                                onchange="app.convert(); app.updateDynamicReference()"></select>
+                                onchange="app.convert(); app.updateDynamicReference(); app.updateQuickInfo(app.state.category, this.value, document.getElementById('unit-to').value)"></select>
                         </div>
                     </div>
 
@@ -6021,7 +6027,7 @@
                         <div class="input-wrapper">
                             <input type="number" class="conv-input" id="output-val" readonly placeholder="0">
                             <select class="conv-select" id="unit-to"
-                                onchange="app.convert(); app.updateDynamicReference()"></select>
+                                onchange="app.convert(); app.updateDynamicReference(); app.updateQuickInfo(app.state.category, document.getElementById('unit-from').value, this.value)"></select>
                         </div>
                     </div>
 
@@ -7770,14 +7776,45 @@
                 // Usage Notes
                 document.getElementById('ref-notes-content').innerHTML = `<div class="ref-box">${ref.notes || 'No special notes for this conversion.'}</div>`;
 
-                // Close all panels by default
+                // Auto-open Unit Definitions panel by default (for competition: visible descriptions)
                 document.querySelectorAll('.ref-panel').forEach(p => p.classList.remove('open'));
+                const defPanel = document.getElementById('ref-definitions');
+                if (defPanel) defPanel.classList.add('open');
+
+                // Update Quick Info section with visible description
+                this.updateQuickInfo(catId, from, to);
             },
             updateDynamicReference: function () {
                 const convObj = this.state.converter;
                 if (convObj && (convObj.type === 'custom' || convObj.all)) {
                     this.renderReference();
                 }
+            },
+            // Update Quick Info section with visible descriptions (competition requirement)
+            updateQuickInfo: function (catId, from, to) {
+                const quickInfoEl = document.getElementById('quick-info-text');
+                if (!quickInfoEl) return;
+
+                const ref = REF_DATA[catId];
+                if (!ref) {
+                    quickInfoEl.textContent = 'Convert between units quickly and accurately.';
+                    return;
+                }
+
+                const fromDef = this.getUnitDef(catId, from);
+                const toDef = this.getUnitDef(catId, to);
+
+                let infoHtml = '';
+                if (fromDef && toDef && from !== to) {
+                    infoHtml = `<strong>${fromDef.name}:</strong> ${fromDef.def.substring(0, 80)}${fromDef.def.length > 80 ? '...' : ''}<br>` +
+                        `<strong>${toDef.name}:</strong> ${toDef.def.substring(0, 80)}${toDef.def.length > 80 ? '...' : ''}`;
+                } else if (fromDef) {
+                    infoHtml = `<strong>${fromDef.name}:</strong> ${fromDef.def}`;
+                } else {
+                    infoHtml = ref.context || 'Convert between units quickly and accurately.';
+                }
+
+                quickInfoEl.innerHTML = infoHtml;
             }
         };
 
@@ -8443,7 +8480,7 @@
                 const resp = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
                 const data = await resp.json();
                 if (data.rates) {
-                    const inrRate = data.rates.INR || 83.5;
+                    const inrRate = data.rates.INR || 90 ;
                     DATA.currency.factors = {
                         inr: 1,
                         usd: inrRate,
