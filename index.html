@@ -7,7 +7,7 @@
         href="https://raw.githubusercontent.com/ankushchowrasia/universalunitconconverter/03eb0fa83270da69d759bf5cae2fdbf76d85d92d/universal%20unit%20converter.png"
         type="image/png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universal Unit Converter - 250+ Converters</title>
+    <title>Unit Converter Hub - 110 Converters</title>
     <meta name="description" content="Universal Unit Converter. Matrix Theme.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -7996,6 +7996,8 @@
             let units = [];
             if (this.state.category === 'clothing') {
                 units = Object.keys(cat.factors);
+            } else if (this.state.category === 'timezone') {
+                units = cat.units || [];
             } else {
                 units = conv.all ? Object.keys(cat.factors || {}) : [conv.from, conv.to];
             }
@@ -8082,6 +8084,12 @@
                         </div>`;
                     }
                 });
+            }
+            // --- TIMEZONE SPECIFIC LOGIC ---
+            else if (catId === 'timezone') {
+                // Delegate to dedicated timezone comparison function
+                this.runTimezoneComparison();
+                return;
             }
             // --- STANDARD LINEAR LOGIC ---
             else if (cat && cat.factors) {
