@@ -7,7 +7,7 @@
         href="https://raw.githubusercontent.com/ankushchowrasia/universalunitconconverter/03eb0fa83270da69d759bf5cae2fdbf76d85d92d/universal%20unit%20converter.png"
         type="image/png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universal Unit Converter - 250+ Converters</title>
+    <title>Universal Unit Converter - 250+ Converters </title>
     <meta name="description" content="Universal Unit Converter. Matrix Theme.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2245,6 +2245,10 @@
             height: 1px;
             background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.5), transparent);
             box-shadow: 0 0 15px rgba(0, 255, 65, 0.8);
+            z-index: 1;
+            /* Ensure it stays behind navbar and other content */
+            pointer-events: none;
+            /* Prevent interaction */
         }
 
         /* 1) "Welcome You" 
@@ -2905,6 +2909,54 @@
             }
         }
 
+        /* History Panel Action Buttons - Compact Design */
+        .history-panel .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5em;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            height: auto !important;
+            min-height: 44px !important;
+            max-height: 50px !important;
+            padding: 10px 16px !important;
+            box-sizing: border-box;
+        }
+
+        /* Emoji icons in history panel buttons - proper sizing */
+        .history-panel .btn-outline {
+            font-size: 0.85rem;
+            border: 1px solid var(--primary);
+            background: transparent;
+        }
+
+        @media (max-width: 768px) {
+            .history-panel .btn {
+                padding: 10px 14px !important;
+                font-size: 0.82rem !important;
+                min-height: 42px !important;
+                max-height: 46px !important;
+            }
+
+            .history-panel .btn-outline {
+                font-size: 0.82rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .history-panel .btn {
+                padding: 8px 12px !important;
+                font-size: 0.78rem !important;
+                min-height: 40px !important;
+                max-height: 44px !important;
+            }
+
+            .history-panel .btn-outline {
+                font-size: 0.78rem !important;
+            }
+        }
+
         .history-panel.open {
             right: 0;
         }
@@ -3254,18 +3306,23 @@
 
         .skip-link {
             position: absolute;
-            top: -40px;
+            top: -100px;
             left: 0;
             background: var(--primary);
             color: #000;
             padding: 8px 16px;
-            z-index: 10000;
+            z-index: 1001;
+            /* Just above navbar (1000) but not excessively high */
             font-weight: bold;
             transition: top 0.3s;
+            max-width: auto;
+            font-size: 0.9rem;
+            border-radius: 0 0 8px 0;
         }
 
         .skip-link:focus {
-            top: 0;
+            top: 65px;
+            /* Below the sticky navbar */
         }
 
         /* High Contrast Mode */
@@ -5870,10 +5927,10 @@
         <div class="history-list" id="history-list" style="flex: 1; overflow-y: auto; overscroll-behavior: contain;">
             <div style="text-align:center; color:var(--text-muted); margin-top:20px;">No history yet</div>
         </div>
-        <button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="exportHistory()">📥 Export
-            CSV</button>
-        <button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="app.clearHistory()">Clear
-            History</button>
+        <button class="btn btn-outline" style="width:100%; margin-top:8px; padding:10px 16px; font-size:0.85rem;"
+            onclick="exportHistory()">📥 Export CSV</button>
+        <button class="btn btn-outline" style="width:100%; margin-top:8px; padding:10px 16px; font-size:0.85rem;"
+            onclick="app.clearHistory()">🗑️ Clear History</button>
     </aside>
 
     <!-- New Top Navigation Bar -->
@@ -8480,7 +8537,7 @@
                 const resp = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
                 const data = await resp.json();
                 if (data.rates) {
-                    const inrRate = data.rates.INR || 90 ;
+                    const inrRate = data.rates.INR || 90;
                     DATA.currency.factors = {
                         inr: 1,
                         usd: inrRate,
